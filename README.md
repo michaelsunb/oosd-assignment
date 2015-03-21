@@ -1,1 +1,2 @@
-# oosd-assignment1
+# Object Oriented Software Design
+# By Sokun, Jason, Siang and Michael
