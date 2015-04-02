@@ -1,2 +1,8 @@
 # Object Oriented Software Design
-# By Sokun, Jason, Siang and Michael
+Member: By Sokun, Jason, Siang and Michael
+
+# Tools
+- Java SDK 1.7+
+- Eclipse
+- ObjectAid UML Explorer for Eclipse http://www.objectaid.com/
+- GitHub Eclipse plugin http://eclipse.github.io/v
