@@ -1,5 +1,5 @@
 # Object Oriented Software Design
-Member: By Sokun, Jason, Siang and Michael
+Member: Sokun, Jason, Siang and Michael
 
 # Tools
 - Java SDK 1.7+
