@@ -6,6 +6,7 @@ public class Player {
 	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
+	private int score = 0;
 	
 	public Boolean getTurn() {
 		return turn;
@@ -42,8 +43,19 @@ public class Player {
 		return numberOfMove;
 	}
 
-	public void setNumberOfMove(int numberOfMove) {
-		this.numberOfMove = numberOfMove;
+	public void increaseMove() {
+		this.numberOfMove++;
 	}
 	
+	public int getScore()
+	{
+		return this.score;
+	}
+	
+	/*
+	 * TODO: use DBC to value >= 1 && value % 5 == 0
+	 */
+	public void addScore(int value) {
+		this.score += value;
+	}
 }

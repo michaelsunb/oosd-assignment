@@ -1,7 +1,5 @@
 package chess.core;
 
-import java.util.Observable;
-	
 public class Board /*extends Observable*/ implements IBoard {
 	private int height;
 	private int width;
