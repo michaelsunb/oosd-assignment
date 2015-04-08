@@ -21,7 +21,7 @@ public class Rook extends Piece {
 			// For all y
 			int checkSame = -1;
 			for(int i=0;i<=36;i++) {
-				int x = (currPos % 5);
+				int x = (currPos % 6);
 				int y = (i / 5);
 				int movable = x + (y * 6);
 				if(checkSame != movable && movable < 36) {
