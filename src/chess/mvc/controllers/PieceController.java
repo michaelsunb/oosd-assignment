@@ -22,11 +22,13 @@ public class PieceController implements ActionListener {
 		game.reset(100);
 		
 		Piece piece = game.getBoardInstance().getPiece(position);
-		int movablePos[] = piece.getMovablePositions(position);
+		if(piece != null) {
+			int movablePos[] = piece.getMovablePositions(position);
 
-		for(int square : movablePos) {
-			Component movableSource = currentSource.getParent().getComponent(square);
-			movableSource.setBackground(Color.RED);
+			for(int square : movablePos) {
+				Component movableSource = currentSource.getParent().getComponent(square);
+				movableSource.setBackground(Color.RED);
+			}
 		}
 	}
 }

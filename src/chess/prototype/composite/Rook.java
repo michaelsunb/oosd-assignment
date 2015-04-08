@@ -19,7 +19,7 @@ public class Rook extends Piece {
 
 		int boardSize = height * width;
 
-		if(currPos > 0 && currPos < boardSize) {
+		if(currPos >= 0 && currPos < boardSize) {
 			// For all y
 			int checkSame = -1;
 			for(int i=0;i<=boardSize;i++) {

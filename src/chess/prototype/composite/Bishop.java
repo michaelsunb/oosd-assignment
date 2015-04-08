@@ -19,7 +19,7 @@ public class Bishop extends Piece {
 
 		int boardSize = height * width;
 
-		if(currPos > 0 && currPos < boardSize) {
+		if(currPos >= 0 && currPos < boardSize) {
 
 			int x = (currPos % width);
 			positions.add(currPos);

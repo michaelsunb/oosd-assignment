@@ -21,7 +21,7 @@ public class Knight extends Piece {
 
 		int boardSize = height * width;
 
-		if(currPos > 0 && currPos < boardSize) {
+		if(currPos >= 0 && currPos < boardSize) {
 			int x = (currPos % width);
 			int y = (currPos / height);
 			if((x - 2) >= 0) {

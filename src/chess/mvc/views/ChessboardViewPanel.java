@@ -7,6 +7,8 @@ import java.awt.Insets;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import chess.core.Game;
+import chess.core.Piece;
 import chess.mvc.controllers.PieceController;
 
 /*
@@ -36,11 +38,20 @@ public class ChessboardViewPanel extends JPanel {
 
 	private void renderBoard(int rows, int cols) {
 		Insets buttonMargin = new Insets(0,0,0,0);
-		
+
+		// TODO put game controller
+		Game game = Game.getInstance();
+		game.reset(100);
+
 		int position = 0;
         for (int ii = 0; ii < rows; ii++) {
             for (int jj = 0; jj < cols; jj++) {
-                JButton b = new JButton();
+            	Piece piece = game.getBoardInstance().getPiece(position);
+            	String name = "";
+            	if(piece != null) {
+            		name = piece.getSymbol().toString();
+            	}
+                JButton b = new JButton(name);
                 b.setFont(font);
                 b.setMargin(buttonMargin);
                
