@@ -7,6 +7,10 @@ public class Barrier extends Piece {
 	public Barrier()
 	{
 		this.score = 1;
+		/*
+		 * Star Unicode Character
+		 */
+		this.symbol = '\u2605';
 	}
 	
 	@Override

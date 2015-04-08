@@ -39,7 +39,7 @@ public class PieceTest {
 		((CombinePiece)p).add(new Knight());
 		
 		assertEquals(10, p.getScore());
-		assertTrue("Combine move", p.getMovablePositions().length == 3);
+		assertTrue("Combine piece", p.getMovablePositions().length == 3);
 	}
 	
 	@Test
@@ -56,6 +56,6 @@ public class PieceTest {
 		
 		assertEquals(5, p.getScore());
 		
-		assertTrue("Combine move", p.getMovablePositions().length == 2);
+		assertTrue("Split piece", p.getMovablePositions().length == 2);
 	}	
 }

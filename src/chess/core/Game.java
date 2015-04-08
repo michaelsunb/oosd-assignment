@@ -5,20 +5,44 @@ import chess.prototype.decorator.*;
 public class Game {
 	private Player[] players;
 	private IBoard board;
+	private static Game instance;
+	private int maxMoves = 10;
 	
-	public Game() {
+	private Game() {
+		// this.reset();
+	}
+	
+	public static Game getInstance() {
+		if (instance == null) {
+			instance = new Game();
+		}
+		return instance;
+	}
+	
+	public void reset(int maxMove) {
+		
+		this.maxMoves = maxMove;
+		
+		/*
+		 * creating players
+		 */
+		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
 		
 		/*
-		 * decorate the board with different pieces
+		 * create & decorate chess board with different pieces
 		 */
-		board = new PlayerPieceDecorator(new Board(), players[0]);
-		board = new BarrierPieceDecorator(board);
-		board = new PlayerPieceDecorator(board, players[1]);
-	
+		board = new Board();
+		board.init();
+		new PlayerPieceDecorator(board, players[0]).init();
+		new BarrierPieceDecorator(board).init();
+		new PlayerPieceDecorator(board, players[1]).init();
 	}
 	
+	/*
+	 * postcondition: only a one user can take turn
+	 */
 	public void swapPlayer() {
 		for(Player p  : this.players)
 		{
@@ -26,6 +50,9 @@ public class Game {
 		}
 	}
 
+	/*
+	 * postcondition: return a valid instance of player object
+	 */
 	public Player getCurrentPlayer(){
 		for(Player p: this.players)
 		{
@@ -33,6 +60,17 @@ public class Game {
 		}
 		
 		return this.players[0];
+	}
+
+	public IBoard getBoardInstance() {
+		return this.board;
+	}
+
+	/*
+	 * precondition: number of valid move can't be zero
+	 */
+	public int getMaxMoves() {
+		return maxMoves;
 	}
 
 }

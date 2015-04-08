@@ -1,3 +1,5 @@
+package chess.app;
+
 import javax.swing.SwingUtilities;
 
 import chess.mvc.views.MainFrame;

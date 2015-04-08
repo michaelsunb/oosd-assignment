@@ -15,7 +15,6 @@ public class PlayerPieceDecorator extends BoardDecorator {
 
 	@Override
 	public void init() {
-		
 		// both players pieces have been setup
 		if (this.board.getPieces()[0] != null && 
 				this.board.getPieces()[30] != null){

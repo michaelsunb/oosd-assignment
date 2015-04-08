@@ -22,12 +22,6 @@ public class Player {
 	}
 	
 	public void move(int prevPos, int nextPos) {
-		/*
-		this.prevPos = prevPos;
-		this.nextPos = nextPos;
-		swapPlayer();
-		positionsChanged();
-		*/
 		this.numberOfMove ++;
 	}
 

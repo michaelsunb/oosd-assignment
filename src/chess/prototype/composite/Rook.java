@@ -6,6 +6,10 @@ public class Rook extends Piece {
 
 	public Rook() {
 		this.score = 5;
+		/*
+		 * Rook Unicode
+		 */
+		this.symbol = '\u265C';
 	}
 	
 	@Override
