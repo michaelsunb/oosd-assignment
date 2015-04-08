@@ -1,5 +1,7 @@
 package chess.core;
 
+import java.util.ArrayList;
+
 
 public abstract class Piece  {
 	protected int score = 0;
@@ -25,7 +27,7 @@ public abstract class Piece  {
 		this.score = score;
 	}
 
-	public abstract int[] getMovablePositions(); 
+	public abstract int[] getMovablePositions(int pos); 
 	
 	public Character getSymbol() {
 		return this.symbol;

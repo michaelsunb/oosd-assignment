@@ -25,11 +25,11 @@ public class CombinePiece extends Piece {
 	}
 	
 	@Override
-	public int[] getMovablePositions() {
+	public int[] getMovablePositions(int currPos) {
 		TreeSet<Integer> positions = new TreeSet<Integer>();
 
 		for(Piece p: pieces) {
-			for(int position: p.getMovablePositions()) {
+			for(int position: p.getMovablePositions(currPos)) {
 				positions.add(position);
 			}
 		}

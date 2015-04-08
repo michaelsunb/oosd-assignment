@@ -13,7 +13,7 @@ public class Knight extends Piece {
 	}
 	
 	@Override
-	public int[] getMovablePositions() {
+	public int[] getMovablePositions(int currPos) {
 		return new int[]{ 1, 2 };
 	}
 
