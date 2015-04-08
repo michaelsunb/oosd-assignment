@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import chess.mvc.controllers.PieceController;
 
 /*
  * Adapted from http://stackoverflow.com/questions/21077322/create-a-chess-board-with-jpanel
@@ -18,7 +19,7 @@ public class ChessboardViewPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -3243088743876785303L;
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-	
+
 	public ChessboardViewPanel()
 	{
 		/*
@@ -36,6 +37,7 @@ public class ChessboardViewPanel extends JPanel {
 	private void renderBoard(int rows, int cols) {
 		Insets buttonMargin = new Insets(0,0,0,0);
 		
+		int position = 0;
         for (int ii = 0; ii < rows; ii++) {
             for (int jj = 0; jj < cols; jj++) {
                 JButton b = new JButton();
@@ -49,6 +51,8 @@ public class ChessboardViewPanel extends JPanel {
                 } else {
                     b.setBackground(Color.BLACK);
                 }
+                b.setActionCommand("" + position++); // get current position
+                b.addActionListener(new PieceController());
                 this.add(b);
             }
         }

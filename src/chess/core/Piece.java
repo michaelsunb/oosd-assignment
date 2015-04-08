@@ -1,9 +1,11 @@
 package chess.core;
 
-import java.util.ArrayList;
-
 
 public abstract class Piece  {
+	// TODO find a way to get width & height from board
+	public final int height = 6;
+	public final int width = 6;
+
 	protected int score = 0;
 	private Player owner;
 	/*

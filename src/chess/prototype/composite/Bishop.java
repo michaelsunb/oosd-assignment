@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import chess.core.Piece;
 
 public class Bishop extends Piece {
-
 	public Bishop() {
 		this.score = 5;
 		/*
@@ -17,8 +16,12 @@ public class Bishop extends Piece {
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
-		if(currPos > 0 && currPos < 36) {
-			int x = (currPos % 6);
+
+		int boardSize = height * width;
+
+		if(currPos > 0 && currPos < boardSize) {
+
+			int x = (currPos % width);
 			positions.add(currPos);
 
 			// For all down left
@@ -27,8 +30,8 @@ public class Bishop extends Piece {
 			boolean isLeft = true;
 			while(isLeft) {
 				movable += 5;
-				int checkLeftX = movable % 6;
-				isLeft = (checkLeftX < currX) && (movable < 36);
+				int checkLeftX = movable % width;
+				isLeft = (checkLeftX < currX) && (movable < boardSize);
 				if(isLeft) {
 					positions.add(movable);
 					currX = checkLeftX;
@@ -40,7 +43,7 @@ public class Bishop extends Piece {
 			boolean isRight = true;
 			while(isRight) {
 				movable -= 5;
-				int checkRightX = movable % 6;
+				int checkRightX = movable % width;
 				isRight = (checkRightX > currX) && (movable >= 0);
 				if(isRight) {
 					positions.add(movable);
@@ -53,8 +56,8 @@ public class Bishop extends Piece {
 			isRight = true;
 			while(isRight) {
 				movable += 7;
-				int checkRightX = movable % 6;
-				isRight = (checkRightX > currX) && (movable < 36);
+				int checkRightX = movable % width;
+				isRight = (checkRightX > currX) && (movable < boardSize);
 				if(isRight) {
 					positions.add(movable);
 					currX = checkRightX;
@@ -66,7 +69,7 @@ public class Bishop extends Piece {
 			isLeft = true;
 			while(isLeft) {
 				movable -= 7;
-				int checkLeftX = movable % 6;
+				int checkLeftX = movable % width;
 				isLeft = (checkLeftX < currX) && (movable >= 0);
 				if(isLeft) {
 					positions.add(movable);

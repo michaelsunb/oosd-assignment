@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import chess.core.Piece;
 
 public class Rook extends Piece {
-
 	public Rook() {
 		this.score = 5;
 		/*
@@ -17,23 +16,26 @@ public class Rook extends Piece {
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
-		if(currPos > 0 && currPos < 36) {
+
+		int boardSize = height * width;
+
+		if(currPos > 0 && currPos < boardSize) {
 			// For all y
 			int checkSame = -1;
-			for(int i=0;i<=36;i++) {
-				int x = (currPos % 6);
-				int y = (i / 5);
-				int movable = x + (y * 6);
-				if(checkSame != movable && movable < 36) {
+			for(int i=0;i<=boardSize;i++) {
+				int x = (currPos % width);
+				int y = (i / height);
+				int movable = x + (y * height);
+				if(checkSame != movable && movable < boardSize) {
 					positions.add(movable);
 					checkSame = movable;
 				}
 			}
 			// For all x
-			for(int i=0;i<=5;i++) {
-				int y = (currPos / 6);
-				int movable = i + y + (y * 5);
-				if(movable < 36) {
+			for(int i=0;i<width;i++) {
+				int y = (currPos / width);
+				int movable = i + y + (y * (width-1));
+				if(movable < boardSize) {
 					positions.add(movable);
 				}
 			}

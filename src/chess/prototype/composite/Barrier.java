@@ -15,7 +15,7 @@ public class Barrier extends Piece {
 	
 	@Override
 	public int[] getMovablePositions(int currPos) {
-		return new int[]{currPos};
+		return new int[]{};
 	}
 
 }
