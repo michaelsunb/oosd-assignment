@@ -1,12 +1,17 @@
 package chess.mvc.views;
 
 import javax.swing.*;
+
 import chess.core.Player;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.IObserver;
+import chess.prototype.observer.PieceCapturedEvent;
+import chess.prototype.observer.PieceMovedEvent;
 
 /*
  * A panel which render game status
  */
-public class GameStatusViewPanel extends JPanel {
+public class GameStatusViewPanel extends JPanel implements IObserver {
 
 	/**
 	 * 
@@ -46,21 +51,30 @@ public class GameStatusViewPanel extends JPanel {
 		
 	}
 
+	@Override
+	public void update(ChessEvent event) {
+		if (event instanceof PieceMovedEvent) {
+			/// do this
+		} else if (event instanceof PieceCapturedEvent) {
+			// do that
+		}
+	}
+
 	/*
 	 * TODO: DBC enforce that players.length == 2
 	 */
-	public void update(Player[] players) {
-		/*
-		 * Update player 1
-		 */
-		player1NumMovedLabel.setText( String.format("Moved: {0}", players[0].getNumberOfMove()) );
-		player1NumMovedLabel.setText( String.format("Score: {0}", players[0].getScore()) );
-		
-		/*
-		 * Update player 2
-		 */
-		player2NumMovedLabel.setText( String.format("Moved: {0}", players[1].getNumberOfMove()) );
-		player2NumMovedLabel.setText( String.format("Score: {0}", players[1].getScore()) );
-	}
+//	public void update(Player[] players) {
+//		/*
+//		 * Update player 1
+//		 */
+//		player1NumMovedLabel.setText( String.format("Moved: {0}", players[0].getNumberOfMove()) );
+//		player1NumMovedLabel.setText( String.format("Score: {0}", players[0].getScore()) );
+//		
+//		/*
+//		 * Update player 2
+//		 */
+//		player2NumMovedLabel.setText( String.format("Moved: {0}", players[1].getNumberOfMove()) );
+//		player2NumMovedLabel.setText( String.format("Score: {0}", players[1].getScore()) );
+//	}
 	
 }
