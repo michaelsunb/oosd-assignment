@@ -1,15 +1,14 @@
+/*
+ * Author: Sokun, CHORN
+ * Student Number: S3455783
+ */
 package chess.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.ChessEventDispatcher;
-import chess.prototype.observer.IObserver;
-import chess.prototype.observer.PieceMovedEvent;
+import chess.prototype.composite.*;
+import chess.prototype.observer.*;
 
 public class ChessEventDispatcherTest {
 	
@@ -21,26 +20,30 @@ public class ChessEventDispatcherTest {
 		String eventName = PieceMovedEvent.class.getSimpleName();
 		
 		dispatcher.addListener(eventName, listener1);
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1, 2, new Rook());
 		
 		// act
-		dispatcher.fireEvent(new PieceMovedEvent());
+		dispatcher.fireEvent(movedEvent);
 		
 		// assert
-		assertEquals("SimpleObserver.update(..) method get called", "changed", listener1.getName());
+		assertEquals(
+				"SimpleObserver.update(..) method get called", 
+				movedEvent.toString(), listener1.getTestString());
 	}
-
 	
 	class SimpleObserver implements IObserver {
 
-		private String name;
+		private String testString;
 		
 		@Override
 		public void update(ChessEvent event) {
-			this.name = "changed";
+			if (event instanceof PieceMovedEvent) {
+				this.testString = event.toString();
+			}
 		}
 		
-		public String getName() {
-			return this.name;
+		public String getTestString() {
+			return this.testString;
 		}
 	}
 }
