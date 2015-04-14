@@ -9,12 +9,18 @@ import chess.mvc.views.MainFrame;
 public class Chess {
 
 	public static void main(String[] args) {
-		Game game = Game.getInstance();
-		game.reset(15);
-		
-		MainFrame mf = new MainFrame();
-		mf.setVisible(true);
-		mf.pack();
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				Game game = Game.getInstance();
+				game.reset(15);
+				
+				MainFrame mf = new MainFrame();
+				mf.setVisible(true);
+			}
+			
+		});
 	}
 
 }
