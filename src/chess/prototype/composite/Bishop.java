@@ -2,6 +2,8 @@ package chess.prototype.composite;
 
 import java.util.ArrayList;
 
+import chess.core.Game;
+import chess.core.IBoard;
 import chess.core.Piece;
 
 public class Bishop extends Piece {
@@ -16,9 +18,12 @@ public class Bishop extends Piece {
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
-
-		int boardSize = height * width;
-
+		
+		IBoard board = Game.getInstance().getBoardInstance();
+		
+		int boardSize = board.getHeight() * board.getWidth();
+		int width = board.getWidth();
+		
 		if(currPos >= 0 && currPos < boardSize) {
 
 			int x = (currPos % width);

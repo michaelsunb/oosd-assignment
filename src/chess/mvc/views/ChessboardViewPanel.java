@@ -51,11 +51,10 @@ public class ChessboardViewPanel extends JPanel {
                 b.setMargin(buttonMargin);
                 
                 if (p != null) {
-	                if (p instanceof CombinePiece) {
-	            		
-	            	} else {
-	            		b.setText(p.getSymbol().toString());
-	            	}
+	                /*
+	                 * TODO: UI player piece has different color
+	                 */
+	                b.setText(p.getSymbol());
                 }
           	
                 if ((jj % 2 == 1 && ii % 2 == 1)
@@ -65,6 +64,7 @@ public class ChessboardViewPanel extends JPanel {
                 } else {
                     b.setBackground(Color.BLACK);
                 }
+                
                 this.add(b);
             }
         }

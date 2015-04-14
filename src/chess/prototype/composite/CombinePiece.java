@@ -43,4 +43,12 @@ public class CombinePiece extends Piece {
 		return ret;
 	}
 
+	@Override
+	public String getSymbol() {
+		String symbols = "";
+		for(Piece p : this.pieces) {
+			symbols += p.getSymbol();
+		}
+		return symbols;
+	}
 }

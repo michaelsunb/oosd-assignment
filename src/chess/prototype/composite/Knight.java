@@ -2,6 +2,8 @@ package chess.prototype.composite;
 
 import java.util.ArrayList;
 
+import chess.core.Game;
+import chess.core.IBoard;
 import chess.core.Piece;
 
 public class Knight extends Piece {
@@ -18,9 +20,13 @@ public class Knight extends Piece {
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
-
-		int boardSize = height * width;
-
+		
+		IBoard board = Game.getInstance().getBoardInstance();
+		
+		int boardSize = board.getHeight() * board.getWidth();
+		int width = board.getWidth();
+		int height = board.getHeight();
+		
 		if(currPos >= 0 && currPos < boardSize) {
 			int x = (currPos % width);
 			int y = (currPos / height);
@@ -68,6 +74,6 @@ public class Knight extends Piece {
 	}
 
 	private int getCurrentPosition(int x,int y) {
-		return (x + (y * height));
+		return (x + (y * Game.getInstance().getBoardInstance().getHeight()));
 	}
 }

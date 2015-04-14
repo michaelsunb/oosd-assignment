@@ -14,6 +14,7 @@ public class BoardDecoratorTest {
 	public void decorate_one_player_pieces() {
 		// arrange
 		IBoard board = new Board();
+		board.init();
 		Player p1 = new Player();
 		
 		// act
@@ -31,6 +32,7 @@ public class BoardDecoratorTest {
 	public void decorate_two_players_pieces() {
 		// arrange
 		IBoard board = new Board();
+		board.init();
 		Player p1 = new Player();
 		Player p2 = new Player();
 		

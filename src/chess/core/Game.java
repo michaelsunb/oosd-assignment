@@ -9,7 +9,7 @@ public class Game {
 	private int maxMoves = 10;
 	
 	private Game() {
-		// this.reset();
+		this.reset(10);
 	}
 	
 	public static Game getInstance() {
