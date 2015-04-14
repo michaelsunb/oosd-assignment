@@ -35,6 +35,7 @@ public class Game {
 		 */
 		board = new Board();
 		board.init();
+		
 		new PlayerPieceDecorator(board, players[0]).init();
 		new BarrierPieceDecorator(board).init();
 		new PlayerPieceDecorator(board, players[1]).init();

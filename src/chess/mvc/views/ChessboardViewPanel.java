@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import chess.core.Game;
-import chess.core.Piece;
-import chess.mvc.controllers.PieceController;
+import chess.core.*;
+import chess.prototype.composite.CombinePiece;
 
 /*
  * Adapted from http://stackoverflow.com/questions/21077322/create-a-chess-board-with-jpanel
@@ -21,13 +21,15 @@ public class ChessboardViewPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -3243088743876785303L;
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-
+	private IBoard board;
+	
 	public ChessboardViewPanel()
 	{
+		board = Game.getInstance().getBoardInstance();
 		/*
 		 * TODO: get it from board object
 		 */
-		this.setLayout(new GridLayout(6, 6));
+		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
 		
 		this.setBorder(new LineBorder(Color.BLACK));
 		
@@ -38,23 +40,24 @@ public class ChessboardViewPanel extends JPanel {
 
 	private void renderBoard(int rows, int cols) {
 		Insets buttonMargin = new Insets(0,0,0,0);
-
-		// TODO put game controller
-		Game game = Game.getInstance();
-		game.reset(100);
-
-		int position = 0;
+		int pos = 0;
         for (int ii = 0; ii < rows; ii++) {
             for (int jj = 0; jj < cols; jj++) {
-            	Piece piece = game.getBoardInstance().getPiece(position);
-            	String name = "";
-            	if(piece != null) {
-            		name = piece.getSymbol().toString();
-            	}
-                JButton b = new JButton(name);
+            	
+            	Piece p = this.board.getPiece(pos++);
+            	
+                JButton b = new JButton();
                 b.setFont(font);
                 b.setMargin(buttonMargin);
-               
+                
+                if (p != null) {
+	                if (p instanceof CombinePiece) {
+	            		
+	            	} else {
+	            		b.setText(p.getSymbol().toString());
+	            	}
+                }
+          	
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         //) {
                         || (jj % 2 == 0 && ii % 2 == 0)) {
@@ -62,8 +65,6 @@ public class ChessboardViewPanel extends JPanel {
                 } else {
                     b.setBackground(Color.BLACK);
                 }
-                b.setActionCommand("" + position++); // get current position
-                b.addActionListener(new PieceController());
                 this.add(b);
             }
         }

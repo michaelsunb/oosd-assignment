@@ -15,7 +15,6 @@ public class BoardDecoratorTest {
 		// arrange
 		IBoard board = new Board();
 		Player p1 = new Player();
-		board.init();
 		
 		// act
 		new PlayerPieceDecorator(board, p1).init();
@@ -34,8 +33,6 @@ public class BoardDecoratorTest {
 		IBoard board = new Board();
 		Player p1 = new Player();
 		Player p2 = new Player();
-		
-		board.init();
 		
 		// act
 		new PlayerPieceDecorator(board, p1).init();

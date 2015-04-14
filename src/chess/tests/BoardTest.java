@@ -12,6 +12,7 @@ public class BoardTest {
 	@Test
 	public void board_initialization() {
 		IBoard board = new Board();
+		board.init();
 		
 		assertEquals(36, board.getPieces().length);
 	}

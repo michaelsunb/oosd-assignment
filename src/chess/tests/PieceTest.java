@@ -19,7 +19,6 @@ public class PieceTest {
 	@Test
 	public void rook_can_move() {
 		// arrange
-		
 		// act
 		Piece p = new Rook();
 		
@@ -32,7 +31,6 @@ public class PieceTest {
 	public void barrier_cannot_move()
 	{
 		// arrange
-		
 		// act
 		Piece p = new Barrier();
 		
@@ -74,7 +72,6 @@ public class PieceTest {
 		((CombinePiece)p).add(knight);
 		
 		((CombinePiece)p).remove(rook);
-		
 		
 		// assert
 		assertEquals(5, p.getScore());

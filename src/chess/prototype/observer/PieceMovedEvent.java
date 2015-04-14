@@ -22,26 +22,14 @@ public class PieceMovedEvent implements ChessEvent {
 		return oldPosition;
 	}
 	
-	public void setOldPosition(int oldPosition) {
-		this.oldPosition = oldPosition;
-	}
-	
 	public int getNewPosition() {
 		return newPosition;
-	}
-	
-	public void setNewPosition(int newPosition) {
-		this.newPosition = newPosition;
 	}
 	
 	public Piece getPiece() {
 		return piece;
 	}
 	
-	public void setPiece(Piece piece) {
-		this.piece = piece;
-	}
-
 	@Override
 	public String toString() {
 		return "PieceMovedEvent [oldPosition=" + oldPosition + ", newPosition="

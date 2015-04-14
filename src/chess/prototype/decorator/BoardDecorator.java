@@ -23,4 +23,11 @@ public abstract class BoardDecorator implements IBoard {
 		return null;
 	}	
 	
+	public int getHeight() {
+		return this.board.getHeight();
+	}
+	
+	public int getWidth() {
+		return this.board.getWidth();
+	}
 }

@@ -8,15 +8,11 @@ public class Board /*extends Observable*/ implements IBoard {
 	public Board() {
 		this.height = 6;
 		this.width = 6;
-		
-		this.init();
 	}
 	
 	public Board(int height,int width) {
 		this.height = height;
 		this.width = width;
-		
-		this.init();
 	}
 	
 	/* (non-Javadoc)
@@ -28,19 +24,6 @@ public class Board /*extends Observable*/ implements IBoard {
 		squares = new Piece[boardSize]; 
 	}
 	
-	public void move(int fromPos, int toPos) {
-		// update position
-		
-		// 
-//		this.positionsChanged();
-	}
-	
-	/*
-	private void positionsChanged() {
-		setChanged();
-		notifyObservers();
-	}
-*/
 	/* (non-Javadoc)
 	 * @see chess.core.IBoard#getPieces()
 	 */
@@ -58,5 +41,13 @@ public class Board /*extends Observable*/ implements IBoard {
 		 * TODO: validation design-by-contract
 		 */
 		return squares[pos];
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
+	
+	public int getWidth() {
+		return this.width;
 	}
 }

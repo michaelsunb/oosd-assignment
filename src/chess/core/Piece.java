@@ -11,7 +11,7 @@ public abstract class Piece  {
 	/*
 	 * Chess symbol in unicode https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
 	 */
-	protected Character symbol;
+	protected Character symbol =' ';
 	
 	public Player getOwner() {
 		return owner;

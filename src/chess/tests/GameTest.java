@@ -24,6 +24,7 @@ public class GameTest {
 		
 		assertEquals("Number of move each player can take", 10, game.getMaxMoves());
 		assertNotNull("Game always have valid player turn", game.getCurrentPlayer());
+		assertTrue(game.getBoardInstance().getPiece(30) != null);
 	}
 }
 

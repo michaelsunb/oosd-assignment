@@ -10,9 +10,17 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	
 	public PlayerPieceDecorator(IBoard board, Player player) {
 		super(board);
+		
 		this.player = player;
 	}
 
+	/*
+	 * Placing player pieces at the top or the bottom row of
+	 * the chess board
+	 * @precondition: a valid board object is given
+	 * @precondition: a valid player is given
+	 * @postcondition: pieces create and assign to given player
+	 */
 	@Override
 	public void init() {
 		// both players pieces have been setup
@@ -22,49 +30,47 @@ public class PlayerPieceDecorator extends BoardDecorator {
 		}
 		
 		if (this.board.getPieces()[0] == null) {
-			this.setupFirstPlayerPieces();
+			this.arrangePlayerOnePieces();
 		} else {
-			this.setupSecondPlayerPieces();
+			this.arrangePlayerTwoPieces();
 		}
 	}
 	
-	private void setupFirstPlayerPieces(){
-		this.board.getPieces()[0] = new Rook();
-		this.board.getPieces()[1] = new Knight();
-		this.board.getPieces()[2] = new Bishop();
-		this.board.getPieces()[3] = new Bishop();
-		this.board.getPieces()[4] = new Knight();
-		this.board.getPieces()[5] = new Rook();
-		
-		// set owner
-		for(int i = 0; i < 5; i++) {
-			this.board.getPieces()[i].setOwner(player);
-		}
+	private void arrangePlayerOnePieces(){
+		arrangePieces(0);
 	}
 	
-	private void setupSecondPlayerPieces(){
-		this.board.getPieces()[30] = new Rook();
-		this.board.getPieces()[31] = new Knight();
-		this.board.getPieces()[32] = new Bishop();
-		this.board.getPieces()[33] = new Bishop();
-		this.board.getPieces()[34] = new Knight();
-		this.board.getPieces()[35] = new Rook();
-		
-		// set owner
-		for(int i = 30; i < 35; i++) {
-			this.board.getPieces()[i].setOwner(player);
-		}
+	private void arrangePlayerTwoPieces(){
+		arrangePieces(30);
 	}
 
+	/*
+	 * Assume there is one way to arrange player pieces
+	 * If future requirement changes, Strategy pattern
+	 * can be use and invoke from this method
+	 */
+	private void arrangePieces(int offset) {
+		this.board.getPieces()[offset + 0] = new Rook();
+		this.board.getPieces()[offset + 1] = new Knight();
+		this.board.getPieces()[offset + 2] = new Bishop();
+		this.board.getPieces()[offset + 3] = new Bishop();
+		this.board.getPieces()[offset + 4] = new Knight();
+		this.board.getPieces()[offset + 5] = new Rook();
+		
+		// set owner
+		for(int i = offset + 0; i < offset + 5; i++) {
+			this.board.getPieces()[i].setOwner(player);
+		}
+	}
+	
 	@Override
 	public Piece[] getPieces() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.board.getPieces();
 	}
 
 	@Override
 	public Piece getPiece(int pos) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.board.getPiece(pos);
 	}
 }

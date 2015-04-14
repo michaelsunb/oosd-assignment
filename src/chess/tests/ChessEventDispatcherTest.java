@@ -13,6 +13,15 @@ import chess.prototype.observer.*;
 public class ChessEventDispatcherTest {
 	
 	@Test
+	public void is_singleton()
+	{
+		ChessEventDispatcher dispatcher1 = ChessEventDispatcher.getInstance();
+		ChessEventDispatcher dispatcher2 = ChessEventDispatcher.getInstance();
+		
+		assertEquals(dispatcher1, dispatcher2);
+	}
+	
+	@Test
 	public void fire_an_event() {
 		// arrange
 		ChessEventDispatcher dispatcher = ChessEventDispatcher.getInstance();
