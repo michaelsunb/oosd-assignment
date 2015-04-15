@@ -42,6 +42,10 @@ public class ChessEventDispatcher {
 		/*
 		 * TODO: remove an IObserver from listener list
 		 */
+		if (!this.services.containsKey(eventName)) {
+			return;
+		}
+		this.services.get(eventName).remove(observer);
 	}
 
 	/*
