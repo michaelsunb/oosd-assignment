@@ -22,11 +22,11 @@ public class GameController implements IObserver {
 	public void update(ChessEvent event) {
 		if (event instanceof PieceMovesEvent) {
 			Player currentPlayer = Game.getInstance().getCurrentPlayer();
-			if(((PieceMovesEvent) event).getPiece().getOwner() == currentPlayer) {
+			//if(((PieceMovesEvent) event).getPiece().getOwner() == currentPlayer) {
 				((PieceMovesEvent) event).displayMoves();
 				prevPiece = ((PieceMovesEvent) event).getPiece();
 				prevPos = ((PieceMovesEvent) event).getPosition();
-			}
+			//}
 		} else if (event instanceof PieceMovedEvent) {
 			int next = ((PieceMovedEvent) event).getNewPosition();
 			moveAction(next);
