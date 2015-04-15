@@ -40,9 +40,28 @@ public class ChessEventDispatcherTest {
 				movedEvent.toString(), listener1.getTestString());
 	}
 	
+	@Test
+	public void unregister_event() {
+		// arrange
+		ChessEventDispatcher dispatcher = ChessEventDispatcher.getInstance();
+		SimpleObserver listener1 = new SimpleObserver();
+		String eventName = PieceMovedEvent.class.getSimpleName();
+		
+		dispatcher.addListener(eventName, listener1);
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1, 2, new Rook());
+		
+		// act
+		dispatcher.removeListener(eventName, listener1);
+		dispatcher.fireEvent(movedEvent);
+		
+		// assert
+		assertEquals(
+				"SimpleObserver.update(..) method is not get called", 
+				"", listener1.getTestString());
+	}
 	class SimpleObserver implements IObserver {
 
-		private String testString;
+		private String testString = "";
 		
 		@Override
 		public void update(ChessEvent event) {
