@@ -11,7 +11,7 @@ import chess.prototype.observer.PieceMovedEvent;
 /*
  * A panel which render game status
  */
-public class GameStatusViewPanel extends JPanel implements IObserver {
+public class GameStatusViewPanel extends JPanel {
 
 	/**
 	 * 
@@ -49,15 +49,6 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		this.add(player2NumMovedLabel);
 		this.add(player2ScoredLabel);
 		
-	}
-
-	@Override
-	public void update(ChessEvent event) {
-		if (event instanceof PieceMovedEvent) {
-			/// do this
-		} else if (event instanceof PieceCapturedEvent) {
-			// do that
-		}
 	}
 
 	/*

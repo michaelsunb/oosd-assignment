@@ -9,9 +9,22 @@ import javax.swing.JComponent;
 
 import chess.core.Game;
 import chess.core.Piece;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.IObserver;
+import chess.prototype.observer.PieceCapturedEvent;
+import chess.prototype.observer.PieceMovedEvent;
 
-public class PieceController implements ActionListener {
+public class PieceController  implements IObserver, ActionListener {
 
+	@Override
+	public void update(ChessEvent event) {
+		if (event instanceof PieceMovedEvent) {
+			/// do this
+		} else if (event instanceof PieceCapturedEvent) {
+			// do that
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JComponent currentSource = ((JComponent) e.getSource());

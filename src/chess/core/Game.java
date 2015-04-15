@@ -9,7 +9,11 @@ public class Game {
 	private int maxMoves = 10;
 	
 	private Game() {
-		this.reset(10);
+		/**
+		 * Just set up the board first
+		 */
+		board = new Board();
+		board.init();
 	}
 	
 	public static Game getInstance() {
@@ -29,12 +33,6 @@ public class Game {
 		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
-		
-		/*
-		 * create & decorate chess board with different pieces
-		 */
-		board = new Board();
-		board.init();
 		
 		new PlayerPieceDecorator(board, players[0]).init();
 		new BarrierPieceDecorator(board).init();

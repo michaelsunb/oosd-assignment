@@ -38,6 +38,7 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	
 	private void arrangePlayerOnePieces(){
 		arrangePieces(0);
+		this.player.setTurn(true);
 	}
 	
 	private void arrangePlayerTwoPieces(){
@@ -58,7 +59,7 @@ public class PlayerPieceDecorator extends BoardDecorator {
 		this.board.getPieces()[offset + 5] = new Rook();
 		
 		// set owner
-		for(int i = offset + 0; i < offset + 5; i++) {
+		for(int i = offset + 0; i <= offset + 5; i++) {
 			this.board.getPieces()[i].setOwner(player);
 		}
 	}

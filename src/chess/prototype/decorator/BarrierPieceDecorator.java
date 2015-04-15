@@ -15,7 +15,7 @@ public class BarrierPieceDecorator extends BoardDecorator {
 	 */
 	@Override
 	public void init() {
-		for(int i = 12; i < 23; i++) {
+		for(int i = 12; i <= 23; i++) {
 			this.board.getPieces()[i] = new Barrier();
 		}
 	}
