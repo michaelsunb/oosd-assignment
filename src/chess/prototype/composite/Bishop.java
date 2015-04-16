@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import chess.core.Game;
 import chess.core.IBoard;
 import chess.core.Piece;
+import chess.piece.commands.ChessPieceMoveCheck;
 
 public class Bishop extends Piece {
 	public Bishop() {
@@ -40,6 +41,8 @@ public class Bishop extends Piece {
 				if(isLeft) {
 					positions.add(movable);
 					currX = checkLeftX;
+					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+						break;
 				}
 			}
 			// For all up right
@@ -53,6 +56,8 @@ public class Bishop extends Piece {
 				if(isRight) {
 					positions.add(movable);
 					currX = checkRightX;
+					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+						break;
 				}
 			}
 			// For all down right
@@ -66,6 +71,8 @@ public class Bishop extends Piece {
 				if(isRight) {
 					positions.add(movable);
 					currX = checkRightX;
+					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+						break;
 				}
 			}
 			// For all up left
@@ -79,6 +86,8 @@ public class Bishop extends Piece {
 				if(isLeft) {
 					positions.add(movable);
 					currX = checkLeftX;
+					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+						break;
 				}
 			}
 		}

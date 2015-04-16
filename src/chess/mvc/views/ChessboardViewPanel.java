@@ -34,8 +34,9 @@ public class ChessboardViewPanel extends JPanel {
 		/*
 		 * TODO: get it from board object
 		 */
+
 		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
-		
+
 		this.setBorder(new LineBorder(Color.BLACK));
 		
 		renderBoard(board.getWidth(), board.getHeight());
@@ -49,8 +50,7 @@ public class ChessboardViewPanel extends JPanel {
 		int pos = 0;
         for (int ii = 0; ii < rows; ii++) {
             for (int jj = 0; jj < cols; jj++) {
-            	
-            	Piece p = this.board.getPiece(pos);
+            	Piece p = Game.getInstance().getBoardInstance().getPiece(pos);
             	
                 JButton b = new JButton();
                 b.setFont(font);
@@ -101,7 +101,11 @@ public class ChessboardViewPanel extends JPanel {
     			 } else {
     				 comp.setBackground(Color.BLACK);
     			 }
-                 ((AbstractButton) comp).setAction(new GameAction(comp.getName(), setActionCommand, pos));
+    			 String symbol = "";
+    			 if(board.getPiece(pos) != null){
+    				 symbol = board.getPiece(pos).getSymbol();
+    			 }
+                 ((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
     			pos++;
     		}
         }
@@ -116,15 +120,17 @@ public class ChessboardViewPanel extends JPanel {
 	            	event = new PieceMovesEvent(position, p, currentSource);
 	            	setActionCommand = "movePiece";
 	            	prevPosition = position;
+	            	rerenderBoard(currentSource);
+	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	                break;
 	            case "movePiece":
 	            	event = new PieceMovedEvent(prevPosition, position, p);
-	            	setActionCommand = "pickPiece";
+	            	setActionCommand = "pickPiece";  
+	    			ChessEventDispatcher.getInstance().fireEvent(event);
+	            	rerenderBoard(currentSource);
 	            	Game.getInstance().swapPlayer();
 	            	break;
 	        }
-        	rerenderBoard(currentSource);
-			ChessEventDispatcher.getInstance().fireEvent(event);
         }
     }
 }

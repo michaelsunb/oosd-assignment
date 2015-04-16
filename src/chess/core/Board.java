@@ -50,4 +50,7 @@ public class Board /*extends Observable*/ implements IBoard {
 	public int getWidth() {
 		return this.width;
 	}
+	
+	public void changePieceLocation(int pos){
+	}
 }
