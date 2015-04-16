@@ -25,7 +25,8 @@ public class ChessboardViewPanel extends JPanel {
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
 
 	private IBoard board;
-	
+
+	private String setActionCommand = "pickPiece";
 	private int prevPosition;
 	private Piece prevPiece;
 	
@@ -40,49 +41,53 @@ public class ChessboardViewPanel extends JPanel {
 
 		this.setBorder(new LineBorder(Color.BLACK));
 		
-		renderBoard(board.getWidth(), board.getHeight());
+		
+		renderBoard(initialComponenets());
         
         // fill the chess board
 	}
-
-	private void renderBoard(int rows, int cols) {
-
-		Insets buttonMargin = new Insets(0,0,0,0);
-		int pos = 0;
-        for (int ii = 0; ii < rows; ii++) {
-            for (int jj = 0; jj < cols; jj++) {
-            	Piece p = board.getPiece(pos);
-            	
-                JButton b = new JButton();
-                b.setFont(font);
-                b.setMargin(buttonMargin);
-
-                if(p!=null && p.getOwner() != null) {
-                	b.setForeground(p.getOwner().getColour());
-                }
-                String symbol =  (p != null) ? p.getSymbol() : "";
-
-                if(symbol != "") {
-                	b.setAction(new GameAction(symbol, "pickPiece", pos));
-                }
-                pos++;
-          	
-                if ((jj % 2 == 1 && ii % 2 == 1)
-                        || (jj % 2 == 0 && ii % 2 == 0)) {
-                    b.setBackground(Color.LIGHT_GRAY);
-                } else {
-                    b.setBackground(Color.GRAY);
-                }
-                this.add(b);
-            }
-        }
+	
+	private Component[] initialComponenets() {
+		int boardSize = board.getHeight() * board.getWidth();
+		Component[] comp = new Component[boardSize];
+		for(int i = 0; i <boardSize ; i++) {
+			JComponent b = new JButton();
+            comp[i] = b;
+		}
+		return (Component[])comp;
 	}
+    
+    private void renderBoard(Component[] component) {
+		int pos = 0;
+		for (Component comp : component) {
+			int x = (pos % board.getWidth());
+			int y = (pos / board.getHeight());
+			 if((y % 2 == 1 && x % 2 == 1) ||
+					 (y % 2 == 0 && x % 2 == 0)){
+				 comp.setBackground(Color.LIGHT_GRAY);
+			 } else {
+				 comp.setBackground(Color.GRAY);
+			 }
+
+			 Piece piece = board.getPiece(pos);
+			 String symbol = "";
+			 if(piece != null){
+				 symbol = board.getPiece(pos).getSymbol();
+				 ((AbstractButton) comp).setFont(font);
+				 if(piece.getOwner() != null) {
+					 ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
+				 }
+			 }
+             ((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
+             this.add(comp);
+			pos++;
+		}
+    }
 
     class GameAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 		private int position;
-		private String setActionCommand;
 
 		// This is our sample action. It must have an actionPerformed() method,
         // which is called when the action should be invoked.
@@ -90,37 +95,12 @@ public class ChessboardViewPanel extends JPanel {
         	super(title);
         	this.position = position;
         	putValue(ACTION_COMMAND_KEY, command);
-        	this.setActionCommand = command;
-        }
-        
-        private void rerenderBoard(Component component) {
-    		Component[] listComponents = component.getParent().getComponents();
-    		int pos = 0;
-    		for (Component comp : listComponents) {
-    			int x = (pos % board.getWidth());
-    			int y = (pos / board.getHeight());
-    			 if((y % 2 == 1 && x % 2 == 1) ||
-    					 (y % 2 == 0 && x % 2 == 0)){
-    				 comp.setBackground(Color.LIGHT_GRAY);
-    			 } else {
-    				 comp.setBackground(Color.GRAY);
-    			 }
-
-    			 Piece piece = board.getPiece(pos);
-    			 String symbol = "";
-    			 if(piece != null){
-    				 symbol = board.getPiece(pos).getSymbol();
-    				 if(piece.getOwner() != null) {
-    					 ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
-    				 }
-    			 }
-                 ((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
-    			pos++;
-    		}
+        	setActionCommand = command;
         }
 
         public void actionPerformed(ActionEvent e) {
         	Component currentSource = ((Component) e.getSource());
+    		Component[] listComponents = currentSource.getParent().getComponents();
         	Piece p = Game.getInstance().getBoardInstance().getPiece(position);
 
             ChessEvent event = null;
@@ -130,14 +110,14 @@ public class ChessboardViewPanel extends JPanel {
 	            	setActionCommand = "movePiece";
 	            	prevPosition = position;
 	            	prevPiece = p;
-	            	rerenderBoard(currentSource);
+	            	renderBoard(listComponents);
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	                break;
 	            case "movePiece":
 	            	event = new PieceMovedEvent(prevPosition, position, prevPiece);
 	            	setActionCommand = "pickPiece";
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
-	            	rerenderBoard(currentSource);
+	            	renderBoard(listComponents);
 	            	Game.getInstance().swapPlayer();
 	            	break;
 	        }

@@ -40,10 +40,6 @@ public class Rook extends Piece {
 				movable -= 1;
 				isNorth = (movable < currY) && (movable >= 0);
 				if(isNorth) {
-					if(currPos == movable){
-						continue;
-					}
-					
 					int currMovablePos = getCurrentPosition(x,movable);
 					positions.add(currMovablePos);
 					if(!board.checkTargetSquareIfEmpty(currMovablePos))
@@ -59,9 +55,6 @@ public class Rook extends Piece {
 				movable += 1;
 				isSouth = (movable > currY) && (movable < board.getHeight());
 				if(isSouth) {
-					if(currPos == movable){
-						continue;
-					}
 					int currMovablePos = getCurrentPosition(x,movable);
 					positions.add(currMovablePos);
 					if(!board.checkTargetSquareIfEmpty(currMovablePos))
@@ -77,9 +70,6 @@ public class Rook extends Piece {
 				movable += 1;
 				isEast = (movable > currX) && (movable < board.getHeight());
 				if(isEast) {
-					if(currPos == movable){
-						continue;
-					}
 					int currMovablePos = getCurrentPosition(movable,y);
 					positions.add(currMovablePos);
 					if(!board.checkTargetSquareIfEmpty(currMovablePos))
@@ -95,9 +85,6 @@ public class Rook extends Piece {
 				movable -= 1;
 				isWest = (movable < currX) && (movable >= 0);
 				if(isWest) {
-					if(currPos == movable){
-						continue;
-					}
 					int currMovablePos = getCurrentPosition(movable,y);
 					positions.add(currMovablePos);
 					if(!board.checkTargetSquareIfEmpty(currMovablePos))

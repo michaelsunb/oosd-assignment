@@ -21,7 +21,8 @@ public class Chess {
 				GameController gameController = new GameController();
 
 				view.setVisible(true);
-				
+
+				// Register observers
 				ChessEventDispatcher.getInstance().addListener("PieceMovesEvent", gameController);
 				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", new ChessPieceMove());
 			}
