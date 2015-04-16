@@ -4,11 +4,11 @@ import java.awt.Container;
 
 import javax.swing.JMenuBar;
 
-public class NewGameEvent implements ChessEvent {
+public class GameNewEvent implements ChessEvent {
 	private Container contentPane;
 	private JMenuBar menuBar;
 
-	public NewGameEvent(Container contentPane, JMenuBar menuBar) {
+	public GameNewEvent(Container contentPane, JMenuBar menuBar) {
 		super();
 		this.contentPane = contentPane;
 		this.menuBar = menuBar;

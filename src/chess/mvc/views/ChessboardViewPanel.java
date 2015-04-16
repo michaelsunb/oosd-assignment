@@ -106,6 +106,13 @@ public class ChessboardViewPanel extends JPanel {
 	    			p.getOwner() != Game.getInstance().getCurrentPlayer()) {
 	    				break;
 	    			}
+
+	    			int numOfMoves = Game.getInstance().getMaxMoves();
+	            	ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), p,--numOfMoves);
+	            	renderBoard(listComponents);
+	    			ChessEventDispatcher.getInstance().fireEvent(eventStatus);
+	    			
+	    			
 	            	setActionCommand = "movePiece";
 	            	ChessEvent event = new PieceMovesEvent(position, p, currentSource);
 	            	renderBoard(listComponents);

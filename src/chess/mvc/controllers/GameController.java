@@ -31,10 +31,10 @@ public class GameController implements IObserver {
 	
 	@Override
 	public void update(ChessEvent event) {
-		if (event instanceof NewGameEvent)
+		if (event instanceof GameNewEvent)
 		{
-			menuBar = ((NewGameEvent) event).getMenuBar();
-			contentPane = ((NewGameEvent) event).getContainer();
+			menuBar = ((GameNewEvent) event).getMenuBar();
+			contentPane = ((GameNewEvent) event).getContainer();
 	    	try {
 	        	String moves = JOptionPane.showInputDialog(contentPane,
 	                    "How many moves?",
@@ -44,10 +44,10 @@ public class GameController implements IObserver {
 	        		return;
 	        	}
 	        	Game.getInstance().reset(Integer.parseInt(moves));
+				createBoard();
 	    	} catch(NumberFormatException nfe) {
 	    		JOptionPane.showMessageDialog(null, "Not a number!");
 	    	}
-			createBoard();
 		}
 	}
 }

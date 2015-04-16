@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import chess.core.Game;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.ChessEventDispatcher;
-import chess.prototype.observer.NewGameEvent;
+import chess.prototype.observer.GameNewEvent;
 import chess.prototype.observer.PieceMovesEvent;
 
 public class MainFrame extends JFrame {
@@ -71,7 +71,7 @@ public class MainFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
 	            case "NewGameEvent":
-	            	ChessEvent event = new NewGameEvent(contentPane, menuBar);
+	            	ChessEvent event = new GameNewEvent(contentPane, menuBar);
 	            	ChessEventDispatcher.getInstance().fireEvent(event);
 	            	break;
 	        }

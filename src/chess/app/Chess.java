@@ -2,8 +2,8 @@ package chess.app;
 
 import javax.swing.SwingUtilities;
 
-import chess.core.Game;
 import chess.mvc.controllers.GameController;
+import chess.mvc.views.GameStatusViewPanel;
 import chess.mvc.views.MainFrame;
 import chess.piece.commands.ChessPieceAction;
 import chess.piece.commands.ChessPieceMove;
@@ -27,11 +27,14 @@ public class Chess {
 				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", moveListener);
 				
 				GameController gameController = new GameController();
-				ChessEventDispatcher.getInstance().addListener("NewGameEvent", gameController);
+				ChessEventDispatcher.getInstance().addListener("GameNewEvent", gameController);
 				
 				ChessPieceAction pieceAction = new ChessPieceAction();
 				ChessEventDispatcher.getInstance().addListener("PieceCapturedEvent", pieceAction);
 				ChessEventDispatcher.getInstance().addListener("PieceJoinEvent", pieceAction);
+				
+				GameStatusViewPanel statusView = new GameStatusViewPanel();
+				ChessEventDispatcher.getInstance().addListener("GameStatusEvent", statusView);
 			}
 			
 		});

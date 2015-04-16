@@ -1,54 +1,61 @@
 package chess.mvc.views;
 
+import java.awt.Color;
+
 import javax.swing.*;
 
-import chess.core.Player;
 import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.GameStatusEvent;
 import chess.prototype.observer.IObserver;
 import chess.prototype.observer.PieceCapturedEvent;
-import chess.prototype.observer.PieceMovedEvent;
 
 /*
  * A panel which render game status
  */
-public class GameStatusViewPanel extends JPanel {
+public class GameStatusViewPanel extends JPanel implements IObserver {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6869843804453967033L;
-	private static JLabel player1Label;
-	private static JLabel player1NumMovedLabel;
-	private static JLabel player1ScoredLabel;
-	
-	private static JLabel player2Label;
-	private static JLabel player2NumMovedLabel;
-	private static JLabel player2ScoredLabel;
-	
+
+	private int numberOfMoves = 0;
+	private int score = 0;
+
 	public GameStatusViewPanel() {
-		
 		/*
 		 * Creating label for displaying player 1 info
 		 */
-		player1Label = new JLabel("Player 1");
-		player1NumMovedLabel = new JLabel("Moved");
-		player1ScoredLabel = new JLabel("Scored");
+
+		createStatus(1);
+
+		JLabel playerDivedLabel = new JLabel("\t|\t");
+		this.add(playerDivedLabel);
 		
-		this.add(player1Label);
-		this.add(player1NumMovedLabel);
-		this.add(player1ScoredLabel);
-		
-		/*
-		 * Creating label for displaying player 2 info
-		 */
-		player2Label = new JLabel("Player 2");
-		player2NumMovedLabel = new JLabel("Moved");
-		player2ScoredLabel = new JLabel("Scored");
-		
-		this.add(player2Label);
-		this.add(player2NumMovedLabel);
-		this.add(player2ScoredLabel);
-		
+		createStatus(2);
+	}
+	
+	private void createStatus(int player) {
+		JLabel playerLabel = new JLabel("Player " + player);
+		this.add(playerLabel);
+		JLabel playerMovedLabel = new JLabel("Moves " + numberOfMoves);
+		this.add(playerMovedLabel);
+		JLabel playerScoredLabel = new JLabel("Scores " + score);
+		this.add(playerScoredLabel);
+		this.revalidate();
+	}
+
+	@Override
+	public void update(ChessEvent event) {
+		if(event instanceof GameStatusEvent) {
+			if(((GameStatusEvent)event).getTargetPiece().getColour() == Color.WHITE) {
+				createStatus(2);
+			} else {
+				createStatus(1);
+			}
+			numberOfMoves = ((GameStatusEvent)event).getNumberOfMoves();
+			score += ((GameStatusEvent)event).getTargetPiece().getScore();
+		}
 	}
 
 	/*

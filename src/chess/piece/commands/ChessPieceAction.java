@@ -28,6 +28,7 @@ public class ChessPieceAction implements IObserver {
 			// act
 			((CombinePiece)piece).add(curPiece);
 			((CombinePiece)piece).add(tarPiece);
+			((CombinePiece)piece).setOwner(curPiece.getOwner());
 		}
 		Game.getInstance().getBoardInstance().getPieces()[position] = piece;
 	}
