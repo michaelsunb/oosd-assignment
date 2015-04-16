@@ -4,7 +4,6 @@
  */
 package chess.prototype.observer;
 
-import java.awt.Color;
 import java.awt.Component;
 import chess.core.Piece;
 
@@ -30,17 +29,5 @@ public class PieceMovesEvent implements ChessEvent {
 
 	public final int getPosition() {
 		return position;
-	}
-	
-	public void displayMoves() {
-
-		if(piece != null) {
-			int movablePos[] = piece.getMovablePositions(position);
-
-			for(int square : movablePos) {
-				Component movableSource = component.getParent().getComponent(square);
-				movableSource.setBackground(Color.RED);
-			}
-		}
 	}
 }

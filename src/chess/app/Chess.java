@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import chess.core.Game;
 import chess.mvc.controllers.GameController;
 import chess.mvc.views.MainFrame;
+import chess.piece.commands.ChessPieceAction;
 import chess.piece.commands.ChessPieceMove;
 import chess.prototype.observer.ChessEventDispatcher;
 
@@ -16,15 +17,21 @@ public class Chess {
 
 			@Override
 			public void run() {
-				Game model = Game.getInstance();
-				MainFrame view = new MainFrame(model);
-				GameController gameController = new GameController();
+				MainFrame view = new MainFrame();
 
 				view.setVisible(true);
 
 				// Register observers
-				ChessEventDispatcher.getInstance().addListener("PieceMovesEvent", gameController);
-				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", new ChessPieceMove());
+				ChessPieceMove moveListener = new ChessPieceMove();
+				ChessEventDispatcher.getInstance().addListener("PieceMovesEvent", moveListener);
+				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", moveListener);
+				
+				GameController gameController = new GameController();
+				ChessEventDispatcher.getInstance().addListener("NewGameEvent", gameController);
+				
+				ChessPieceAction pieceAction = new ChessPieceAction();
+				ChessEventDispatcher.getInstance().addListener("PieceCapturedEvent", pieceAction);
+				ChessEventDispatcher.getInstance().addListener("PieceJoinEvent", pieceAction);
 			}
 			
 		});

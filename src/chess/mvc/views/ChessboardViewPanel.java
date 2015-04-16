@@ -27,8 +27,6 @@ public class ChessboardViewPanel extends JPanel {
 	private IBoard board;
 
 	private String setActionCommand = "pickPiece";
-	private int prevPosition;
-	private Piece prevPiece;
 	
 	public ChessboardViewPanel()
 	{
@@ -40,8 +38,7 @@ public class ChessboardViewPanel extends JPanel {
 		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
 
 		this.setBorder(new LineBorder(Color.BLACK));
-		
-		
+
 		renderBoard(initialComponenets());
         
         // fill the chess board
@@ -62,24 +59,25 @@ public class ChessboardViewPanel extends JPanel {
 		for (Component comp : component) {
 			int x = (pos % board.getWidth());
 			int y = (pos / board.getHeight());
-			 if((y % 2 == 1 && x % 2 == 1) ||
-					 (y % 2 == 0 && x % 2 == 0)){
-				 comp.setBackground(Color.LIGHT_GRAY);
-			 } else {
-				 comp.setBackground(Color.GRAY);
-			 }
+			
+			if((y % 2 == 1 && x % 2 == 1) ||
+					(y % 2 == 0 && x % 2 == 0)){
+				comp.setBackground(Color.LIGHT_GRAY);
+			} else {
+				comp.setBackground(Color.GRAY);
+			}
 
-			 Piece piece = board.getPiece(pos);
-			 String symbol = "";
-			 if(piece != null){
-				 symbol = board.getPiece(pos).getSymbol();
-				 ((AbstractButton) comp).setFont(font);
-				 if(piece.getOwner() != null) {
-					 ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
-				 }
-			 }
-             ((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
-             this.add(comp);
+			Piece piece = board.getPiece(pos);
+			String symbol = "";
+			if(piece != null) {
+				symbol = board.getPiece(pos).getSymbol();
+				((AbstractButton) comp).setFont(font);
+				if(piece.getOwner() != null) {
+					((AbstractButton) comp).setForeground(piece.getOwner().getColour());
+				}
+			}
+			((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
+			this.add(comp);
 			pos++;
 		}
     }
@@ -89,8 +87,6 @@ public class ChessboardViewPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private int position;
 
-		// This is our sample action. It must have an actionPerformed() method,
-        // which is called when the action should be invoked.
         public GameAction(String title, String command,int position) {
         	super(title);
         	this.position = position;
@@ -103,22 +99,23 @@ public class ChessboardViewPanel extends JPanel {
     		Component[] listComponents = currentSource.getParent().getComponents();
         	Piece p = Game.getInstance().getBoardInstance().getPiece(position);
 
-            ChessEvent event = null;
             switch (e.getActionCommand()) {
 	            case "pickPiece":
-	            	event = new PieceMovesEvent(position, p, currentSource);
+	    			if(p != null &&
+	    			p.getOwner() != null &&
+	    			p.getOwner() != Game.getInstance().getCurrentPlayer()) {
+	    				break;
+	    			}
 	            	setActionCommand = "movePiece";
-	            	prevPosition = position;
-	            	prevPiece = p;
+	            	ChessEvent event = new PieceMovesEvent(position, p, currentSource);
 	            	renderBoard(listComponents);
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	                break;
 	            case "movePiece":
-	            	event = new PieceMovedEvent(prevPosition, position, prevPiece);
 	            	setActionCommand = "pickPiece";
-	    			ChessEventDispatcher.getInstance().fireEvent(event);
+	            	ChessEvent movePieceEvent = new PieceMovedEvent(position);
+	    			ChessEventDispatcher.getInstance().fireEvent(movePieceEvent);
 	            	renderBoard(listComponents);
-	            	Game.getInstance().swapPlayer();
 	            	break;
 	        }
         }

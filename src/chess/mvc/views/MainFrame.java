@@ -12,25 +12,25 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 
 import chess.core.Game;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
+import chess.prototype.observer.NewGameEvent;
+import chess.prototype.observer.PieceMovesEvent;
 
 public class MainFrame extends JFrame {
 	/**
 	 * 
 	 */
-	Container contentPane;
+	private Container contentPane;
+	private JMenuBar menuBar;
 	private static final long serialVersionUID = -6716444773355403669L;
-	
-	Game gameModel;
 
-	public MainFrame(Game game)
+	public MainFrame()
 	{
-		gameModel = game;
-		
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
 		menuBar();
-		createBoard();
 
 		setSize(605, 660);
 		setResizable(false);
@@ -41,27 +41,16 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void menuBar() {
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 
         JMenu menu = new JMenu("Menu");
 
-        GameAction exampleAction = new GameAction("New Game","New");
+        GameAction exampleAction = new GameAction("New Game","NewGameEvent");
 
         menu.add(exampleAction);
         menuBar.add(menu);
         
         contentPane.add(menuBar, BorderLayout.NORTH);
-	}
-	
-	private void createBoard() {
-		// create chessboard
-		ChessboardViewPanel cb = new ChessboardViewPanel();
-		contentPane.add(cb, BorderLayout.CENTER);
-		contentPane.revalidate();
-		
-		// create game status view panel
-		GameStatusViewPanel statusPane = new GameStatusViewPanel();
-		contentPane.add(statusPane, BorderLayout.SOUTH);
 	}
 
     class GameAction extends AbstractAction {
@@ -81,22 +70,9 @@ public class MainFrame extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
-	            case "New":
-	            	try {
-		            	String moves = JOptionPane.showInputDialog((JComponent) e.getSource(),
-		                        "How many moves?",
-		                        "alert", 
-		                        JOptionPane.OK_CANCEL_OPTION);
-		            	if(moves == null) { // cancelled
-		            		return;
-		            	}
-		            	gameModel.reset(Integer.parseInt(moves));
-			            contentPane.removeAll();
-			            menuBar();
-			    		createBoard();
-	            	} catch(NumberFormatException nfe)   {
-	            		JOptionPane.showMessageDialog(null, "Not a number!");
-	            	}
+	            case "NewGameEvent":
+	            	ChessEvent event = new NewGameEvent(contentPane, menuBar);
+	            	ChessEventDispatcher.getInstance().fireEvent(event);
 	            	break;
 	        }
         }
