@@ -19,5 +19,4 @@ public class BarrierPieceDecorator extends BoardDecorator {
 			this.board.getPieces()[i] = new Barrier();
 		}
 	}
-
 }

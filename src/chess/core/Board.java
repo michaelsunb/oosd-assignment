@@ -51,6 +51,12 @@ public class Board /*extends Observable*/ implements IBoard {
 		return this.width;
 	}
 	
-	public void changePieceLocation(int pos){
+	public boolean checkTargetSquareIfEmpty(int pos){
+		if(squares[pos] == null){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

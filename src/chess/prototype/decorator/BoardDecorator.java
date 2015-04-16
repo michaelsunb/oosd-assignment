@@ -30,4 +30,9 @@ public abstract class BoardDecorator implements IBoard {
 	public int getWidth() {
 		return this.board.getWidth();
 	}
+	
+	public boolean checkTargetSquareIfEmpty(int pos) {
+		// TODO Auto-generated method stub
+		return this.board.checkTargetSquareIfEmpty(pos);
+	}
 }

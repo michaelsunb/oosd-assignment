@@ -39,10 +39,13 @@ public class Bishop extends Piece {
 				int checkLeftX = movable % width;
 				isLeft = (checkLeftX < currX) && (movable < boardSize);
 				if(isLeft) {
-					positions.add(movable);
 					currX = checkLeftX;
-					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+					if(!board.checkTargetSquareIfEmpty(movable))
 						break;
+					if(currPos == movable){
+						continue;
+					}
+					positions.add(movable);
 				}
 			}
 			// For all up right
@@ -54,11 +57,13 @@ public class Bishop extends Piece {
 				int checkRightX = movable % width;
 				isRight = (checkRightX > currX) && (movable >= 0);
 				if(isRight) {
-					positions.add(movable);
 					currX = checkRightX;
-					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+					if(!board.checkTargetSquareIfEmpty(movable))
 						break;
+					if(currPos == movable)
+						continue;
 				}
+				positions.add(movable);
 			}
 			// For all down right
 			movable = currPos;
@@ -71,7 +76,7 @@ public class Bishop extends Piece {
 				if(isRight) {
 					positions.add(movable);
 					currX = checkRightX;
-					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+					if(!board.checkTargetSquareIfEmpty(movable))
 						break;
 				}
 			}
@@ -86,7 +91,7 @@ public class Bishop extends Piece {
 				if(isLeft) {
 					positions.add(movable);
 					currX = checkLeftX;
-					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable))
+					if(!board.checkTargetSquareIfEmpty(movable))
 						break;
 				}
 			}

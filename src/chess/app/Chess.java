@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import chess.core.Game;
 import chess.mvc.controllers.GameController;
 import chess.mvc.views.MainFrame;
-import chess.piece.commands.ChessPieceMoveCommand;
+import chess.piece.commands.ChessPieceMove;
 import chess.prototype.observer.ChessEventDispatcher;
 
 
@@ -23,7 +23,7 @@ public class Chess {
 				view.setVisible(true);
 				
 				ChessEventDispatcher.getInstance().addListener("PieceMovesEvent", gameController);
-				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", new ChessPieceMoveCommand());
+				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", new ChessPieceMove());
 			}
 			
 		});

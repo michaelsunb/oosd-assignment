@@ -3,6 +3,7 @@ package chess.core;
 import java.util.*;
 
 public class Player {
+	private String name;
 	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
@@ -51,5 +52,12 @@ public class Player {
 	 */
 	public void addScore(int value) {
 		this.score += value;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	public String getName(){
+		return this.name;
 	}
 }

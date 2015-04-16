@@ -36,10 +36,8 @@ public class Rook extends Piece {
 				
 				if(checkSame != movable && movable < boardSize && movable != currPos) {
 					positions.add(movable);
-					if(ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable)){
-						checkSame = movable;
-					}
-					else{
+					checkSame = movable;
+					if(!board.checkTargetSquareIfEmpty(movable)){
 						break;
 					}
 				}
@@ -52,7 +50,7 @@ public class Rook extends Piece {
 				int movable = i + y + (y * (width-1));
 				if(movable < boardSize && movable != currPos) {
 					positions.add(movable);
-					if(!ChessPieceMoveCheck.checkTargetSquareIfEmpty(movable)){
+					if(!board.checkTargetSquareIfEmpty(movable)){
 						break;
 					}
 				}

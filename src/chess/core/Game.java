@@ -33,6 +33,8 @@ public class Game {
 		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
+		players[0].setName("Player 1");
+		players[1].setName("Player 2");
 		
 		new PlayerPieceDecorator(board, players[0]).init();
 		new BarrierPieceDecorator(board).init();
