@@ -48,13 +48,14 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 	@Override
 	public void update(ChessEvent event) {
 		if(event instanceof GameStatusEvent) {
+			numberOfMoves = ((GameStatusEvent)event).getNumberOfMoves() - numberOfMoves;
+			score += ((GameStatusEvent)event).getTargetPiece().getScore();
 			if(((GameStatusEvent)event).getTargetPiece().getColour() == Color.WHITE) {
 				createStatus(2);
 			} else {
 				createStatus(1);
 			}
-			numberOfMoves = ((GameStatusEvent)event).getNumberOfMoves();
-			score += ((GameStatusEvent)event).getTargetPiece().getScore();
+			//System.out.println(numberOfMoves);
 		}
 	}
 
