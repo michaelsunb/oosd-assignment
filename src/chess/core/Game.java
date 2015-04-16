@@ -12,6 +12,10 @@ public class Game {
 		/**
 		 * Just set up the board first
 		 */
+		createNewBoard();
+	}
+	
+	private void createNewBoard() {
 		board = new Board();
 		board.init();
 	}
@@ -26,15 +30,13 @@ public class Game {
 	public void reset(int maxMove) {
 		
 		this.maxMoves = maxMove;
-		
+		createNewBoard();
 		/*
 		 * creating players
 		 */
 		players = new Player[2];
 		players[0] = new Player();
 		players[1] = new Player();
-		players[0].setName("Player 1");
-		players[1].setName("Player 2");
 		
 		new PlayerPieceDecorator(board, players[0]).init();
 		new BarrierPieceDecorator(board).init();

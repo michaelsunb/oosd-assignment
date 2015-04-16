@@ -50,14 +50,17 @@ public class ChessboardViewPanel extends JPanel {
 		int pos = 0;
         for (int ii = 0; ii < rows; ii++) {
             for (int jj = 0; jj < cols; jj++) {
-            	Piece p = Game.getInstance().getBoardInstance().getPiece(pos);
+            	Piece p = board.getPiece(pos);
             	
                 JButton b = new JButton();
                 b.setFont(font);
                 b.setMargin(buttonMargin);
 
+                if(p!=null && p.getOwner() != null) {
+                	b.setForeground(p.getOwner().getColour());
+                }
                 String symbol =  (p != null) ? p.getSymbol() : "";
-                b.setName(symbol);
+
                 if(symbol != "") {
                 	b.setAction(new GameAction(symbol, "pickPiece", pos));
                 }
@@ -65,9 +68,9 @@ public class ChessboardViewPanel extends JPanel {
           	
                 if ((jj % 2 == 1 && ii % 2 == 1)
                         || (jj % 2 == 0 && ii % 2 == 0)) {
-                    b.setBackground(Color.WHITE);
+                    b.setBackground(Color.LIGHT_GRAY);
                 } else {
-                    b.setBackground(Color.BLACK);
+                    b.setBackground(Color.GRAY);
                 }
                 this.add(b);
             }
@@ -93,17 +96,22 @@ public class ChessboardViewPanel extends JPanel {
     		Component[] listComponents = component.getParent().getComponents();
     		int pos = 0;
     		for (Component comp : listComponents) {
-    			int x = (pos % Game.getInstance().getBoardInstance().getWidth());
-    			int y = (pos / Game.getInstance().getBoardInstance().getHeight());
+    			int x = (pos % board.getWidth());
+    			int y = (pos / board.getHeight());
     			 if((y % 2 == 1 && x % 2 == 1) ||
     					 (y % 2 == 0 && x % 2 == 0)){
-    				 comp.setBackground(Color.WHITE);
+    				 comp.setBackground(Color.LIGHT_GRAY);
     			 } else {
-    				 comp.setBackground(Color.BLACK);
+    				 comp.setBackground(Color.GRAY);
     			 }
+
+    			 Piece piece = board.getPiece(pos);
     			 String symbol = "";
-    			 if(board.getPiece(pos) != null){
+    			 if(piece != null){
     				 symbol = board.getPiece(pos).getSymbol();
+    				 if(piece.getOwner() != null) {
+    					 ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
+    				 }
     			 }
                  ((AbstractButton) comp).setAction(new GameAction(symbol, setActionCommand, pos));
     			pos++;

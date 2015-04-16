@@ -2,8 +2,18 @@ package chess.core;
 
 import java.util.*;
 
+import java.awt.Color;
+
 public class Player {
-	private String name;
+	private Color colour;
+	public Color getColour() {
+		return colour;
+	}
+
+	public void setColour(Color black) {
+		this.colour = black;
+	}
+
 	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
@@ -52,12 +62,5 @@ public class Player {
 	 */
 	public void addScore(int value) {
 		this.score += value;
-	}
-	
-	public void setName(String name){
-		this.name = name;
-	}
-	public String getName(){
-		return this.name;
 	}
 }

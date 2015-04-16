@@ -1,5 +1,7 @@
 package chess.prototype.decorator;
 
+import java.awt.Color;
+
 import chess.core.IBoard;
 import chess.core.Piece;
 import chess.core.Player;
@@ -37,11 +39,13 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	}
 	
 	private void arrangePlayerOnePieces(){
-		arrangePieces(0);
+		this.player.setColour(Color.WHITE);
 		this.player.setTurn(true);
+		arrangePieces(0);
 	}
 	
 	private void arrangePlayerTwoPieces(){
+		this.player.setColour(Color.BLACK);
 		arrangePieces(30);
 	}
 
