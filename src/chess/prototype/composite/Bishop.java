@@ -2,6 +2,7 @@ package chess.prototype.composite;
 
 import java.util.ArrayList;
 
+import chess.core.Board;
 import chess.core.Game;
 import chess.core.IBoard;
 import chess.core.Piece;
@@ -20,7 +21,7 @@ public class Bishop extends Piece {
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		
-		IBoard board = Game.getInstance().getBoardInstance();
+		Board board = (Board) Game.getInstance().getBoardInstance();
 		
 		int boardSize = board.getHeight() * board.getWidth();
 		int width = board.getWidth();
@@ -28,7 +29,6 @@ public class Bishop extends Piece {
 		if(currPos >= 0 && currPos < boardSize) {
 
 			int x = (currPos % width);
-			positions.add(currPos);
 
 			// For all down left
 			int movable = currPos;
@@ -40,12 +40,12 @@ public class Bishop extends Piece {
 				isLeft = (checkLeftX < currX) && (movable < boardSize);
 				if(isLeft) {
 					currX = checkLeftX;
-					if(!board.checkTargetSquareIfEmpty(movable))
-						break;
 					if(currPos == movable){
 						continue;
 					}
 					positions.add(movable);
+					if(!board.checkTargetSquareIfEmpty(movable))
+						break;
 				}
 			}
 			// For all up right
@@ -58,12 +58,12 @@ public class Bishop extends Piece {
 				isRight = (checkRightX > currX) && (movable >= 0);
 				if(isRight) {
 					currX = checkRightX;
-					if(!board.checkTargetSquareIfEmpty(movable))
-						break;
 					if(currPos == movable)
 						continue;
+					positions.add(movable);
+					if(!board.checkTargetSquareIfEmpty(movable))
+						break;
 				}
-				positions.add(movable);
 			}
 			// For all down right
 			movable = currPos;

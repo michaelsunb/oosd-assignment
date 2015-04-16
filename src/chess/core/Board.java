@@ -54,7 +54,6 @@ public class Board /*extends Observable*/ implements IBoard {
 	public void changePieceLocation(int pos){
 	}
 
-	@Override
 	public boolean checkTargetSquareIfEmpty(int pos) {
 		if(squares[pos] == null) {
 			return true;

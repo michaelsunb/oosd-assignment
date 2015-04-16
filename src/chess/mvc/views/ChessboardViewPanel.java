@@ -27,6 +27,7 @@ public class ChessboardViewPanel extends JPanel {
 	private IBoard board;
 	
 	private int prevPosition;
+	private Piece prevPiece;
 	
 	public ChessboardViewPanel()
 	{
@@ -122,22 +123,19 @@ public class ChessboardViewPanel extends JPanel {
         	Component currentSource = ((Component) e.getSource());
         	Piece p = Game.getInstance().getBoardInstance().getPiece(position);
 
-        	if(p == null) {
-        		return;
-        	}
-        	
             ChessEvent event = null;
             switch (e.getActionCommand()) {
 	            case "pickPiece":
 	            	event = new PieceMovesEvent(position, p, currentSource);
 	            	setActionCommand = "movePiece";
 	            	prevPosition = position;
+	            	prevPiece = p;
 	            	rerenderBoard(currentSource);
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	                break;
 	            case "movePiece":
-	            	event = new PieceMovedEvent(prevPosition, position, p);
-	            	setActionCommand = "pickPiece";  
+	            	event = new PieceMovedEvent(prevPosition, position, prevPiece);
+	            	setActionCommand = "pickPiece";
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	            	rerenderBoard(currentSource);
 	            	Game.getInstance().swapPlayer();
