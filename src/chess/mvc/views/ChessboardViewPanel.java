@@ -114,6 +114,10 @@ public class ChessboardViewPanel extends JPanel {
         	Component currentSource = ((Component) e.getSource());
         	Piece p = Game.getInstance().getBoardInstance().getPiece(position);
 
+        	if(p == null) {
+        		return;
+        	}
+        	
             ChessEvent event = null;
             switch (e.getActionCommand()) {
 	            case "pickPiece":
