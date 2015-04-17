@@ -14,16 +14,16 @@ import chess.core.*;
 public class ChessPieceMoveCheck {
 	
 	public static boolean checkPieceAgainstPlayer(int currPos){
-		if(Game.getInstance().getBoardInstance().getPiece(currPos).getOwner() != Game.getInstance().getCurrentPlayer())
-			return false;
-		else
-			return true;
+		Game game = Game.getInstance();
+		IBoard board = game.getBoardInstance();
+		
+		return (board.getPiece(currPos).getOwner() != game.getCurrentPlayer()) ? false : true;
 	}
 
 	public static boolean checkMoveValidity(int currPos, int targetPos){
 		IBoard board = Game.getInstance().getBoardInstance();
 		int[] movablePosition = board.getPiece(currPos).getMovablePositions(currPos);
-		boolean moveValidity = Arrays.binarySearch(movablePosition, targetPos) > 0;
+		boolean moveValidity = Arrays.binarySearch(movablePosition, targetPos) >= 0;
 		
 		if(targetPos > board.getPieces().length){
 			System.out.println("Out of bounds");
