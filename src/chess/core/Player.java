@@ -1,3 +1,7 @@
+/*
+ * AUTHOR: Sokun, CHORN
+ * Number: S3455783
+ */
 package chess.core;
 
 import java.util.*;
@@ -5,21 +9,14 @@ import java.util.*;
 import java.awt.Color;
 
 public class Player {
+	
 	private Color colour;
-	public Color getColour() {
-		return colour;
-	}
-
-	public void setColour(Color black) {
-		this.colour = black;
-	}
-
 	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
 	private int score = 0;
 	
-	public Boolean getTurn() {
+	public Boolean isTurn() {
 		return turn;
 	}
 
@@ -57,6 +54,14 @@ public class Player {
 		return this.score;
 	}
 	
+	public Color getColour() {
+		return colour;
+	}
+
+	public void setColour(Color black) {
+		this.colour = black;
+	}
+
 	/*
 	 * TODO: use DBC to value >= 1 && value % 5 == 0
 	 */

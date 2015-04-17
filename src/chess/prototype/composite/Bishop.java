@@ -6,7 +6,7 @@ import chess.core.Board;
 import chess.core.Game;
 import chess.core.IBoard;
 import chess.core.Piece;
-import chess.piece.commands.ChessPieceMoveCheck;
+import chess.prototype.commands.ChessPieceMoveCheck;
 
 public class Bishop extends Piece {
 	public Bishop() {
@@ -44,7 +44,7 @@ public class Bishop extends Piece {
 						continue;
 					}
 					positions.add(movable);
-					if(!board.checkTargetSquareIfEmpty(movable))
+					if(!board.isSqureEmpty(movable))
 						break;
 				}
 			}
@@ -61,7 +61,7 @@ public class Bishop extends Piece {
 					if(currPos == movable)
 						continue;
 					positions.add(movable);
-					if(!board.checkTargetSquareIfEmpty(movable))
+					if(!board.isSqureEmpty(movable))
 						break;
 				}
 			}
@@ -76,7 +76,7 @@ public class Bishop extends Piece {
 				if(isRight) {
 					positions.add(movable);
 					currX = checkRightX;
-					if(!board.checkTargetSquareIfEmpty(movable))
+					if(!board.isSqureEmpty(movable))
 						break;
 				}
 			}
@@ -91,7 +91,7 @@ public class Bishop extends Piece {
 				if(isLeft) {
 					positions.add(movable);
 					currX = checkLeftX;
-					if(!board.checkTargetSquareIfEmpty(movable))
+					if(!board.isSqureEmpty(movable))
 						break;
 				}
 			}

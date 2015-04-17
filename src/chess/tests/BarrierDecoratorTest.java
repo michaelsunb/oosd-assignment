@@ -1,3 +1,7 @@
+/*
+ * Author: Sokun, CHORN
+ * Number: S3455783
+ */
 package chess.tests;
 
 import static org.junit.Assert.*;

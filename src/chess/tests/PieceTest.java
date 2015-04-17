@@ -5,14 +5,9 @@
 package chess.tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import chess.core.Piece;
-import chess.prototype.composite.Barrier;
-import chess.prototype.composite.CombinePiece;
-import chess.prototype.composite.Knight;
-import chess.prototype.composite.Rook;
+import chess.core.*;
+import chess.prototype.composite.*;
 
 public class PieceTest {
 
@@ -77,5 +72,37 @@ public class PieceTest {
 		assertEquals(5, p.getScore());
 		assertTrue("Split piece (move of the Knight)", 
 				p.getMovablePositions(1).length == knight.getMovablePositions(1).length);
-	}	
+	}
+	
+	@Test
+	public void should_not_combine_the_same_piece_type_twice() {
+		// arrange
+		CombinePiece compositePiece = new CombinePiece();
+		
+		// act
+		compositePiece.add(new Rook());
+		boolean result = compositePiece.add(new Rook());
+		
+		// assert
+		assertFalse("Rook already combine", result);
+	}
+	
+	@Test
+	public void should_combine_up_to_three_different_piece_type() {
+		// arrange
+		CombinePiece compositePiece = new CombinePiece();
+		
+		// act
+		compositePiece.add(new Rook());
+		compositePiece.add(new Bishop());
+		boolean result = compositePiece.add(new Knight());
+		
+		// assert
+		assertTrue("Can combine three different piece type", result);
+		
+		// act
+		result = compositePiece.add(new Knight());
+		assertFalse("Knight piece already combine", result);
+	}
+	
 }

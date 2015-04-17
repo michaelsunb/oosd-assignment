@@ -1,6 +1,6 @@
 package chess.core;
 
-public class Board /*extends Observable*/ implements IBoard {
+public class Board implements IBoard {
 	private int height;
 	private int width;
 	private Piece[] squares;
@@ -15,31 +15,19 @@ public class Board /*extends Observable*/ implements IBoard {
 		this.width = width;
 	}
 	
-	/* (non-Javadoc)
-	 * @see chess.core.IBoard#init()
-	 */
 	@Override
 	public void init() {
 		int boardSize = height * width;
 		squares = new Piece[boardSize]; 
 	}
 	
-	/* (non-Javadoc)
-	 * @see chess.core.IBoard#getPieces()
-	 */
 	@Override
 	public Piece[] getPieces() {
 		return squares;
 	}
 	
-	/* (non-Javadoc)
-	 * @see chess.core.IBoard#getPiece(int)
-	 */
 	@Override
 	public Piece getPiece(int pos) {
-		/*
-		 * TODO: validation design-by-contract
-		 */
 		return squares[pos];
 	}
 	
@@ -54,11 +42,7 @@ public class Board /*extends Observable*/ implements IBoard {
 	public void changePieceLocation(int pos){
 	}
 
-	public boolean checkTargetSquareIfEmpty(int pos) {
-		if(squares[pos] == null) {
-			return true;
-		} else {
-			return false;
-		}
+	public boolean isSqureEmpty(int pos) {
+		return (squares[pos] == null) ? true : false;
 	}
 }

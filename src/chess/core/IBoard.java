@@ -17,4 +17,5 @@ public interface IBoard {
 	public int getHeight();
 	
 	public int getWidth();
+	
 }

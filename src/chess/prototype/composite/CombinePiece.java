@@ -1,22 +1,21 @@
 package chess.prototype.composite;
 
 import java.util.*;
-
 import chess.core.Piece;
 
 public class CombinePiece extends Piece {
 	private List<Piece> pieces = new ArrayList<Piece>();
 	
-	public void add(Piece piece) {
-		// if type already added ignore
+	public boolean add(Piece piece) {
 		for(Piece p: pieces) {
 			if (p.getClass().equals(piece.getClass())) {
-				return;
+				return false;
 			}
 		}
 		
 		this.pieces.add(piece);
 		this.score += piece.getScore();
+		return true;
 	}
 	
 	public void remove(Piece piece) {

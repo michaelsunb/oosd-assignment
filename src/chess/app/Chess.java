@@ -2,13 +2,10 @@ package chess.app;
 
 import javax.swing.SwingUtilities;
 
-import chess.mvc.controllers.GameController;
-import chess.mvc.views.GameStatusViewPanel;
-import chess.mvc.views.MainFrame;
-import chess.piece.commands.ChessPieceAction;
-import chess.piece.commands.ChessPieceMove;
-import chess.prototype.observer.ChessEventDispatcher;
-
+import chess.mvc.controllers.*;
+import chess.mvc.views.*;
+import chess.prototype.commands.*;
+import chess.prototype.observer.*;
 
 public class Chess {
 
@@ -17,24 +14,29 @@ public class Chess {
 
 			@Override
 			public void run() {
+				ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
+				
+				// setup mvc
+				// TODO: we need to learn more to implement MVC properly, 
+				// current implementation is far from complete
+				GameController gameController = new GameController();
 				MainFrame view = new MainFrame();
-
+				GameStatusViewPanel statusView = new GameStatusViewPanel();
+				
 				view.setVisible(true);
-
+				
 				// Register observers
 				ChessPieceMove moveListener = new ChessPieceMove();
-				ChessEventDispatcher.getInstance().addListener("PieceMovesEvent", moveListener);
-				ChessEventDispatcher.getInstance().addListener("PieceMovedEvent", moveListener);
+				eventMgr.addListener("PieceSelectedEvent", moveListener);
+				eventMgr.addListener("PieceSelectedEvent", moveListener);
 				
-				GameController gameController = new GameController();
-				ChessEventDispatcher.getInstance().addListener("GameNewEvent", gameController);
+				eventMgr.addListener("GameNewEvent", gameController);
 				
 				ChessPieceAction pieceAction = new ChessPieceAction();
-				ChessEventDispatcher.getInstance().addListener("PieceCapturedEvent", pieceAction);
-				ChessEventDispatcher.getInstance().addListener("PieceJoinEvent", pieceAction);
+				eventMgr.addListener("PieceCapturedEvent", pieceAction);
+				eventMgr.addListener("PieceJoinEvent", pieceAction);
 				
-				GameStatusViewPanel statusView = new GameStatusViewPanel();
-				ChessEventDispatcher.getInstance().addListener("GameStatusEvent", statusView);
+				eventMgr.addListener("GameStatusEvent", statusView);
 			}
 			
 		});

@@ -1,3 +1,7 @@
+/*
+ * Author: Michaelsun BALUYOS
+ * Student Number: s3110401
+ */
 package chess.prototype.observer;
 
 import java.util.ArrayList;

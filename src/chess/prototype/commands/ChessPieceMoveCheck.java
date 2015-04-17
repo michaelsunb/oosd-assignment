@@ -1,7 +1,16 @@
-package chess.piece.commands;
+/*
+ * Author: Siang Ling
+ * Number: s3295217
+ */
+package chess.prototype.commands;
 
-import chess.core.Game;
+import java.util.Arrays;
 
+import chess.core.*;
+/*
+ * Sokun's comment: this class is so anti-pattern, 
+ * we need to add appropriate methods to responsible class follow the GRASP principle
+ */
 public class ChessPieceMoveCheck {
 	
 	public static boolean checkPieceAgainstPlayer(int currPos){
@@ -12,15 +21,11 @@ public class ChessPieceMoveCheck {
 	}
 
 	public static boolean checkMoveValidity(int currPos, int targetPos){
-		boolean moveValidity = false;
+		IBoard board = Game.getInstance().getBoardInstance();
+		int[] movablePosition = board.getPiece(currPos).getMovablePositions(currPos);
+		boolean moveValidity = Arrays.binarySearch(movablePosition, targetPos) > 0;
 		
-		for(int i :Game.getInstance().getBoardInstance().getPiece(currPos).getMovablePositions(currPos)){
-			if(i == targetPos){
-				moveValidity = true;
-			}
-		}
-		
-		if(targetPos > Game.getInstance().getBoardInstance().getPieces().length){
+		if(targetPos > board.getPieces().length){
 			System.out.println("Out of bounds");
 			moveValidity = false;
 		}
@@ -28,10 +33,7 @@ public class ChessPieceMoveCheck {
 		if(currPos == targetPos){
 			System.out.println("Trying to move to yourself.");
 			moveValidity = false;
-		}
-		
+		}		
 		return moveValidity;
 	}
-	
-	
 }

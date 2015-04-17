@@ -1,11 +1,7 @@
 package chess.mvc.views;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -116,7 +112,7 @@ public class ChessboardViewPanel extends JPanel {
 	    			
 	    			
 	            	setActionCommand = "movePiece";
-	            	ChessEvent event = new PieceMovesEvent(position, p, currentSource);
+	            	ChessEvent event = new PieceSelectedEvent(position, p, currentSource);
 	            	renderBoard(listComponents);
 	    			ChessEventDispatcher.getInstance().fireEvent(event);
 	                break;

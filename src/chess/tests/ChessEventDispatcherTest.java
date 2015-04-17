@@ -29,7 +29,7 @@ public class ChessEventDispatcherTest {
 		String eventName = PieceMovedEvent.class.getSimpleName();
 		
 		dispatcher.addListener(eventName, listener1);
-		PieceMovedEvent movedEvent = new PieceMovedEvent(1, 2, new Rook());
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1);
 		
 		// act
 		dispatcher.fireEvent(movedEvent);
@@ -48,7 +48,7 @@ public class ChessEventDispatcherTest {
 		String eventName = PieceMovedEvent.class.getSimpleName();
 		
 		dispatcher.addListener(eventName, listener1);
-		PieceMovedEvent movedEvent = new PieceMovedEvent(1, 2, new Rook());
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1);
 		
 		// act
 		dispatcher.removeListener(eventName, listener1);
@@ -59,6 +59,7 @@ public class ChessEventDispatcherTest {
 				"SimpleObserver.update(..) method is not get called", 
 				"", listener1.getTestString());
 	}
+	
 	class SimpleObserver implements IObserver {
 
 		private String testString = "";

@@ -1,3 +1,7 @@
+/*
+ * Author: Sokun, CHORN
+ * Number: S3455783
+ */
 package chess.core;
 
 import chess.prototype.decorator.*;
@@ -44,22 +48,32 @@ public class Game {
 	}
 	
 	/*
-	 * postcondition: only a one user can take turn
+	 * @pre.condition: there are two player per game session
+	 * @post.condition: only a one user can take turn
 	 */
 	public void swapPlayer() {
 		for(Player p  : this.players)
 		{
-			p.setTurn(!p.getTurn());
+			p.setTurn(!p.isTurn());
 		}
 	}
-
+	
+	/*
+	 * @pre.condition: p is 1 or 2
+	 * @post.condition: return a player instance
+	 */
+	public Player getPlayer(int p) {
+		if (p < 1 || p > 2) return null;
+		return this.players[p-1];
+	}
+	
 	/*
 	 * postcondition: return a valid instance of player object
 	 */
 	public Player getCurrentPlayer(){
 		for(Player p: this.players)
 		{
-			if (p.getTurn()) return p;
+			if (p.isTurn()) return p;
 		}
 		
 		return this.players[0];
@@ -70,10 +84,11 @@ public class Game {
 	}
 
 	/*
-	 * precondition: number of valid move can't be zero
+	 * pre.condition: number of valid move can't be zero
 	 */
 	public int getMaxMoves() {
 		return maxMoves;
 	}
 
+	
 }

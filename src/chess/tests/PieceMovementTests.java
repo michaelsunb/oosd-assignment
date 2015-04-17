@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import chess.core.Game;
-import chess.piece.commands.ChessPieceMove;
+import chess.prototype.commands.ChessPieceMove;
 import chess.prototype.composite.Rook;
 
 public class PieceMovementTests {

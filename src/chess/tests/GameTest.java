@@ -1,12 +1,13 @@
+/*
+ * Author: Sokun, CHORN
+ * Number: S3455783
+ */
 package chess.tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import chess.core.Game;
+import org.junit.*;
+import chess.core.*;
 
 public class GameTest {
 	@Test
@@ -25,6 +26,37 @@ public class GameTest {
 		assertEquals("Number of move each player can take", 10, game.getMaxMoves());
 		assertNotNull("Game always have valid player turn", game.getCurrentPlayer());
 		assertTrue(game.getBoardInstance().getPiece(30) != null);
+	}
+	
+	@Test
+	public void game_get_players() {
+		// arrange
+		Game game = Game.getInstance();
+		game.reset(10);
+		
+		// act
+		Player p1 = game.getPlayer(1);
+		Player p2 = game.getPlayer(2);
+		
+		// assert
+		assertNotEquals("There are two players in a game", p1, p2);
+	}
+	
+	@Test
+	public void game_swapTurn()
+	{
+		// arrange
+		Game game = Game.getInstance();
+		game.reset(10);
+		game.getPlayer(1).setTurn(true);
+		
+		// act
+		game.swapPlayer();
+		
+		// assert
+		assertFalse("Player 1 lost turn to player 2", game.getPlayer(1).isTurn());
+		assertTrue("Player 2 get turn", game.getPlayer(2).isTurn());
+		
 	}
 }
 

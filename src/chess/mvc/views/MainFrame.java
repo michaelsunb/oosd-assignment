@@ -1,21 +1,10 @@
 package chess.mvc.views;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-
-import chess.core.Game;
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.ChessEventDispatcher;
-import chess.prototype.observer.GameNewEvent;
-import chess.prototype.observer.PieceMovesEvent;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import chess.core.*;
+import chess.prototype.observer.*;
 
 public class MainFrame extends JFrame {
 	/**

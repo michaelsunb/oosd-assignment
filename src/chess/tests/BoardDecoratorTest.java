@@ -1,11 +1,12 @@
+/*
+ * Author: Sokun, CHORN
+ * Number: S3455783
+ */
 package chess.tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import chess.core.*;
-import chess.prototype.composite.*;
 import chess.prototype.decorator.*;
 
 public class BoardDecoratorTest {

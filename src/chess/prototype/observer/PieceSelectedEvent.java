@@ -7,12 +7,12 @@ package chess.prototype.observer;
 import java.awt.Component;
 import chess.core.Piece;
 
-public class PieceMovesEvent implements ChessEvent {
+public class PieceSelectedEvent implements ChessEvent {
 	private Piece piece;
 	private Component component;
 	private int position;
 	
-	public PieceMovesEvent(int currentPosition, Piece piece,
+	public PieceSelectedEvent(int currentPosition, Piece piece,
 			Component component) {
 		this.position = currentPosition;
 		this.piece = piece;

@@ -1,4 +1,8 @@
-package chess.piece.commands;
+/*
+ * Author: Siang Ling
+ * Number: s3295217
+ */
+package chess.prototype.commands;
 
 import chess.core.Game;
 import chess.core.Piece;

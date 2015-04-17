@@ -6,7 +6,7 @@ import chess.core.Board;
 import chess.core.Game;
 import chess.core.IBoard;
 import chess.core.Piece;
-import chess.piece.commands.ChessPieceMoveCheck;
+import chess.prototype.commands.ChessPieceMoveCheck;
 
 public class Rook extends Piece {
 	public Rook() {
@@ -42,7 +42,7 @@ public class Rook extends Piece {
 				if(isNorth) {
 					int currMovablePos = getCurrentPosition(x,movable);
 					positions.add(currMovablePos);
-					if(!board.checkTargetSquareIfEmpty(currMovablePos))
+					if(!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -57,7 +57,7 @@ public class Rook extends Piece {
 				if(isSouth) {
 					int currMovablePos = getCurrentPosition(x,movable);
 					positions.add(currMovablePos);
-					if(!board.checkTargetSquareIfEmpty(currMovablePos))
+					if(!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -72,7 +72,7 @@ public class Rook extends Piece {
 				if(isEast) {
 					int currMovablePos = getCurrentPosition(movable,y);
 					positions.add(currMovablePos);
-					if(!board.checkTargetSquareIfEmpty(currMovablePos))
+					if(!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -87,7 +87,7 @@ public class Rook extends Piece {
 				if(isWest) {
 					int currMovablePos = getCurrentPosition(movable,y);
 					positions.add(currMovablePos);
-					if(!board.checkTargetSquareIfEmpty(currMovablePos))
+					if(!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
