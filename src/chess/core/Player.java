@@ -15,12 +15,11 @@ public class Player {
 	private int numberOfMove = 0;
 	private Boolean turn = false;
 	private int score = 0;
-	
-	public Player()
-	{
+
+	public Player() {
 		pieces = new ArrayList<Piece>();
 	}
-	
+
 	public Boolean isTurn() {
 		return turn;
 	}
@@ -28,9 +27,9 @@ public class Player {
 	public void setTurn(Boolean turn) {
 		this.turn = turn;
 	}
-	
+
 	public void move(int prevPos, int nextPos) {
-		this.numberOfMove ++;
+		this.numberOfMove++;
 	}
 
 	public List<Piece> getPieces() {
@@ -48,12 +47,11 @@ public class Player {
 	public void increaseMove() {
 		this.numberOfMove++;
 	}
-	
-	public int getScore()
-	{
+
+	public int getScore() {
 		return this.score;
 	}
-	
+
 	public Color getColour() {
 		return colour;
 	}
@@ -63,10 +61,10 @@ public class Player {
 	}
 
 	public void addScore(int value) {
-		if(value > 1 && value % 5 != 0) {
+		if (value > 1 && value % 5 != 0) {
 			return;
 		}
-		
+
 		this.score += value;
 	}
 }

@@ -10,34 +10,32 @@ import chess.mvc.models.PieceMovedEvent;
 import chess.mvc.models.PieceSelectedEvent;
 import chess.prototype.observer.*;
 
-public class ChessPieceMove implements IObserver{
+public class ChessPieceMove implements IObserver {
 	private int currPos;
 	private Piece piece;
 	private Component component;
-	
+
 	private void displayMoves() {
-		if(piece != null) {
+		if (piece != null) {
 			int movablePos[] = piece.getMovablePositions(currPos);
 
-			for(int square : movablePos) {
+			for (int square : movablePos) {
 				Component movableSource = component.getParent().getComponent(square);
 				movableSource.setBackground(Color.RED);
 			}
 		}
 	}
-	
+
 	@Override
 	public void update(ChessEvent event) {
 		/**
-		 * TODO:  refactor to make this class to align single responsibility principle
+		 * TODO: refactor to make this class to align single responsibility
+		 * principle
 		 */
-		if(event instanceof PieceSelectedEvent)
-		{
-			PieceSelected((PieceSelectedEvent)event);
-		}
-		else if(event instanceof PieceMovedEvent)
-		{
-			PieceMoved((PieceMovedEvent)event);
+		if (event instanceof PieceSelectedEvent) {
+			PieceSelected((PieceSelectedEvent) event);
+		} else if (event instanceof PieceMovedEvent) {
+			PieceMoved((PieceMovedEvent) event);
 		}
 	}
 
@@ -46,31 +44,33 @@ public class ChessPieceMove implements IObserver{
 		Game game = Game.getInstance();
 		Board board = (Board) game.getBoardInstance();
 		ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
-		
+
 		int targetPos = event.getNewPosition();
-		
+
 		// can't move empty piece
-		if(this.piece == null) return;
-		
+		if (this.piece == null)
+			return;
+
 		event.setPreviousPiece(piece);
-		
+
 		int[] allMovableSquares = piece.getMovablePositions(currPos);
-		
-		for(int i :allMovableSquares) {
-			if(i == targetPos) {
+
+		for (int i : allMovableSquares) {
+			if (i == targetPos) {
 				ChessEvent pieceAction = event.returnAction();
-				
-				if(pieceAction == null) return;
-				
-				if(pieceAction instanceof PieceMovedEvent) {
+
+				if (pieceAction == null)
+					return;
+
+				if (pieceAction instanceof PieceMovedEvent) {
 					board.getPieces()[targetPos] = piece;
 				} else {
-	            	eventMgr.fireEvent(pieceAction);
+					eventMgr.fireEvent(pieceAction);
 				}
 
 				board.getPieces()[currPos] = null;
-	        	Game.getInstance().swapPlayer();
-	        	break;
+				Game.getInstance().swapPlayer();
+				break;
 			}
 		}
 	}

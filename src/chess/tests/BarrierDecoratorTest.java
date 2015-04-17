@@ -20,10 +20,10 @@ public class BarrierDecoratorTest {
 		// arrange
 		IBoard board = new Board();
 		board.init();
-		
-		// 
+
+		//
 		new BarrierPieceDecorator(board).init();
-		
+
 		// assert
 		assertTrue(board.getPiece(17) instanceof Barrier);
 	}

@@ -4,7 +4,7 @@ import chess.core.Player;
 import chess.prototype.observer.ChessEvent;
 
 public class GameStatusEvent implements ChessEvent {
-	
+
 	private Player targetPlayer;
 	private int numberOfMoves;
 

@@ -17,16 +17,16 @@ public class BoardDecoratorTest {
 		IBoard board = new Board();
 		board.init();
 		Player p1 = new Player();
-		
+
 		// act
 		new PlayerPieceDecorator(board, p1).init();
-		
+
 		// assert
 		Piece p = board.getPiece(0);
-		
+
 		assertTrue(p != null);
 		assertTrue(p.getOwner().equals(p1));
-		
+
 	}
 
 	@Test
@@ -36,21 +36,21 @@ public class BoardDecoratorTest {
 		board.init();
 		Player p1 = new Player();
 		Player p2 = new Player();
-		
+
 		// act
 		new PlayerPieceDecorator(board, p1).init();
 		new PlayerPieceDecorator(board, p2).init();
 
 		// assert
 		Piece p = board.getPiece(0);
-		
+
 		assertTrue(p != null);
 		assertTrue(p.getOwner().equals(p1));
-		
+
 		p = board.getPiece(30);
-		
+
 		assertTrue(p != null);
 		assertTrue(p.getOwner().equals(p2));
-		
+
 	}
 }

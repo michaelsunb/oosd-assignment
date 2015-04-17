@@ -12,7 +12,7 @@ public class PieceCapturedEvent implements ChessEvent {
 	private Player captureBy;
 	private Piece capturedPiece;
 	private int capturedPosition;
-	
+
 	public PieceCapturedEvent(Player captureBy, Piece capturedPiece,
 			int capturedPosition) {
 		this.captureBy = captureBy;
@@ -23,7 +23,7 @@ public class PieceCapturedEvent implements ChessEvent {
 	public Player getCaptureBy() {
 		return captureBy;
 	}
-	
+
 	public Piece getCapturedPiece() {
 		return capturedPiece;
 	}
@@ -31,5 +31,5 @@ public class PieceCapturedEvent implements ChessEvent {
 	public int getCapturedPosition() {
 		return capturedPosition;
 	}
-	
+
 }

@@ -15,7 +15,7 @@ public class PieceSplitEvent implements ChessEvent {
 	private Piece splitPiece;
 	private int splitToPosition;
 	private int splitFromPosition;
-	
+
 	public PieceSplitEvent(Piece currentPiece, Piece splitPiece,
 			int splitToPosition, int splitFromPosition) {
 		super();

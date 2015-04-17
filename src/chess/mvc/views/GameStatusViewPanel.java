@@ -24,35 +24,35 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 
 		JLabel playerDivedLabel = new JLabel("\t|\t");
 		this.add(playerDivedLabel);
-		
+
 		createStatus(2);
 	}
-	
+
 	private void createStatus(int player) {
 		JLabel playerLabel = new JLabel("Player " + player);
 		this.add(playerLabel);
-		
+
 		JLabel playerMovedLabel = new JLabel("Moves " + numberOfMoves);
 		this.add(playerMovedLabel);
-		
+
 		JLabel playerScoredLabel = new JLabel("Scores " + score);
 		this.add(playerScoredLabel);
-		
+
 		this.revalidate();
 	}
 
 	@Override
 	public void update(ChessEvent event) {
-		if(event instanceof GameStatusEvent) {
-			updateGameStatus((GameStatusEvent)event);
+		if (event instanceof GameStatusEvent) {
+			updateGameStatus((GameStatusEvent) event);
 		}
 	}
 
 	private void updateGameStatus(GameStatusEvent event) {
 		numberOfMoves = event.getNumberOfMoves() - numberOfMoves;
 		score += event.getTargetPiece().getScore();
-		
-		if(event.getTargetPiece().getColour() == Color.WHITE) {
+
+		if (event.getTargetPiece().getColour() == Color.WHITE) {
 			createStatus(2);
 		} else {
 			createStatus(1);

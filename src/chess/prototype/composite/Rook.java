@@ -14,18 +14,18 @@ public class Rook extends Piece {
 		 */
 		this.symbol = '\u265C';
 	}
-	
+
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 
 		Board board = (Board) Game.getInstance().getBoardInstance();
-		
+
 		int boardSize = board.getHeight() * board.getWidth();
 		int width = board.getWidth();
 		int height = board.getHeight();
 
-		if(currPos >= 0 && currPos < boardSize) {
+		if (currPos >= 0 && currPos < boardSize) {
 			int x = (currPos % width);
 			int y = (currPos / height);
 			int movable = y;
@@ -34,13 +34,13 @@ public class Rook extends Piece {
 
 			// For all north
 			boolean isNorth = true;
-			while(isNorth) {
+			while (isNorth) {
 				movable -= 1;
 				isNorth = (movable < currY) && (movable >= 0);
-				if(isNorth) {
-					int currMovablePos = getCurrentPosition(x,movable);
+				if (isNorth) {
+					int currMovablePos = getCurrentPosition(x, movable);
 					positions.add(currMovablePos);
-					if(!board.isSqureEmpty(currMovablePos))
+					if (!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -49,13 +49,13 @@ public class Rook extends Piece {
 			movable = y;
 			currY = y;
 			boolean isSouth = true;
-			while(isSouth) {
+			while (isSouth) {
 				movable += 1;
 				isSouth = (movable > currY) && (movable < board.getHeight());
-				if(isSouth) {
-					int currMovablePos = getCurrentPosition(x,movable);
+				if (isSouth) {
+					int currMovablePos = getCurrentPosition(x, movable);
 					positions.add(currMovablePos);
-					if(!board.isSqureEmpty(currMovablePos))
+					if (!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -64,13 +64,13 @@ public class Rook extends Piece {
 			movable = x;
 			currX = x;
 			boolean isEast = true;
-			while(isEast) {
+			while (isEast) {
 				movable += 1;
 				isEast = (movable > currX) && (movable < board.getHeight());
-				if(isEast) {
-					int currMovablePos = getCurrentPosition(movable,y);
+				if (isEast) {
+					int currMovablePos = getCurrentPosition(movable, y);
 					positions.add(currMovablePos);
-					if(!board.isSqureEmpty(currMovablePos))
+					if (!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -79,13 +79,13 @@ public class Rook extends Piece {
 			movable = x;
 			currX = x;
 			boolean isWest = true;
-			while(isWest) {
+			while (isWest) {
 				movable -= 1;
 				isWest = (movable < currX) && (movable >= 0);
-				if(isWest) {
-					int currMovablePos = getCurrentPosition(movable,y);
+				if (isWest) {
+					int currMovablePos = getCurrentPosition(movable, y);
 					positions.add(currMovablePos);
-					if(!board.isSqureEmpty(currMovablePos))
+					if (!board.isSqureEmpty(currMovablePos))
 						break;
 				}
 			}
@@ -94,13 +94,13 @@ public class Rook extends Piece {
 
 		int[] ret = new int[positions.size()];
 		int i = 0;
-		for(Integer pos: positions) {
+		for (Integer pos : positions) {
 			ret[i++] = pos;
 		}
 		return ret;
 	}
 
-	private int getCurrentPosition(int x,int y) {
+	private int getCurrentPosition(int x, int y) {
 		return (x + (y * Game.getInstance().getBoardInstance().getHeight()));
 	}
 }

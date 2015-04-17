@@ -11,8 +11,8 @@ public class PieceJoinEvent implements ChessEvent {
 	private Piece currentPiece;
 	private Piece augmentPiece;
 	private int joinPosition;
-	
-	public PieceJoinEvent(Piece currentPiece, Piece augmentPiece, int joinPosition){
+
+	public PieceJoinEvent(Piece currentPiece, Piece augmentPiece, int joinPosition) {
 		this.currentPiece = currentPiece;
 		this.augmentPiece = augmentPiece;
 		this.joinPosition = joinPosition;
@@ -29,6 +29,5 @@ public class PieceJoinEvent implements ChessEvent {
 	public int getJoinPosition() {
 		return joinPosition;
 	}
-	
-	
+
 }

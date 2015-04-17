@@ -12,7 +12,7 @@ public class PieceSelectedEvent implements ChessEvent {
 	private Piece piece;
 	private Component component;
 	private int position;
-	
+
 	public PieceSelectedEvent(int currentPosition, Piece piece,
 			Component component) {
 		this.position = currentPosition;

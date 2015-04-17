@@ -1,14 +1,14 @@
 package chess.core;
 
-public abstract class Piece  {
+public abstract class Piece {
 	protected int score = 0;
 	private Player owner;
 	/*
-	 * Chess symbol in unicode 
+	 * Chess symbol in unicode
 	 * https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
 	 */
-	protected Character symbol =' ';
-	
+	protected Character symbol = ' ';
+
 	public Player getOwner() {
 		return owner;
 	}
@@ -25,8 +25,8 @@ public abstract class Piece  {
 		this.score = score;
 	}
 
-	public abstract int[] getMovablePositions(int pos); 
-	
+	public abstract int[] getMovablePositions(int pos);
+
 	public String getSymbol() {
 		return this.symbol.toString();
 	}

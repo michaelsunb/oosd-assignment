@@ -23,5 +23,5 @@ public class SetupChessboardEvent implements ChessEvent {
 	public ArrayList<Piece> getPieces() {
 		return pieces;
 	}
-	
+
 }

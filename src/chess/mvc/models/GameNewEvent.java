@@ -6,7 +6,6 @@ import javax.swing.JMenuBar;
 
 import chess.prototype.observer.ChessEvent;
 
-
 public class GameNewEvent implements ChessEvent {
 	private Container contentPane;
 	private JMenuBar menuBar;
@@ -16,11 +15,11 @@ public class GameNewEvent implements ChessEvent {
 		this.contentPane = contentPane;
 		this.menuBar = menuBar;
 	}
-	
+
 	public Container getContainer() {
 		return contentPane;
 	}
-	
+
 	public final JMenuBar getMenuBar() {
 		return menuBar;
 	}

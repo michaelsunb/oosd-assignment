@@ -5,47 +5,47 @@ import chess.core.Piece;
 
 public class CombinePiece extends Piece {
 	private List<Piece> pieces = new ArrayList<Piece>();
-	
+
 	public boolean add(Piece piece) {
-		for(Piece p: pieces) {
+		for (Piece p : pieces) {
 			if (p.getClass().equals(piece.getClass())) {
 				return false;
 			}
 		}
-		
+
 		this.pieces.add(piece);
 		this.score += piece.getScore();
 		return true;
 	}
-	
+
 	public void remove(Piece piece) {
 		this.pieces.remove(piece);
 		this.score -= piece.getScore();
 	}
-	
+
 	@Override
 	public int[] getMovablePositions(int currPos) {
 		TreeSet<Integer> positions = new TreeSet<Integer>();
 
-		for(Piece p: pieces) {
-			for(int position: p.getMovablePositions(currPos)) {
+		for (Piece p : pieces) {
+			for (int position : p.getMovablePositions(currPos)) {
 				positions.add(position);
 			}
 		}
-		
+
 		int[] ret = new int[positions.size()];
 		int i = 0;
-		for(Integer pos: positions) {
+		for (Integer pos : positions) {
 			ret[i++] = pos;
 		}
-		
+
 		return ret;
 	}
 
 	@Override
 	public String getSymbol() {
 		String symbols = "";
-		for(Piece p : this.pieces) {
+		for (Piece p : this.pieces) {
 			symbols += p.getSymbol();
 		}
 		return symbols;
