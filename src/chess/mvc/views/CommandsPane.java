@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 
 public class CommandsPane extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JButton startBtn;
 	private JButton exitBtn;
 	

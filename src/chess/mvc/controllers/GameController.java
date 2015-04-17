@@ -7,6 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 
 import chess.core.*;
+import chess.mvc.models.GameNewEvent;
 import chess.mvc.views.*;
 import chess.prototype.observer.*;
 

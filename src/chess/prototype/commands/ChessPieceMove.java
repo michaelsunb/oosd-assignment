@@ -6,6 +6,8 @@ package chess.prototype.commands;
 
 import java.awt.*;
 import chess.core.*;
+import chess.mvc.models.PieceMovedEvent;
+import chess.mvc.models.PieceSelectedEvent;
 import chess.prototype.observer.*;
 
 public class ChessPieceMove implements IObserver{
@@ -26,6 +28,9 @@ public class ChessPieceMove implements IObserver{
 	
 	@Override
 	public void update(ChessEvent event) {
+		/**
+		 * TODO:  refactor to make this class to align single responsibility principle
+		 */
 		if(event instanceof PieceSelectedEvent)
 		{
 			PieceSelected((PieceSelectedEvent)event);

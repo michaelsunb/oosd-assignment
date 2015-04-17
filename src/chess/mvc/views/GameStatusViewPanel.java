@@ -4,15 +4,15 @@ import java.awt.Color;
 
 import javax.swing.*;
 
+import chess.mvc.models.GameStatusEvent;
 import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.GameStatusEvent;
 import chess.prototype.observer.IObserver;
-import chess.prototype.observer.PieceCapturedEvent;
 
 /*
  * A panel which render game status
  */
 public class GameStatusViewPanel extends JPanel implements IObserver {
+	private static final long serialVersionUID = 1L;
 	private int numberOfMoves = 0;
 	private int score = 0;
 

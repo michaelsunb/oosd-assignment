@@ -2,11 +2,12 @@
  * Author: Michaelsun BALUYOS
  * Student Number: s3110401
  */
-package chess.prototype.observer;
+package chess.mvc.models;
 
 import java.util.ArrayList;
 
 import chess.core.Piece;
+import chess.prototype.observer.ChessEvent;
 
 /*
  * TODO: May be we can pass board->getPieces() to UI component (ChessboardViewPanel) so it can draw the board

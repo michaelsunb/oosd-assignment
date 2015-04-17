@@ -20,9 +20,7 @@ public class PlayerTest {
 		
 		player.addScore(5);
 		assertEquals("Captured Barrier & a Piece", (1 + 5), player.getScore());
-		
 
-		
 		player.addScore(10);
 		assertEquals("Captured Barrier, a Piece & a CombinePiece", (1 + 5 + 10), player.getScore());
 	}
@@ -33,7 +31,6 @@ public class PlayerTest {
 		Player player = new Player();
 		// act
 		player.addScore(2);
-		
 		// assert
 		assertNotSame("None of the Piece has score = 2, adding this value will not accepted",
 				2, player.getScore());

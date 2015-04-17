@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import chess.core.Board;
 import chess.core.Game;
-import chess.core.IBoard;
 import chess.core.Piece;
-import chess.prototype.commands.ChessPieceMoveCheck;
 
 public class Bishop extends Piece {
 	public Bishop() {

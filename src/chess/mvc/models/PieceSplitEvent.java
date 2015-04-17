@@ -2,9 +2,10 @@
  * Author: Sokun CHORN
  * Student Number: s3338291
  */
-package chess.prototype.observer;
+package chess.mvc.models;
 
 import chess.core.Piece;
+import chess.prototype.observer.ChessEvent;
 
 /*
  * Provide useful information about the piece needed to be split

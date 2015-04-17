@@ -39,7 +39,7 @@ public class GameTest {
 		Player p2 = game.getPlayer(2);
 		
 		// assert
-		assertNotEquals("There are two players in a game", p1, p2);
+		assertNotSame("There are two players in a game", p1, p2);
 	}
 	
 	@Test

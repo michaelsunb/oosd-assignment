@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import chess.core.*;
+import chess.mvc.models.GameStatusEvent;
+import chess.mvc.models.PieceMovedEvent;
+import chess.mvc.models.PieceSelectedEvent;
 import chess.prototype.observer.*;
 
 /*
@@ -14,6 +17,7 @@ import chess.prototype.observer.*;
  * TODO: inject board data into the view
  */
 public class ChessboardViewPanel extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
 	private IBoard board;
 	private String setActionCommand = "pickPiece";

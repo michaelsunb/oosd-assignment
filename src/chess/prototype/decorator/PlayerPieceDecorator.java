@@ -8,6 +8,19 @@ import chess.core.Player;
 import chess.prototype.composite.*;
 
 public class PlayerPieceDecorator extends BoardDecorator {
+	final private int NORTH_LOWER_BOUND = 0;
+	final private int SOUTH_LOWER_BOUND = 30;
+	
+	final private int LOWER_OFFSET = 0;
+	final private int UPPER_OFFSET = 5;
+	
+	final private int OFFSET_FIRST_ROOK = 0;
+	final private int OFFSET_FIRST_KNIGHT = 1;
+	final private int OFFSET_FIRST_BISHOP = 2;
+	final private int OFFSET_SECOND_ROOK = 3;
+	final private int OFFSET_SECOND_KNIGHT = 4;
+	final private int OFFSET_SECOND_BISHOP = 5;
+	
 	private Player player;
 	
 	public PlayerPieceDecorator(IBoard board, Player player) {
@@ -26,12 +39,12 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	@Override
 	public void init() {
 		// both players pieces have been setup
-		if (this.board.getPieces()[0] != null && 
-				this.board.getPieces()[30] != null){
+		if (this.board.getPieces()[NORTH_LOWER_BOUND] != null && 
+				this.board.getPieces()[SOUTH_LOWER_BOUND] != null){
 			return;
 		}
 		
-		if (this.board.getPieces()[0] == null) {
+		if (this.board.getPieces()[NORTH_LOWER_BOUND] == null) {
 			this.arrangePlayerOnePieces();
 		} else {
 			this.arrangePlayerTwoPieces();
@@ -41,12 +54,12 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	private void arrangePlayerOnePieces(){
 		this.player.setColour(Color.WHITE);
 		this.player.setTurn(true);
-		arrangePieces(0);
+		arrangePieces(NORTH_LOWER_BOUND);
 	}
 	
 	private void arrangePlayerTwoPieces(){
 		this.player.setColour(Color.BLACK);
-		arrangePieces(30);
+		arrangePieces(SOUTH_LOWER_BOUND);
 	}
 
 	/*
@@ -55,15 +68,15 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	 * can be use and invoke from this method
 	 */
 	private void arrangePieces(int offset) {
-		this.board.getPieces()[offset + 0] = new Rook();
-		this.board.getPieces()[offset + 1] = new Knight();
-		this.board.getPieces()[offset + 2] = new Bishop();
-		this.board.getPieces()[offset + 3] = new Bishop();
-		this.board.getPieces()[offset + 4] = new Knight();
-		this.board.getPieces()[offset + 5] = new Rook();
+		this.board.getPieces()[offset + OFFSET_FIRST_ROOK] = new Rook();
+		this.board.getPieces()[offset + OFFSET_FIRST_KNIGHT] = new Knight();
+		this.board.getPieces()[offset + OFFSET_FIRST_BISHOP] = new Bishop();
+		this.board.getPieces()[offset + OFFSET_SECOND_BISHOP] = new Bishop();
+		this.board.getPieces()[offset + OFFSET_SECOND_KNIGHT] = new Knight();
+		this.board.getPieces()[offset + OFFSET_SECOND_ROOK] = new Rook();
 		
 		// set owner
-		for(int i = offset + 0; i <= offset + 5; i++) {
+		for(int i = offset + LOWER_OFFSET; i <= offset + UPPER_OFFSET; i++) {
 			this.board.getPieces()[i].setOwner(player);
 		}
 	}

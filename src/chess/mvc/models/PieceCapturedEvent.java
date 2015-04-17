@@ -2,10 +2,11 @@
  * Author: Sokun CHORN
  * Student Number: s3338291
  */
-package chess.prototype.observer;
+package chess.mvc.models;
 
 import chess.core.Piece;
 import chess.core.Player;
+import chess.prototype.observer.ChessEvent;
 
 public class PieceCapturedEvent implements ChessEvent {
 	private Player captureBy;

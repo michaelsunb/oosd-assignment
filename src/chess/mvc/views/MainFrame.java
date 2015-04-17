@@ -3,10 +3,11 @@ package chess.mvc.views;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import chess.core.*;
+import chess.mvc.models.GameNewEvent;
 import chess.prototype.observer.*;
 
 public class MainFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private Container contentPane;
 	private JMenuBar menuBar;
 

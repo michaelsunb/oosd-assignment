@@ -5,7 +5,8 @@
 package chess.prototype.commands;
 
 import chess.core.*;
-import chess.core.Piece;
+import chess.mvc.models.PieceCapturedEvent;
+import chess.mvc.models.PieceJoinEvent;
 import chess.prototype.composite.*;
 import chess.prototype.observer.*;
 
@@ -41,7 +42,6 @@ public class ChessPieceAction implements IObserver {
 		player.addScore(this.board.getPiece(position).getScore());
 		
 		replacePiece(piece);
-		System.out.println("captured");
 	}
 		
 	public void PieceCombined(PieceJoinEvent event){

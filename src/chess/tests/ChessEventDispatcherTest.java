@@ -7,7 +7,8 @@ package chess.tests;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import chess.prototype.composite.*;
+
+import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.*;
 
 public class ChessEventDispatcherTest {

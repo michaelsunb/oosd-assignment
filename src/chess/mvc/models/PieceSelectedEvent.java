@@ -2,10 +2,11 @@
  * Author: Michaelsun BALUYOS
  * Student Number: s3110401
  */
-package chess.prototype.observer;
+package chess.mvc.models;
 
 import java.awt.Component;
 import chess.core.Piece;
+import chess.prototype.observer.ChessEvent;
 
 public class PieceSelectedEvent implements ChessEvent {
 	private Piece piece;
