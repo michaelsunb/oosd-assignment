@@ -101,14 +101,16 @@ public class ChessboardViewPanel extends JPanel {
 
             switch (e.getActionCommand()) {
 	            case "pickPiece":
-	    			if(p != null &&
+	    			if(p == null ||
+	    			p != null &&
 	    			p.getOwner() != null &&
 	    			p.getOwner() != Game.getInstance().getCurrentPlayer()) {
 	    				break;
 	    			}
 
 	    			int numOfMoves = Game.getInstance().getMaxMoves();
-	            	ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), p,--numOfMoves);
+	            	ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), numOfMoves);
+	            	
 	            	renderBoard(listComponents);
 	    			ChessEventDispatcher.getInstance().fireEvent(eventStatus);
 	    			

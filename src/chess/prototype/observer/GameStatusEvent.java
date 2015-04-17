@@ -5,23 +5,17 @@ import chess.core.Player;
 
 public class GameStatusEvent implements ChessEvent {
 	
-	private Player curPlayer;
-	private Piece curPiece;
+	private Player targetPlayer;
 	private int numberOfMoves;
 
-	public GameStatusEvent(Player tarPlayer, Piece curPiece, int numberOfMoves) {
+	public GameStatusEvent(Player tarPlayer, int numberOfMoves) {
 		super();
-		this.curPlayer = tarPlayer;
-		this.curPiece = curPiece;
+		this.targetPlayer = tarPlayer;
 		this.numberOfMoves = numberOfMoves;
 	}
 
 	public final Player getTargetPiece() {
-		return curPlayer;
-	}
-
-	public final Piece getCurPiece() {
-		return curPiece;
+		return targetPlayer;
 	}
 
 	public final int getNumberOfMoves() {

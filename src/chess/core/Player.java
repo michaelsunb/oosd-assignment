@@ -61,6 +61,10 @@ public class Player {
 	 * TODO: use DBC to value >= 1 && value % 5 == 0
 	 */
 	public void addScore(int value) {
+		if(value > 1 && value % 5 != 0) {
+			return;
+		}
+		
 		this.score += value;
 	}
 }
