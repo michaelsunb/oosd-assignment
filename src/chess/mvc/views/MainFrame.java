@@ -7,12 +7,8 @@ import chess.core.*;
 import chess.prototype.observer.*;
 
 public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
 	private Container contentPane;
 	private JMenuBar menuBar;
-	private static final long serialVersionUID = -6716444773355403669L;
 
 	public MainFrame()
 	{

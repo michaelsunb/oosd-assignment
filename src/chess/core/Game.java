@@ -82,6 +82,4 @@ public class Game {
 	public int getMaxMoves() {
 		return maxMoves;
 	}
-
-	
 }

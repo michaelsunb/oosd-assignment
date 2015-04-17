@@ -33,21 +33,28 @@ public class GameController implements IObserver {
 	public void update(ChessEvent event) {
 		if (event instanceof GameNewEvent)
 		{
-			menuBar = ((GameNewEvent) event).getMenuBar();
-			contentPane = ((GameNewEvent) event).getContainer();
-	    	try {
-	        	String moves = JOptionPane.showInputDialog(contentPane,
-	                    "How many moves?",
-	                    "alert", 
-	                    JOptionPane.OK_CANCEL_OPTION);
-	        	if(moves == null) { // cancelled
-	        		return;
-	        	}
-	        	Game.getInstance().reset(Integer.parseInt(moves));
-				createBoard();
-	    	} catch(NumberFormatException nfe) {
-	    		JOptionPane.showMessageDialog(null, "Not a number!");
-	    	}
+			startNewGame((GameNewEvent)event);
+		}
+	}
+
+	private void startNewGame(GameNewEvent event) {
+		menuBar = event.getMenuBar();
+		contentPane = event.getContainer();
+		
+		try {
+			String moves = JOptionPane.showInputDialog(contentPane,
+		            "How many moves?",
+		            "alert", 
+		            JOptionPane.OK_CANCEL_OPTION);
+			
+			if(moves == null) { // cancelled
+				return;
+			}
+			Game.getInstance().reset(Integer.parseInt(moves));
+			createBoard();
+			
+		} catch(NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(null, "Not a number!");
 		}
 	}
 }

@@ -8,6 +8,7 @@ import chess.core.Board;
 import chess.core.Game;
 import chess.core.Piece;
 import chess.core.Player;
+import chess.prototype.composite.Barrier;
 
 public class PieceMovedEvent implements ChessEvent {
 	private int newPosition;
@@ -40,10 +41,16 @@ public class PieceMovedEvent implements ChessEvent {
 		Player currOwner = previousPiece.getOwner();
 		if(currOwner == null) return null; // previous piece has no owner (Barrier)
 		
-		// target location has no owner (Barrier) or is empty
-		Player targetOwner = (board.getPiece(newPosition) != null) ? board.getPiece(newPosition).getOwner() : null;
-		if(targetOwner == null) {
+		// target location is empty
+		if(board.isSqureEmpty(newPosition)){
 			return this;
+		}
+		
+		// target location has no owner (Barrier)
+		Player targetOwner = (board.getPiece(newPosition) != null) ? board.getPiece(newPosition).getOwner() : null;
+		if(board.getPiece(newPosition).equals(Barrier.class)) {
+			Piece barrier = board.getPiece(newPosition);
+			return new PieceCapturedEvent(currOwner, barrier, newPosition);
 		}
 
 		// check if enemy

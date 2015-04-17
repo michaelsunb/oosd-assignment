@@ -9,12 +9,17 @@ import java.util.*;
 import java.awt.Color;
 
 public class Player {
-	
+
 	private Color colour;
 	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
 	private int score = 0;
+	
+	public Player()
+	{
+		pieces = new ArrayList<Piece>();
+	}
 	
 	public Boolean isTurn() {
 		return turn;
@@ -22,11 +27,6 @@ public class Player {
 
 	public void setTurn(Boolean turn) {
 		this.turn = turn;
-	}
-
-	public Player()
-	{
-		pieces = new ArrayList<Piece>();
 	}
 	
 	public void move(int prevPos, int nextPos) {
@@ -62,9 +62,6 @@ public class Player {
 		this.colour = black;
 	}
 
-	/*
-	 * TODO: use DBC to value >= 1 && value % 5 == 0
-	 */
 	public void addScore(int value) {
 		if(value > 1 && value % 5 != 0) {
 			return;

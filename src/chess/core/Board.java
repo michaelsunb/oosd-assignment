@@ -38,9 +38,6 @@ public class Board implements IBoard {
 	public int getWidth() {
 		return this.width;
 	}
-	
-	public void changePieceLocation(int pos){
-	}
 
 	public boolean isSqureEmpty(int pos) {
 		return (squares[pos] == null) ? true : false;

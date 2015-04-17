@@ -4,37 +4,62 @@
  */
 package chess.prototype.commands;
 
-import chess.core.Game;
+import chess.core.*;
 import chess.core.Piece;
-import chess.prototype.composite.CombinePiece;
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.IObserver;
-import chess.prototype.observer.PieceCapturedEvent;
-import chess.prototype.observer.PieceJoinEvent;
+import chess.prototype.composite.*;
+import chess.prototype.observer.*;
 
 public class ChessPieceAction implements IObserver {
-
+	private Game game;
+	private IBoard board;
+	
+	int position = 0;
+	Piece piece = null;
+	
 	@Override
 	public void update(ChessEvent event) {
-		int position = 0;
-		Piece piece = null;
-		if(event instanceof PieceCapturedEvent) {
-			piece = ((PieceCapturedEvent)event).getCapturedPiece();
-			position = ((PieceCapturedEvent)event).getCapturedPosition();
-			
-		} else if(event instanceof PieceJoinEvent) {
-			Piece curPiece = ((PieceJoinEvent)event).getCurrentPiece();
-			Piece tarPiece = ((PieceJoinEvent)event).getAugmentPiece();
-			position = ((PieceJoinEvent)event).getJoinPosition();
-
-			piece = new CombinePiece();
-			
-			// act
-			((CombinePiece)piece).add(curPiece);
-			((CombinePiece)piece).add(tarPiece);
-			((CombinePiece)piece).setOwner(curPiece.getOwner());
+		/*
+		 * Store object references for code short handing
+		 */
+		this.game = Game.getInstance();
+		this.board = game.getBoardInstance();
+		
+		if(event instanceof PieceCapturedEvent){
+			PieceCaptured((PieceCapturedEvent)event);
 		}
-		Game.getInstance().getBoardInstance().getPieces()[position] = piece;
+		else if(event instanceof PieceJoinEvent) {
+			PieceCombined((PieceJoinEvent)event);
+		}
+		
+	}
+	
+	public void PieceCaptured(PieceCapturedEvent event) {
+		piece = event.getCapturedPiece();
+		position = event.getCapturedPosition();
+		Player player = this.game.getCurrentPlayer();
+		
+		player.addScore(this.board.getPiece(position).getScore());
+		
+		replacePiece(piece);
+		System.out.println("captured");
+	}
+		
+	public void PieceCombined(PieceJoinEvent event){
+		Piece curPiece = event.getCurrentPiece();
+		Piece tarPiece = event.getAugmentPiece();
+		position = event.getJoinPosition();
+
+		CombinePiece piece = new CombinePiece();
+		piece.add(curPiece);
+		piece.add(tarPiece);
+		
+		piece.setOwner(curPiece.getOwner());
+		
+		replacePiece(piece);
+	}
+	
+	public void replacePiece(Piece piece){
+		this.board.getPieces()[position] = piece;
 	}
 
 }

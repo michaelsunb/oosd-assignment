@@ -1,11 +1,11 @@
 package chess.core;
 
-
 public abstract class Piece  {
 	protected int score = 0;
 	private Player owner;
 	/*
-	 * Chess symbol in unicode https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
+	 * Chess symbol in unicode 
+	 * https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode
 	 */
 	protected Character symbol =' ';
 	

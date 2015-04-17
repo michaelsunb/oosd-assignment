@@ -14,14 +14,8 @@ import chess.prototype.observer.*;
  * TODO: inject board data into the view
  */
 public class ChessboardViewPanel extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3243088743876785303L;
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-
 	private IBoard board;
-
 	private String setActionCommand = "pickPiece";
 	
 	public ChessboardViewPanel()
@@ -33,8 +27,6 @@ public class ChessboardViewPanel extends JPanel {
 		this.setBorder(new LineBorder(Color.BLACK));
 
 		renderBoard(initialComponenets());
-        
-        // fill the chess board
 	}
 	
 	private Component[] initialComponenets() {
@@ -44,7 +36,7 @@ public class ChessboardViewPanel extends JPanel {
 			JComponent b = new JButton();
             comp[i] = b;
 		}
-		return (Component[])comp;
+		return comp;
 	}
     
     private void renderBoard(Component[] component) {
@@ -52,7 +44,9 @@ public class ChessboardViewPanel extends JPanel {
 		for (Component comp : component) {
 			int x = (pos % board.getWidth());
 			int y = (pos / board.getHeight());
-			
+			/*
+			 * Sokun's comment: need refactoring
+			 */
 			if((y % 2 == 1 && x % 2 == 1) ||
 					(y % 2 == 0 && x % 2 == 0)){
 				comp.setBackground(Color.LIGHT_GRAY);
@@ -64,6 +58,7 @@ public class ChessboardViewPanel extends JPanel {
 			String symbol = "";
 			if(piece != null) {
 				symbol = board.getPiece(pos).getSymbol();
+
 				((AbstractButton) comp).setFont(font);
 				if(piece.getOwner() != null) {
 					((AbstractButton) comp).setForeground(piece.getOwner().getColour());
@@ -75,6 +70,10 @@ public class ChessboardViewPanel extends JPanel {
 		}
     }
 
+    /*
+     * Sokun's comment: refactor to use Observer pattern instead of
+     * extending AbstractAction
+     */
     class GameAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
