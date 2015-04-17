@@ -47,33 +47,20 @@ public class ChessPieceMove implements IObserver{
 		// can't move empty piece
 		if(this.piece == null) return;
 		
+		event.setPreviousPiece(piece);
+		
 		int[] allMovableSquares = piece.getMovablePositions(currPos);
 		
 		for(int i :allMovableSquares) {
 			if(i == targetPos) {
-				Player currOwner = piece.getOwner();
-				Player targetOwner = (board.getPiece(targetPos) != null) ? board.getPiece(targetPos).getOwner() : null;
-				if(currOwner != null && targetOwner == null)
-				{
-					board.getPieces()[targetPos] = board.getPiece(currPos);
-				}
-				else if(currOwner != null && currOwner.getColour() != targetOwner.getColour())
-				{
-					Piece capturedPiece = board.getPiece(currPos);
-
-	            	ChessEvent movePieceEvent = new PieceCapturedEvent(currOwner,capturedPiece,targetPos);
-	            	eventMgr.fireEvent(movePieceEvent);
-				}
-				else if(currOwner != null && currOwner.getColour() == targetOwner.getColour())
-				{
-					Piece capturedPiece = board.getPiece(targetPos);
-
-	            	ChessEvent movePieceEvent = new PieceJoinEvent(piece,capturedPiece,targetPos);
-	            	eventMgr.fireEvent(movePieceEvent);
-				}
-				else
-				{
-					board.getPieces()[targetPos] = Game.getInstance().getBoardInstance().getPiece(currPos);
+				ChessEvent pieceAction = event.returnAction();
+				
+				if(pieceAction == null) return;
+				
+				if(pieceAction instanceof PieceMovedEvent) {
+					board.getPieces()[targetPos] = piece;
+				} else {
+	            	eventMgr.fireEvent(pieceAction);
 				}
 
 				board.getPieces()[currPos] = null;
@@ -81,7 +68,6 @@ public class ChessPieceMove implements IObserver{
 	        	break;
 			}
 		}
-
 	}
 
 	public void PieceSelected(PieceSelectedEvent event) {

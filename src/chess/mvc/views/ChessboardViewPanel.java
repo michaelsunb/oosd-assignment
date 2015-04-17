@@ -27,9 +27,6 @@ public class ChessboardViewPanel extends JPanel {
 	public ChessboardViewPanel()
 	{
 		board = Game.getInstance().getBoardInstance();
-		/*
-		 * TODO: get it from board object
-		 */
 
 		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
 
@@ -109,8 +106,7 @@ public class ChessboardViewPanel extends JPanel {
 	            	
 	            	renderBoard(listComponents);
 	    			ChessEventDispatcher.getInstance().fireEvent(eventStatus);
-	    			
-	    			
+
 	            	setActionCommand = "movePiece";
 	            	ChessEvent event = new PieceSelectedEvent(position, p, currentSource);
 	            	renderBoard(listComponents);
