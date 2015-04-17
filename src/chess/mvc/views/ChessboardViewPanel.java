@@ -92,30 +92,35 @@ public class ChessboardViewPanel extends JPanel {
     		Component[] listComponents = currentSource.getParent().getComponents();
         	Piece p = Game.getInstance().getBoardInstance().getPiece(position);
 
+        	ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
+
             switch (e.getActionCommand()) {
 	            case "pickPiece":
 	    			if(p == null ||
+	    			p != null &&
+	    			p.getOwner() == null ||
 	    			p != null &&
 	    			p.getOwner() != null &&
 	    			p.getOwner() != Game.getInstance().getCurrentPlayer()) {
 	    				break;
 	    			}
+	            	setActionCommand = "movePiece";
 
+	            	// fire two events
 	    			int numOfMoves = Game.getInstance().getMaxMoves();
 	            	ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), numOfMoves);
+	            	ChessEvent eventSelect = new PieceSelectedEvent(position, p, currentSource);
 	            	
 	            	renderBoard(listComponents);
-	    			ChessEventDispatcher.getInstance().fireEvent(eventStatus);
-
-	            	setActionCommand = "movePiece";
-	            	ChessEvent event = new PieceSelectedEvent(position, p, currentSource);
-	            	renderBoard(listComponents);
-	    			ChessEventDispatcher.getInstance().fireEvent(event);
+	            	eventMgr.fireEvent(eventStatus);
+	            	eventMgr.fireEvent(eventSelect);
 	                break;
 	            case "movePiece":
 	            	setActionCommand = "pickPiece";
+	            	
 	            	ChessEvent movePieceEvent = new PieceMovedEvent(position);
-	    			ChessEventDispatcher.getInstance().fireEvent(movePieceEvent);
+	            	eventMgr.fireEvent(movePieceEvent);
+	    			
 	            	renderBoard(listComponents);
 	            	break;
 	        }

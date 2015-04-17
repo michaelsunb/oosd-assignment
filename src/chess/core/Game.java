@@ -13,15 +13,7 @@ public class Game {
 	private int maxMoves = 10;
 	
 	private Game() {
-		/**
-		 * Just set up the board first
-		 */
-		createNewBoard();
-	}
-	
-	private void createNewBoard() {
-		board = new Board();
-		board.init();
+		reset(maxMoves);
 	}
 	
 	public static Game getInstance() {
@@ -34,7 +26,8 @@ public class Game {
 	public void reset(int maxMove) {
 		
 		this.maxMoves = maxMove;
-		createNewBoard();
+		board = new Board();
+		board.init();
 		/*
 		 * creating players
 		 */
