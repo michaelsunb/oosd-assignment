@@ -26,16 +26,11 @@ public class Chess {
 				view.setVisible(true);
 
 				// Register observers
-				ChessPieceMove moveListener = new ChessPieceMove();
-				eventMgr.addListener("PieceSelectedEvent", moveListener);
-				eventMgr.addListener("PieceMovedEvent", moveListener);
-
+				eventMgr.addListener("PieceSelectedEvent", new PieceSelectedCommand());
+				eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
 				eventMgr.addListener("GameNewEvent", gameController);
-
-				ChessPieceAction pieceAction = new ChessPieceAction();
-				eventMgr.addListener("PieceCapturedEvent", pieceAction);
-				eventMgr.addListener("PieceJoinEvent", pieceAction);
-
+				eventMgr.addListener("PieceCapturedEvent", new PieceCapturedCommand());
+				eventMgr.addListener("PieceJoinEvent", new PieceJoinCommand());
 				eventMgr.addListener("GameStatusEvent", statusView);
 			}
 

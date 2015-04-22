@@ -31,6 +31,10 @@ public class Board implements IBoard {
 		return squares[pos];
 	}
 
+	public void setPiece(int pos, Piece piece) {
+		this.squares[pos]  = piece;
+	}
+	
 	@Override
 	public int getHeight() {
 		return this.height;

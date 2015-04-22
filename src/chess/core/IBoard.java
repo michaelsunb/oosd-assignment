@@ -17,6 +17,7 @@ public interface IBoard {
 	 */
 	public abstract Piece getPiece(int pos);
 
+	public void setPiece(int pos, Piece piece) ;
 	/*
 	 * Get the height of the chess board
 	 */

@@ -24,7 +24,7 @@ public class PieceMovedEvent implements ChessEvent {
 		return newPosition;
 	}
 
-	public final Piece getPreviousPosition() {
+	public final Piece getPreviousPiece() {
 		return previousPiece;
 	}
 
@@ -32,43 +32,43 @@ public class PieceMovedEvent implements ChessEvent {
 		this.previousPiece = previousPiece;
 	}
 
-	public ChessEvent returnAction() {
-		Game game = Game.getInstance();
-		Board board = (Board) game.getBoardInstance();
-
-		// can't move empty piece
-		if (this.previousPiece == null)
-			return null;
-
-		Player currOwner = previousPiece.getOwner();
-		if (currOwner == null)
-			return null; // previous piece has no owner (Barrier)
-
-		// target location is empty
-		if (board.isSqureEmpty(newPosition)) {
-			return this;
-		}
-
-		// target location has no owner (Barrier)
-		Player targetOwner = (board.getPiece(newPosition) != null) ? board
-				.getPiece(newPosition).getOwner() : null;
-		if (board.getPiece(newPosition).equals(Barrier.class)) {
-			Piece barrier = board.getPiece(newPosition);
-			return new PieceCapturedEvent(currOwner, barrier, newPosition);
-		}
-
-		// check if enemy
-		if (currOwner != targetOwner) {
-			Piece capturedPiece = previousPiece;
-			return new PieceCapturedEvent(currOwner, capturedPiece, newPosition);
-		}
-
-		// check if friendly
-		if (currOwner == targetOwner) {
-			Piece capturedPiece = board.getPiece(newPosition);
-			return new PieceJoinEvent(previousPiece, capturedPiece, newPosition);
-		}
-
-		return this;
-	}
+//	public ChessEvent returnAction() {
+//		Game game = Game.getInstance();
+//		Board board = (Board) game.getBoardInstance();
+//
+//		// can't move empty piece
+//		if (this.previousPiece == null)
+//			return null;
+//
+//		Player currOwner = previousPiece.getOwner();
+//		if (currOwner == null)
+//			return null; // previous piece has no owner (Barrier)
+//
+//		// target location is empty
+//		if (board.isSqureEmpty(newPosition)) {
+//			return this;
+//		}
+//
+//		// target location has no owner (Barrier)
+//		Player targetOwner = (board.getPiece(newPosition) != null) ? board
+//				.getPiece(newPosition).getOwner() : null;
+//		if (board.getPiece(newPosition).equals(Barrier.class)) {
+//			Piece barrier = board.getPiece(newPosition);
+//			return new PieceCapturedEvent(currOwner, barrier, newPosition);
+//		}
+//
+//		// check if enemy
+//		if (currOwner != targetOwner) {
+//			Piece capturedPiece = previousPiece;
+//			return new PieceCapturedEvent(currOwner, capturedPiece, newPosition);
+//		}
+//
+//		// check if friendly
+//		if (currOwner == targetOwner) {
+//			Piece capturedPiece = board.getPiece(newPosition);
+//			return new PieceJoinEvent(previousPiece, capturedPiece, newPosition);
+//		}
+//
+//		return this;
+//	}
 }

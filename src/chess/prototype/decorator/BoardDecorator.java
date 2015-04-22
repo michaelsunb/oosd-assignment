@@ -15,16 +15,19 @@ public abstract class BoardDecorator implements IBoard {
 
 	@Override
 	public Piece[] getPieces() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.board.getPieces();
 	}
 
 	@Override
 	public Piece getPiece(int pos) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.board.getPiece(pos);
 	}
 
+	@Override
+	public void setPiece(int pos, Piece piece) {
+		this.board.setPiece(pos, piece);
+	}
+	
 	@Override
 	public int getHeight() {
 		return this.board.getHeight();

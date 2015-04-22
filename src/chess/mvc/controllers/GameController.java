@@ -32,9 +32,8 @@ public class GameController implements IObserver {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (event instanceof GameNewEvent) {
-			startNewGame((GameNewEvent) event);
-		}
+		if (!(event instanceof GameNewEvent)) return;
+		startNewGame((GameNewEvent) event);
 	}
 
 	private void startNewGame(GameNewEvent event) {

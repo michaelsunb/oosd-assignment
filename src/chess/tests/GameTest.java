@@ -6,7 +6,10 @@ package chess.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.*;
+
 import chess.core.*;
 
 public class GameTest {
@@ -56,5 +59,18 @@ public class GameTest {
 		assertFalse("Player 1 lost turn to player 2", game.getPlayer(1).isTurn());
 		assertTrue("Player 2 get turn", game.getPlayer(2).isTurn());
 
+	}
+	
+	@Test
+	public void get_player_pieces() {
+		// arrange
+		Game game = Game.getInstance();
+		game.reset(10);
+
+		// act
+		List<Piece> pieces = game.getPlayerPieces(1);
+		
+		// assert
+		assertEquals(30, pieces.size());
 	}
 }

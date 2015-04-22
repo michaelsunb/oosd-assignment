@@ -4,6 +4,9 @@
  */
 package chess.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import chess.prototype.decorator.*;
 
 public class Game {
@@ -83,5 +86,18 @@ public class Game {
 	 */
 	public int getMaxMoves() {
 		return maxMoves;
+	}
+	
+	public List<Piece> getPlayerPieces(int p_num) {
+		Player player = this.getPlayer(p_num);
+		
+		List<Piece> pieces = new ArrayList<Piece>();
+		for(Piece p: this.board.getPieces()) {
+			if (p.getOwner().equals(player))
+			{
+				pieces.add(p);
+			}
+		}
+		return pieces;
 	}
 }
