@@ -1,5 +1,6 @@
 package chess.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -55,5 +56,18 @@ public class CommandDecisionTest extends GameTestBase {
 		
 		// assert
 		assertTrue((command.commandDecision(event) instanceof PieceMovedEvent));
+	}
+	
+	@Test
+	public void piece_did_not_move() {
+		// arrange
+		PieceCommandDecisionEvent event = new PieceCommandDecisionEvent(6,7);
+		
+		// act
+		eventMgr.fireEvent(event);
+		
+		// assert
+		assertEquals("Piece cannot be moved",
+				null, command.commandDecision(event));
 	}
 }

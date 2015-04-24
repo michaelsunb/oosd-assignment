@@ -15,12 +15,15 @@ import chess.prototype.composite.Barrier;
 import chess.prototype.observer.ChessEvent;
 
 public class CommandDecisionMake extends CommandBase {
+	
+	final private static ChessEvent PieceNotMovable = null;
 
 	@Override
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceCommandDecisionEvent)) return;
 
-		eventMgr.fireEvent(commandDecision((PieceCommandDecisionEvent) event));
+		if(commandDecision((PieceCommandDecisionEvent) event) != PieceNotMovable)
+			eventMgr.fireEvent(commandDecision((PieceCommandDecisionEvent) event));
 	}
 
 	public ChessEvent commandDecision(PieceCommandDecisionEvent event) {
@@ -29,25 +32,25 @@ public class CommandDecisionMake extends CommandBase {
 		Piece piece = board.getPiece(oldPosition);
 		
 		// can't move empty piece
-		if (piece == null) return null;
+		if (piece == null) return PieceNotMovable;
 
 		int[] allMovableSquares = piece.getMovablePositions(oldPosition);
 
-		ChessEvent nextEvent = null;
+		ChessEvent nextEvent = PieceNotMovable;
 		
 		for (int i : allMovableSquares) {
 			if (i == newPosition) {
 				// can't move empty piece
 				if (piece == null)
-					return null;
+					return PieceNotMovable;
 
 				Player currOwner = piece.getOwner();
 				if (currOwner == null)
-					return null; // previous piece has no owner (Barrier)
+					return PieceNotMovable; // previous piece has no owner (Barrier)
 
 				// target location is empty
 				if (((Board) board).isSqureEmpty(oldPosition)) {
-					return null;
+					return PieceNotMovable;
 				}
 				
 				nextEvent = new PieceMovedEvent(oldPosition,newPosition);
