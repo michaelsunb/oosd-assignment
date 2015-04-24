@@ -4,7 +4,6 @@ import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceCapturedEvent;
 import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.IObserver;
 
 public class PieceCapturedCommand extends CommandBase {
 
@@ -16,12 +15,15 @@ public class PieceCapturedCommand extends CommandBase {
 	}
 
 	public void PieceCaptured(PieceCapturedEvent event) {
-		Piece piece = event.getCapturedPiece();
-		int position = event.getCapturedPosition();
-		Player player = this.game.getCurrentPlayer();
+		int newPos = event.getNewPosition();
+		int oldPos = event.getPreviousPosition();
 
-		player.addScore(this.board.getPiece(position).getScore());
+		Piece pieceSelected = board.getPiece(oldPos);
+		Piece pieceEnemy = board.getPiece(newPos);
 
-		board.setPiece(position, piece);
+		Player playerSelected = pieceSelected.getOwner();
+
+		playerSelected.addScore(pieceEnemy.getScore());
+		board.setPiece(newPos, pieceSelected);
 	}
 }

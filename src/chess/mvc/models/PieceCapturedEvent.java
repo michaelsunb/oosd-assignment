@@ -4,32 +4,23 @@
  */
 package chess.mvc.models;
 
-import chess.core.Piece;
-import chess.core.Player;
 import chess.prototype.observer.ChessEvent;
 
 public class PieceCapturedEvent implements ChessEvent {
-	private Player captureBy;
-	private Piece capturedPiece;
-	private int capturedPosition;
+	private int newPosition;
+	private int previousPosition;
 
-	public PieceCapturedEvent(Player captureBy, Piece capturedPiece,
-			int capturedPosition) {
-		this.captureBy = captureBy;
-		this.capturedPiece = capturedPiece;
-		this.capturedPosition = capturedPosition;
+	public PieceCapturedEvent(int previousPosition, int newPosition) {
+		super();
+		this.newPosition = newPosition;
+		this.previousPosition = previousPosition;
 	}
 
-	public Player getCaptureBy() {
-		return captureBy;
+	public int getNewPosition() {
+		return newPosition;
 	}
 
-	public Piece getCapturedPiece() {
-		return capturedPiece;
+	public int getPreviousPosition() {
+		return previousPosition;
 	}
-
-	public int getCapturedPosition() {
-		return capturedPosition;
-	}
-
 }

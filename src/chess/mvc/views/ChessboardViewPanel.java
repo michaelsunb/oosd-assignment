@@ -21,6 +21,8 @@ public class ChessboardViewPanel extends JPanel {
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
 	private IBoard board;
 	private String setActionCommand = "pickPiece";
+	
+	private int prevPosition;
 
 	public ChessboardViewPanel() {
 		board = Game.getInstance().getBoardInstance();
@@ -115,11 +117,13 @@ public class ChessboardViewPanel extends JPanel {
 				renderBoard(listComponents);
 				eventMgr.fireEvent(eventStatus);
 				eventMgr.fireEvent(eventSelect);
+				
+				prevPosition = position;
 				break;
 			case "movePiece":
 				setActionCommand = "pickPiece";
 
-				ChessEvent movePieceEvent = new PieceMovedEvent(position);
+				ChessEvent movePieceEvent = new PieceMovedEvent(position,prevPosition);
 				eventMgr.fireEvent(movePieceEvent);
 
 				renderBoard(listComponents);

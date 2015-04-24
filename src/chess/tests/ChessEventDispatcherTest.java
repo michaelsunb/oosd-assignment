@@ -29,7 +29,7 @@ public class ChessEventDispatcherTest {
 		String eventName = PieceMovedEvent.class.getSimpleName();
 
 		dispatcher.addListener(eventName, listener1);
-		PieceMovedEvent movedEvent = new PieceMovedEvent(1);
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1,1);
 
 		// act
 		dispatcher.fireEvent(movedEvent);
@@ -47,7 +47,7 @@ public class ChessEventDispatcherTest {
 		String eventName = PieceMovedEvent.class.getSimpleName();
 
 		dispatcher.addListener(eventName, listener1);
-		PieceMovedEvent movedEvent = new PieceMovedEvent(1);
+		PieceMovedEvent movedEvent = new PieceMovedEvent(1,1);
 
 		// act
 		dispatcher.removeListener(eventName, listener1);

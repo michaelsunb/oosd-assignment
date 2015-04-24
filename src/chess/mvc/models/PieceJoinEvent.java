@@ -4,30 +4,23 @@
  */
 package chess.mvc.models;
 
-import chess.core.Piece;
 import chess.prototype.observer.ChessEvent;
 
 public class PieceJoinEvent implements ChessEvent {
-	private Piece currentPiece;
-	private Piece augmentPiece;
-	private int joinPosition;
+	private int newPosition;
+	private int previousPosition;
 
-	public PieceJoinEvent(Piece currentPiece, Piece augmentPiece, int joinPosition) {
-		this.currentPiece = currentPiece;
-		this.augmentPiece = augmentPiece;
-		this.joinPosition = joinPosition;
+	public PieceJoinEvent(int previousPosition, int newPosition) {
+		super();
+		this.newPosition = newPosition;
+		this.previousPosition = previousPosition;
 	}
 
-	public Piece getCurrentPiece() {
-		return currentPiece;
+	public int getNewPosition() {
+		return newPosition;
 	}
 
-	public Piece getAugmentPiece() {
-		return augmentPiece;
+	public int getPreviousPosition() {
+		return previousPosition;
 	}
-
-	public int getJoinPosition() {
-		return joinPosition;
-	}
-
 }

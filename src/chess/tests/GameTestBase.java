@@ -5,8 +5,14 @@ import chess.core.IBoard;
 import chess.prototype.observer.ChessEventDispatcher;
 
 public abstract class GameTestBase {
-	protected Game game = Game.getInstance();
-	protected IBoard board = Game.getInstance().getBoardInstance();
-	protected ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
+	protected Game game;
+	protected IBoard board;
+	protected ChessEventDispatcher eventMgr;
 
+	public GameTestBase() {
+		game = Game.getInstance();
+		game.reset(10);
+		board = game.getBoardInstance();
+		eventMgr = ChessEventDispatcher.getInstance();
+	}
 }

@@ -4,11 +4,10 @@
  */
 package chess.prototype.commands;
 
-import chess.core.*;
-import chess.mvc.models.PieceCapturedEvent;
+import chess.core.Piece;
 import chess.mvc.models.PieceJoinEvent;
-import chess.prototype.composite.*;
-import chess.prototype.observer.*;
+import chess.prototype.composite.CombinePiece;
+import chess.prototype.observer.ChessEvent;
 
 public class PieceJoinCommand extends CommandBase {
 
@@ -16,21 +15,24 @@ public class PieceJoinCommand extends CommandBase {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceJoinEvent)) return;
 		
-		PieceCombined((PieceJoinEvent) event);
+		pieceCombined((PieceJoinEvent) event);
 	}
 
-	public void PieceCombined(PieceJoinEvent event) {
-		Piece curPiece = event.getCurrentPiece();
-		Piece tarPiece = event.getAugmentPiece();
-		int position = event.getJoinPosition();
+	public void pieceCombined(PieceJoinEvent event) {
+		int newPos = event.getNewPosition();
+		int oldPos = event.getPreviousPosition();
+
+		Piece pieceSelected = board.getPiece(oldPos);
+		Piece pieceTarget = board.getPiece(newPos);
 
 		CombinePiece piece = new CombinePiece();
-		piece.add(curPiece);
-		piece.add(tarPiece);
+		piece.add(pieceSelected);
+		piece.add(pieceTarget);
 
-		piece.setOwner(curPiece.getOwner());
+		piece.setOwner(pieceSelected.getOwner());
 
-		board.setPiece(position, piece);
+		board.setPiece(newPos, piece);
+		board.setPiece(oldPos, null);
 	}
 
 }
