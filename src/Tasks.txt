@@ -1,0 +1,4 @@
+1. When call fireEvent: record the state of ChessEvent object that pass through
+	> Adding eventStack to ChessEventDispatcher
+	> When undo is call pop and execute the revert the command
+2. The game state serialize to file => allow the game to undo
