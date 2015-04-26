@@ -30,7 +30,7 @@ public class PieceMoveTest extends GameTestBase {
 		// assert
 		assertEquals("Rook moved to empty position",
 				(new Rook()).getClass(), board.getPiece(6).getClass());
-		assertEquals("Rook did not move",
+		assertEquals("Nothing should be in previous position",
 				null, board.getPiece(0));
 	}
 

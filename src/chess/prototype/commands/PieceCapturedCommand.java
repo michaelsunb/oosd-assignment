@@ -1,20 +1,22 @@
 package chess.prototype.commands;
 
+import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceCapturedEvent;
+import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.ChessEvent;
 
-public class PieceCapturedCommand extends CommandBase {
+public class PieceCapturedCommand extends CommandBase implements CommandMoveDecision {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!(event instanceof PieceCapturedEvent)) return;
+		if (!(event instanceof PieceMovedEvent)) return;
+		if (!commandMoveDecision((PieceMovedEvent) event)) return;
 		
-		PieceCaptured((PieceCapturedEvent) event);
+		PieceCaptured((PieceMovedEvent) event);
 	}
 
-	public void PieceCaptured(PieceCapturedEvent event) {
+	public void PieceCaptured(PieceMovedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
@@ -25,5 +27,21 @@ public class PieceCapturedCommand extends CommandBase {
 
 		playerSelected.addScore(pieceEnemy.getScore());
 		board.setPiece(newPos, pieceSelected);
+	}
+
+	@Override
+	public boolean commandMoveDecision(PieceMovedEvent event) {
+		if(!isSelectedPieceValid(event)) return false;
+
+		for(int i : allMovableSquares) {
+			if (i == newPosition) {
+				if(!((Board) board).isSqureEmpty(newPosition) &&
+						targetOwner == null || selectedOwner != targetOwner) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }

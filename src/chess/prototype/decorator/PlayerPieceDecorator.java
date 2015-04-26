@@ -15,11 +15,11 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	final private int UPPER_OFFSET = 5;
 
 	final private int OFFSET_FIRST_ROOK = 0;
-	final private int OFFSET_FIRST_KNIGHT = 1;
-	final private int OFFSET_FIRST_BISHOP = 2;
-	final private int OFFSET_SECOND_ROOK = 3;
-	final private int OFFSET_SECOND_KNIGHT = 4;
-	final private int OFFSET_SECOND_BISHOP = 5;
+	final private int OFFSET_FIRST_BISHOP = 1;
+	final private int OFFSET_FIRST_KNIGHT = 2;
+	final private int OFFSET_SECOND_KNIGHT = 3;
+	final private int OFFSET_SECOND_BISHOP = 4;
+	final private int OFFSET_SECOND_ROOK = 5;
 
 	private Player player;
 
@@ -70,10 +70,10 @@ public class PlayerPieceDecorator extends BoardDecorator {
 	 */
 	private void arrangePieces(int offset) {
 		this.board.getPieces()[offset + OFFSET_FIRST_ROOK] = new Rook();
-		this.board.getPieces()[offset + OFFSET_FIRST_KNIGHT] = new Knight();
 		this.board.getPieces()[offset + OFFSET_FIRST_BISHOP] = new Bishop();
-		this.board.getPieces()[offset + OFFSET_SECOND_BISHOP] = new Bishop();
+		this.board.getPieces()[offset + OFFSET_FIRST_KNIGHT] = new Knight();
 		this.board.getPieces()[offset + OFFSET_SECOND_KNIGHT] = new Knight();
+		this.board.getPieces()[offset + OFFSET_SECOND_BISHOP] = new Bishop();
 		this.board.getPieces()[offset + OFFSET_SECOND_ROOK] = new Rook();
 
 		// set owner

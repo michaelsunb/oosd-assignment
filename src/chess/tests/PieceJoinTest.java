@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import chess.core.Piece;
-import chess.mvc.models.PieceJoinEvent;
+import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.commands.PieceJoinCommand;
 
 public class PieceJoinTest extends GameTestBase {
@@ -17,7 +17,7 @@ public class PieceJoinTest extends GameTestBase {
 	public void setUp() throws Exception {
 		command = new PieceJoinCommand();
 		
-		eventMgr.addListener("PieceJoinEvent", command);
+		eventMgr.addListener("PieceMovedEvent", command);
 	}
 	
 	@Test
@@ -26,7 +26,7 @@ public class PieceJoinTest extends GameTestBase {
 		Piece rook = board.getPiece(0);
 		Piece knight = board.getPiece(1);
 		
-		PieceJoinEvent event = new PieceJoinEvent(0,1);
+		PieceMovedEvent event = new PieceMovedEvent(0,1);
 
 		// act
 		eventMgr.fireEvent(event);
