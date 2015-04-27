@@ -1,39 +1,83 @@
 package chess.prototype.commands;
 
 import chess.core.Board;
+import chess.core.Piece;
+import chess.core.Player;
+import chess.mvc.models.PieceCapturedEvent;
+import chess.mvc.models.PieceJoinEvent;
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.ChessEvent;
 
-public class PieceMovedCommand extends CommandBase implements CommandMoveDecision {
+public class PieceMovedCommand extends CommandBase {
+	private PieceMovedEvent currentEvent;
+
+	private int newPosition;
+	private int oldPosition;
+	private Piece selectedPiece;
+	private Player selectedOwner;
+	private Player targetOwner;
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!(event instanceof PieceMovedEvent)) return;
-		if (!commandMoveDecision((PieceMovedEvent) event)) return;
+		newPosition = this.currentEvent.getNewPosition();
+		oldPosition = this.currentEvent.getPreviousPosition();
 		
-		update((PieceMovedEvent) event);
+		if (!(event instanceof PieceMovedEvent)) return;
+		
+		this.currentEvent = (PieceMovedEvent) event;
+
+		if(!isSelectedPieceValid()) return;
+
+		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
+		
+		PieceJoinEvent join = new PieceJoinEvent(oldPosition, newPosition);
+
+		if(landingOnFriend()) {
+			eventMgr.fireEvent(join);
+			return;
+		}
+		
+		PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
+		if(landingOnEnemy()) {
+			eventMgr.fireEvent(capture);
+			return;
+		}
+		
+		// destination is empty so just occupy
+		board.getPieces()[newPosition] = board.getPiece(oldPosition);
+		board.getPieces()[oldPosition] = null;
 	}
 
-	@Override
-	public void update(PieceMovedEvent event) {
-		int newPos = event.getNewPosition();
-		int oldPos = event.getPreviousPosition();
-		board.getPieces()[newPos] = board.getPiece(oldPos);
-		board.getPieces()[oldPos] = null; 
-	}
+	private boolean landingOnFriend() {
+		selectedOwner = selectedPiece.getOwner();
+		targetOwner = (board.getPiece(newPosition) != null) ? board
+				.getPiece(newPosition).getOwner() : null;
 
-	@Override
-	public boolean commandMoveDecision(PieceMovedEvent event) {
-		if(!isSelectedPieceValid(event)) return false;
-
-		for(int i : allMovableSquares) {
-			if (i == newPosition) {
-				if(((Board) board).isSqureEmpty(newPosition)) {
-					return true;
-				}
-			}
+		if(selectedOwner == targetOwner) {
+			return true;
 		}
 
 		return false;
+	}
+
+	private boolean landingOnEnemy() {
+
+		if(!((Board) board).isSqureEmpty(newPosition) &&
+				targetOwner == null || selectedOwner != targetOwner) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSelectedPieceValid() {
+		selectedPiece = board.getPiece(oldPosition);
+
+		if (selectedPiece == null || // selected piece is an empty square
+				(selectedPiece != null && // selected piece has no owner
+						selectedPiece.getOwner() == null))
+			return false;
+		
+		return true;
 	}
 }

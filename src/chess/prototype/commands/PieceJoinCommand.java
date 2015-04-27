@@ -5,22 +5,21 @@
 package chess.prototype.commands;
 
 import chess.core.Piece;
+import chess.mvc.models.PieceJoinEvent;
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 
-public class PieceJoinCommand extends CommandBase implements CommandMoveDecision {
+public class PieceJoinCommand extends CommandBase {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!(event instanceof PieceMovedEvent)) return;
-		if (!commandMoveDecision((PieceMovedEvent) event)) return;
+		if (!(event instanceof PieceJoinEvent)) return;
 		
-		update((PieceMovedEvent) event);
+		update((PieceJoinEvent) event);
 	}
 
-	@Override
-	public void update(PieceMovedEvent event) {
+	public void update(PieceJoinEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
@@ -35,20 +34,5 @@ public class PieceJoinCommand extends CommandBase implements CommandMoveDecision
 
 		board.setPiece(newPos, piece);
 		board.setPiece(oldPos, null);
-	}
-
-	@Override
-	public boolean commandMoveDecision(PieceMovedEvent event) {
-		if(!isSelectedPieceValid(event)) return false;
-
-		for(int i : allMovableSquares) {
-			if (i == newPosition) {
-				if(selectedOwner == targetOwner) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 }
