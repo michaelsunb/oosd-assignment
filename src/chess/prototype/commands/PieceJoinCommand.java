@@ -16,10 +16,11 @@ public class PieceJoinCommand extends CommandBase implements CommandMoveDecision
 		if (!(event instanceof PieceMovedEvent)) return;
 		if (!commandMoveDecision((PieceMovedEvent) event)) return;
 		
-		pieceCombined((PieceMovedEvent) event);
+		update((PieceMovedEvent) event);
 	}
 
-	public void pieceCombined(PieceMovedEvent event) {
+	@Override
+	public void update(PieceMovedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 

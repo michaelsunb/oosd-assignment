@@ -25,7 +25,7 @@ public class PieceMoveTest extends GameTestBase {
 		PieceMovedEvent event = new PieceMovedEvent(0, 6);
 		
 		// act
-		command.movePiece(event);;
+		eventMgr.fireEvent(event);;
 		
 		// assert
 		assertEquals("Rook moved to empty position",

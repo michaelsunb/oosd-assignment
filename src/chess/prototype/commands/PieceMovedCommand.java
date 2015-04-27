@@ -11,10 +11,11 @@ public class PieceMovedCommand extends CommandBase implements CommandMoveDecisio
 		if (!(event instanceof PieceMovedEvent)) return;
 		if (!commandMoveDecision((PieceMovedEvent) event)) return;
 		
-		movePiece((PieceMovedEvent) event);
+		update((PieceMovedEvent) event);
 	}
 
-	public void movePiece(PieceMovedEvent event) {
+	@Override
+	public void update(PieceMovedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 		board.getPieces()[newPos] = board.getPiece(oldPos);

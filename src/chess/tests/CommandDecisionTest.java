@@ -14,7 +14,6 @@ import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.commands.PieceCapturedCommand;
 import chess.prototype.commands.PieceJoinCommand;
 import chess.prototype.commands.PieceMovedCommand;
-import chess.prototype.composite.Rook;
 
 public class CommandDecisionTest extends GameTestBase {
 	private PieceMovedCommand commandMove;

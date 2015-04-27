@@ -13,15 +13,18 @@ public class PieceCapturedCommand extends CommandBase implements CommandMoveDeci
 		if (!(event instanceof PieceMovedEvent)) return;
 		if (!commandMoveDecision((PieceMovedEvent) event)) return;
 		
-		PieceCaptured((PieceMovedEvent) event);
+		update((PieceMovedEvent) event);
 	}
 
-	public void PieceCaptured(PieceMovedEvent event) {
+	@Override
+	public void update(PieceMovedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
 		Piece pieceSelected = board.getPiece(oldPos);
 		Piece pieceEnemy = board.getPiece(newPos);
+
+		if(pieceEnemy == null) return; // TODO
 
 		Player playerSelected = pieceSelected.getOwner();
 
