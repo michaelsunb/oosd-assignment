@@ -9,6 +9,7 @@ import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.commands.PieceCapturedCommand;
+import chess.prototype.commands.PieceMovedCommand;
 
 public class PieceCapturedTest extends GameTestBase {
 	private PieceCapturedCommand command;
@@ -16,8 +17,9 @@ public class PieceCapturedTest extends GameTestBase {
 	@Before
 	public void setUp() throws Exception {
 		command = new PieceCapturedCommand();
-		
-		eventMgr.addListener("PieceMovedEvent", command);
+
+		eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
+		eventMgr.addListener("PieceCapturedEvent", command);
 	}
 	
 	@Test
@@ -31,10 +33,7 @@ public class PieceCapturedTest extends GameTestBase {
 		// act
 		eventMgr.fireEvent(event);
 
-		
 		// assert
-		assertEquals("Player 1 get 5 score",
-				1, player1.getScore());
 		
 		int tempcount = 0;
 		for(Piece p : board.getPieces()){
@@ -45,6 +44,9 @@ public class PieceCapturedTest extends GameTestBase {
 		
 		assertEquals("Number of Barriers reduced to 11",
 				11, tempcount);
+		
+		assertEquals("Player 1 get 5 score",
+				1, player1.getScore());
 	}
 
 }

@@ -30,7 +30,7 @@ public abstract class Piece {
 	public abstract int[] getMovablePositions(int pos);
 
 	public boolean canMoveTo(int current, int destination) {
-		return Arrays.binarySearch(this.getMovablePositions(current), destination) != -1;
+		return Arrays.binarySearch(this.getMovablePositions(current), destination) >= -1;
 	}
 	
 	public String getSymbol() {

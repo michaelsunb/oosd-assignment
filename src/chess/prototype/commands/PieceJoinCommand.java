@@ -6,7 +6,6 @@ package chess.prototype.commands;
 
 import chess.core.Piece;
 import chess.mvc.models.PieceJoinEvent;
-import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 

@@ -1,7 +1,6 @@
 package chess.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -28,8 +27,8 @@ public class CommandDecisionTest extends GameTestBase {
 		commandCapture = new PieceCapturedCommand();
 		
 		eventMgr.addListener("PieceMovedEvent", commandMove);
-		eventMgr.addListener("PieceMovedEvent", commandJoin);
-		eventMgr.addListener("PieceMovedEvent", commandCapture);
+		eventMgr.addListener("PieceJoinEvent", commandJoin);
+		eventMgr.addListener("PieceCapturedEvent", commandCapture);
 	}
 	
 	@Test
@@ -70,10 +69,9 @@ public class CommandDecisionTest extends GameTestBase {
 		// act
 		eventMgr.fireEvent(event);
 
-		
 		// assert
-		assertNotEquals("combine piece should not equal rook's score",
-				rook.getScore(), board.getPiece(1).getScore());
+		assertTrue("combine piece should not equal rook's score",
+				(rook.getScore() != board.getPiece(1).getScore()));
 
 		assertEquals("Combine piece should equal rook + knight score",
 				rook.getScore() + knight.getScore(),
@@ -84,21 +82,6 @@ public class CommandDecisionTest extends GameTestBase {
 				board.getPiece(0));
 	}
 
-	/**
-	 *  TODO: When testing whole test package
-	 *  this test case fails because for some reason
-	 *  when in PieceMovedCommand it does not detect
-	 *  the selected piece but then when in
-	 *  PieceCapturedCommand selected piece is detected
-	 *  and isSqureEmpty at new position is not true.
-	 *  
-	 *  UPDATE: Some reason event manager has another
-	 *  instance of game and board.
-	 *  
-	 *  UPDATE2: Both move command and capture
-	 *  command are being called and they have
-	 *  different instances of Board.
-	 */
 	@Test
 	public void move_piece() {
 		// arrange
@@ -117,17 +100,17 @@ public class CommandDecisionTest extends GameTestBase {
 	@Test
 	public void piece_did_not_move() {
 		// arrange
+		Piece prevCurrentPiece = board.getPiece(0);
+		Piece prevDestinePiece = board.getPiece(30);
 		PieceMovedEvent event = new PieceMovedEvent(0,30);
 		
 		// act
 		eventMgr.fireEvent(event);
 		
 		// assert
-		assertTrue("Piece cannot be moved",
-				!commandMove.commandMoveDecision(event));
-		assertTrue("Piece cannot be joined",
-				!commandJoin.commandMoveDecision(event));
-		assertTrue("Piece cannot be captured",
-				!commandCapture.commandMoveDecision(event));
+		assertEquals("Position 0 should still have a piece",
+				prevCurrentPiece, board.getPiece(0));
+		assertEquals("Position 30 should still have a piece",
+				prevDestinePiece, board.getPiece(30));
 	}
 }

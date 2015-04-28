@@ -1,10 +1,8 @@
 package chess.prototype.commands;
 
-import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceCapturedEvent;
-import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.ChessEvent;
 
 public class PieceCapturedCommand extends CommandBase {

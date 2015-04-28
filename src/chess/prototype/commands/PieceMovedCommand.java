@@ -19,26 +19,24 @@ public class PieceMovedCommand extends CommandBase {
 
 	@Override
 	public void update(ChessEvent event) {
-		newPosition = this.currentEvent.getNewPosition();
-		oldPosition = this.currentEvent.getPreviousPosition();
-		
 		if (!(event instanceof PieceMovedEvent)) return;
 		
 		this.currentEvent = (PieceMovedEvent) event;
+		newPosition = this.currentEvent.getNewPosition();
+		oldPosition = this.currentEvent.getPreviousPosition();
 
 		if(!isSelectedPieceValid()) return;
 
 		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
-		
-		PieceJoinEvent join = new PieceJoinEvent(oldPosition, newPosition);
 
 		if(landingOnFriend()) {
+			PieceJoinEvent join = new PieceJoinEvent(oldPosition, newPosition);
 			eventMgr.fireEvent(join);
 			return;
 		}
 		
-		PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
 		if(landingOnEnemy()) {
+			PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
 			eventMgr.fireEvent(capture);
 			return;
 		}
@@ -63,14 +61,14 @@ public class PieceMovedCommand extends CommandBase {
 	private boolean landingOnEnemy() {
 
 		if(!((Board) board).isSqureEmpty(newPosition) &&
-				targetOwner == null || selectedOwner != targetOwner) {
+				(targetOwner == null || selectedOwner != targetOwner)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean isSelectedPieceValid() {
+	private boolean isSelectedPieceValid() {
 		selectedPiece = board.getPiece(oldPosition);
 
 		if (selectedPiece == null || // selected piece is an empty square

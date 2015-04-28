@@ -1,7 +1,7 @@
 package chess.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +9,7 @@ import org.junit.Test;
 import chess.core.Piece;
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.commands.PieceJoinCommand;
+import chess.prototype.commands.PieceMovedCommand;
 
 public class PieceJoinTest extends GameTestBase {
 	private PieceJoinCommand command;
@@ -16,8 +17,9 @@ public class PieceJoinTest extends GameTestBase {
 	@Before
 	public void setUp() throws Exception {
 		command = new PieceJoinCommand();
-		
-		eventMgr.addListener("PieceMovedEvent", command);
+
+		eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
+		eventMgr.addListener("PieceJoinEvent", command);
 	}
 	
 	@Test
@@ -31,10 +33,9 @@ public class PieceJoinTest extends GameTestBase {
 		// act
 		eventMgr.fireEvent(event);
 
-		
 		// assert
-		assertNotEquals("combine piece should not equal rook's score",
-				rook.getScore(), board.getPiece(1).getScore());
+		assertTrue("combine piece should not equal rook's score",
+				(rook.getScore() != board.getPiece(1).getScore()));
 
 		assertEquals("Combine piece should equal rook + knight score",
 				rook.getScore() + knight.getScore(),
