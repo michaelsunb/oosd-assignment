@@ -38,6 +38,7 @@ public class GameController extends AbstractAction {
 			eventMgr.fireEvent(new GameNewEvent(view));
 			break;
 			default:
+				this.view.setTitle(e.getActionCommand());
 		}
 	}
 }

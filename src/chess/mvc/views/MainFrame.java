@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
 		buildMenuBar();
 		
 		// adding Chessboard
-		this.chessboardPane = new ChessboardViewPanel();
+		this.chessboardPane = new ChessboardViewPanel(handler);
 		contentPane.add(this.chessboardPane, BorderLayout.CENTER);
 		
 		// add game status

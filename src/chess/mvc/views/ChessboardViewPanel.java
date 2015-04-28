@@ -19,9 +19,10 @@ public class ChessboardViewPanel extends JPanel {
 	private String setActionCommand = "pickPiece";	
 	private int prevPosition;
 	private Component[] components;
+	private AbstractAction actionHandler;
 	
-	public ChessboardViewPanel() {
-		
+	public ChessboardViewPanel(AbstractAction handler) {
+		this.actionHandler = handler;
 	}
 
 	private void initialComponent() {
@@ -42,43 +43,66 @@ public class ChessboardViewPanel extends JPanel {
 	
 	public void redraw(boolean clearView) {
 		if (clearView) {
+			this.removeAll();
 			initialComponent();
 		}
 		
 		IBoard board = Game.getInstance().getBoardInstance();
 		int pos = 0;
 		for (Component comp : this.components) {
+			JButton btn = (JButton)comp;
+			
 			int x = (pos % board.getWidth());
 			int y = (pos / board.getHeight());
 
 			if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
-				comp.setBackground(Color.LIGHT_GRAY);
+				btn.setBackground(Color.LIGHT_GRAY);
 			} else {
-				comp.setBackground(Color.GRAY);
+				btn.setBackground(Color.GRAY);
 			}
 
 			Piece piece = board.getPiece(pos);
 			String symbol = "";
-			
+					
 			if (piece != null) {
-				symbol = board.getPiece(pos).getSymbol();
-
-				((AbstractButton) comp).setFont(font);
+				symbol = piece.getSymbol();	
+				btn.setFont(font);
+				//((AbstractButton) comp).setFont(font);
 				
 				if (piece.getOwner() != null) {
-					((AbstractButton) comp).setForeground(piece.getOwner().getColour());
+					btn.setForeground(piece.getOwner().getColour());
+					// ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
 				}
-			}
+			}	
 			
-			((AbstractButton) comp).setAction(new GameAction(symbol,
-					setActionCommand, pos));
+			btn.setText(symbol);
+
+			/*
+			 * TODO: What if we build a special format string & use it as actionCommand?
+			 * e.g PieceSelectedEvent 1; then have a command parser which turn this string into ChessEvent?
+			 */
+			btn.setActionCommand("PieceSelectedEvent:" +  pos);
+			btn.addActionListener(this.actionHandler);
 			
-			this.add(comp);
+			this.add(btn);
 			pos++;
 		}
 		this.validate();
 	}
-
+	
+	public void clearPath() {
+		for(Component comp: this.components) {
+			if (comp.getBackground() == Color.RED) {
+				// what is the default color
+				comp.setBackground(Color.GRAY);
+			}
+		}
+	}
+	
+	public void markPath(int pos) {
+		components[pos].setBackground(Color.RED);
+	}
+	
 	/*
 	 * Sokun's comment: refactor to use Observer pattern instead of extending
 	 * AbstractAction
@@ -134,15 +158,5 @@ public class ChessboardViewPanel extends JPanel {
 			}
 		}
 	}
-	public void clearPath() {
-		for(Component comp: this.components) {
-			if (comp.getBackground() == Color.RED) {
-				// what is the default color
-				comp.setBackground(Color.GRAY);
-			}
-		}
-	}
-	public void markPath(int pos) {
-		components[pos].setBackground(Color.RED);
-	}
+
 }
