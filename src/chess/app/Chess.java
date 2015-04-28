@@ -21,13 +21,18 @@ public class Chess {
 				gameController.init(view);
 
 				// Register observers
+<<<<<<< HEAD
 				eventMgr.addListener("GameNewEvent", gameController.newGame());
 				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());
 				/*
 				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
+=======
+				eventMgr.addListener("GameNewEvent", gameController);
+				eventMgr.addListener("PieceSelectedEvent", new PieceSelectedCommand());
+>>>>>>> origin/master
 				eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
-				eventMgr.addListener("PieceCapturedEvent", new PieceCapturedCommand());
-				eventMgr.addListener("PieceJoinEvent", new PieceJoinCommand());
+				eventMgr.addListener("PieceMovedEvent", new PieceCapturedCommand());
+				eventMgr.addListener("PieceMovedEvent", new PieceJoinCommand());
 				eventMgr.addListener("GameStatusEvent", statusView);
 				*/
 			}

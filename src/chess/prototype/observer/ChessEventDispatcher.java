@@ -29,9 +29,11 @@ public class ChessEventDispatcher {
 		if (!this.services.containsKey(eventName)) {
 			this.services.put(eventName, new ArrayList<IObserver>());
 		}
-		/*
-		 * TODO: avoid register an observer to the same event multiple times
-		 */
+
+		for (IObserver oldObserver : this.services.get(eventName)) {
+			if(oldObserver.equals(observer)) return;
+		}
+
 		this.services.get(eventName).add(observer);
 	}
 

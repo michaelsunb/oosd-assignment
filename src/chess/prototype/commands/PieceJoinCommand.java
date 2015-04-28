@@ -15,10 +15,10 @@ public class PieceJoinCommand extends CommandBase {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceJoinEvent)) return;
 		
-		pieceCombined((PieceJoinEvent) event);
+		update((PieceJoinEvent) event);
 	}
 
-	public void pieceCombined(PieceJoinEvent event) {
+	public void update(PieceJoinEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
@@ -34,5 +34,4 @@ public class PieceJoinCommand extends CommandBase {
 		board.setPiece(newPos, piece);
 		board.setPiece(oldPos, null);
 	}
-
 }
