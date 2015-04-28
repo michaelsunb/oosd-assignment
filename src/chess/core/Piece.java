@@ -1,6 +1,7 @@
 package chess.core;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public abstract class Piece implements Serializable {
 	protected int score = 0;
@@ -29,6 +30,10 @@ public abstract class Piece implements Serializable {
 
 	public abstract int[] getMovablePositions(int pos);
 
+	public boolean canMoveTo(int current, int destination) {
+		return Arrays.binarySearch(this.getMovablePositions(current), destination) >= -1;
+	}
+	
 	public String getSymbol() {
 		return this.symbol.toString();
 	}

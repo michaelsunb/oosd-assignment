@@ -11,15 +11,17 @@ public class PieceCapturedCommand extends CommandBase {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceCapturedEvent)) return;
 		
-		PieceCaptured((PieceCapturedEvent) event);
+		update((PieceCapturedEvent) event);
 	}
 
-	public void PieceCaptured(PieceCapturedEvent event) {
+	public void update(PieceCapturedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
 		Piece pieceSelected = board.getPiece(oldPos);
 		Piece pieceEnemy = board.getPiece(newPos);
+
+		if(pieceEnemy == null) return; // TODO
 
 		Player playerSelected = pieceSelected.getOwner();
 
