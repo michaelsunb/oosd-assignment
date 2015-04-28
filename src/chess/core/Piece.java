@@ -1,8 +1,10 @@
 package chess.core;
 
-public abstract class Piece {
+import java.io.Serializable;
+
+public abstract class Piece implements Serializable {
 	protected int score = 0;
-	private Player owner;
+	private Player owner = null;
 	/*
 	 * Chess symbol in unicode
 	 * https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode

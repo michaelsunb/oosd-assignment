@@ -5,10 +5,10 @@
 package chess.core;
 
 import java.util.*;
-
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Player {
+public class Player implements Serializable {
 
 	private Color colour;
 	private List<Piece> pieces;

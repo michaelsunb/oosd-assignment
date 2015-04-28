@@ -6,11 +6,11 @@ package chess.tests;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
+import java.io.*;
+import java.util.*;
 import org.junit.*;
-
 import chess.core.*;
+import chess.prototype.composite.*;
 
 public class GameTest {
 	@Test
@@ -71,6 +71,43 @@ public class GameTest {
 		List<Piece> pieces = game.getPlayerPieces(1);
 		
 		// assert
-		assertEquals(30, pieces.size());
+		assertEquals(6, pieces.size());
+	}
+	
+	@Test
+	public void save_game_state() {
+		// arrange
+		Game game = Game.getInstance();
+		game.reset(10);
+				
+		// act
+		game.save();
+		
+		// assert
+		File file = new File("game.state");
+		assertTrue(file.exists());
+	}
+	
+	@Test
+	public void restore_game_state() {
+		// arrange
+		Game game = Game.getInstance();
+		IBoard board = game.getBoardInstance();
+		
+		game.reset(10);
+		board.setPiece(7, new Rook());
+		game.save();
+		
+		game.reset(10);
+		board = game.getBoardInstance();
+		
+		// assert
+		assertTrue(board.getPiece(7) == null);
+		
+		// act
+		game.restore();
+		
+		// assert
+		assertTrue(board.getPiece(7).getClass().getSimpleName().equals("Rook"));
 	}
 }
