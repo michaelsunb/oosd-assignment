@@ -4,7 +4,6 @@ import javax.swing.SwingUtilities;
 
 import chess.mvc.controllers.*;
 import chess.mvc.views.*;
-import chess.prototype.commands.*;
 import chess.prototype.observer.*;
 
 public class Chess {
@@ -21,15 +20,13 @@ public class Chess {
 				gameController.init(view);
 
 				// Register observers
-<<<<<<< HEAD
+
 				eventMgr.addListener("GameNewEvent", gameController.newGame());
 				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());
 				/*
 				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
-=======
 				eventMgr.addListener("GameNewEvent", gameController);
 				eventMgr.addListener("PieceSelectedEvent", new PieceSelectedCommand());
->>>>>>> origin/master
 				eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
 				eventMgr.addListener("PieceMovedEvent", new PieceCapturedCommand());
 				eventMgr.addListener("PieceMovedEvent", new PieceJoinCommand());
