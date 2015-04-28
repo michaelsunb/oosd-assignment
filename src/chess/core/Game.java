@@ -116,7 +116,7 @@ public class Game implements Serializable {
 		try(FileOutputStream fos = new FileOutputStream(file);
 				ObjectOutputStream out = new ObjectOutputStream(fos) 
 				) {
-			
+
 			out.writeObject(instance);
 			out.close();
 
@@ -141,13 +141,12 @@ public class Game implements Serializable {
 			// update instance
 			instance = (Game)in.readObject();
 			in.close();
-			
 			return true;
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println(e.getMessage());
 			// ignore
 		}
 		
-		return true;
+		return false;
 	}
 }

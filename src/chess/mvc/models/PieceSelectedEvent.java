@@ -4,28 +4,21 @@
  */
 package chess.mvc.models;
 
-import java.awt.Component;
-import chess.core.Piece;
+import chess.mvc.views.ChessboardViewPanel;
 import chess.prototype.observer.ChessEvent;
 
 public class PieceSelectedEvent implements ChessEvent {
-	private Piece piece;
-	private Component component;
+	private ChessboardViewPanel chessPane;
 	private int position;
 
-	public PieceSelectedEvent(int currentPosition, Piece piece,
-			Component component) {
+	public PieceSelectedEvent(int currentPosition, 
+			ChessboardViewPanel component) {
 		this.position = currentPosition;
-		this.piece = piece;
-		this.component = component;
+		this.chessPane = component;
 	}
 
-	public final Piece getPiece() {
-		return piece;
-	}
-
-	public final Component getComponent() {
-		return component;
+	public final ChessboardViewPanel getChessboardViewPanel() {
+		return chessPane;
 	}
 
 	public final int getPosition() {

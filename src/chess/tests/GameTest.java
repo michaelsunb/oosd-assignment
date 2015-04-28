@@ -92,22 +92,22 @@ public class GameTest {
 	public void restore_game_state() {
 		// arrange
 		Game game = Game.getInstance();
-		IBoard board = game.getBoardInstance();
-		
 		game.reset(10);
-		board.setPiece(7, new Rook());
+		
+		game.getPlayer(1).increaseMove();
+		game.getBoardInstance().setPiece(7, new Rook());
+		
 		game.save();
-		
-		game.reset(10);
-		board = game.getBoardInstance();
+		game.reset(11);
 		
 		// assert
-		assertTrue(board.getPiece(7) == null);
+		assertTrue(Game.getInstance().getBoardInstance().getPiece(7) == null);
 		
 		// act
 		game.restore();
 		
 		// assert
-		assertTrue(board.getPiece(7).getClass().getSimpleName().equals("Rook"));
+		assertEquals("Max move restored", 10, Game.getInstance().getMaxMoves());
+		
 	}
 }

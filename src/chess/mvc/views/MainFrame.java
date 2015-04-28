@@ -1,66 +1,61 @@
 package chess.mvc.views;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import chess.mvc.models.GameNewEvent;
-import chess.prototype.observer.*;
 
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private Container contentPane;
-	private JMenuBar menuBar;
-
-	public MainFrame() {
-		contentPane = getContentPane();
+	private ChessboardViewPanel chessboardPane;
+	private GameStatusViewPanel statusPane;
+	private AbstractAction actionHandler;
+	
+	public MainFrame(AbstractAction handler) {
+		this.actionHandler = handler;
+		
+		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-
-		menuBar();
-
+		
+		// build menu
+		buildMenuBar();
+		
+		// adding Chessboard
+		this.chessboardPane = new ChessboardViewPanel();
+		contentPane.add(this.chessboardPane, BorderLayout.CENTER);
+		
+		// add game status
+		this.statusPane = new GameStatusViewPanel();
+		contentPane.add(this.statusPane, BorderLayout.SOUTH);
+		
 		setSize(605, 660);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setTitle("Simple Chess Game");
 		setLocationRelativeTo(null);
+		
+		//contentPane.revalidate();
 	}
-
-	private void menuBar() {
-		menuBar = new JMenuBar();
-
-		JMenu menu = new JMenu("Menu");
-
-		GameAction exampleAction = new GameAction("New Game", "NewGameEvent");
-
-		menu.add(exampleAction);
+	
+	
+	private void buildMenuBar() {
+		final JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("Game");
+		JMenuItem newGame = new JMenuItem("New Game");
+		newGame.setActionCommand("NewGameEvent");
+		
+		newGame.addActionListener(this.actionHandler);
+		
+		menu.add(newGame);
 		menuBar.add(menu);
-
-		contentPane.add(menuBar, BorderLayout.NORTH);
+		
+		this.setJMenuBar(menuBar);
 	}
 
-	class GameAction extends AbstractAction {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		// This is our sample action. It must have an actionPerformed() method,
-		// which is called when the action should be invoked.
-
-		public GameAction(String title, String command) {
-			super(title);
-			putValue(ACTION_COMMAND_KEY, command);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			switch (e.getActionCommand()) {
-			case "NewGameEvent":
-				ChessEvent event = new GameNewEvent(contentPane, menuBar);
-				ChessEventDispatcher.getInstance().fireEvent(event);
-				break;
-			}
-		}
+	public ChessboardViewPanel getChessBoardPane() {
+		return this.chessboardPane;
+	}
+	
+	public GameStatusViewPanel getStatusPane() {
+		return this.statusPane;
 	}
 }

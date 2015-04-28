@@ -1,57 +1,43 @@
 package chess.mvc.controllers;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.event.ActionEvent;
 
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
+import javax.swing.AbstractAction;
 
-import chess.core.*;
 import chess.mvc.models.GameNewEvent;
 import chess.mvc.views.*;
+import chess.prototype.commands.*;
 import chess.prototype.observer.*;
 
-public class GameController implements IObserver {
-
-	private Container contentPane;
-	private JMenuBar menuBar;
-
-	private void createBoard() {
-		contentPane.removeAll();
-		contentPane.add(menuBar, BorderLayout.NORTH);
-
-		// create chessboard
-		ChessboardViewPanel cb = new ChessboardViewPanel();
-		contentPane.add(cb, BorderLayout.CENTER);
-
-		// create game status view panel
-		GameStatusViewPanel statusPane = new GameStatusViewPanel();
-		contentPane.add(statusPane, BorderLayout.SOUTH);
-		contentPane.revalidate();
+public class GameController extends AbstractAction {
+	private MainFrame view;
+	private ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
+	
+	public GameController() {
+	}
+	
+	public void init(MainFrame view) {
+		this.view = view;
+		this.view.setVisible(true);
+	}
+	
+	public IObserver newGame() {
+		return new NewGameCommand();
+	}
+	
+	public IObserver pieceSelected() {
+		return new PieceSelectedCommand();
 	}
 
 	@Override
-	public void update(ChessEvent event) {
-		if (!(event instanceof GameNewEvent)) return;
-		startNewGame((GameNewEvent) event);
-	}
-
-	private void startNewGame(GameNewEvent event) {
-		menuBar = event.getMenuBar();
-		contentPane = event.getContainer();
-
-		try {
-			String moves = JOptionPane.showInputDialog(contentPane,
-					"How many moves?", "alert", JOptionPane.OK_CANCEL_OPTION);
-
-			if (moves == null) { // cancelled
-				return;
-			}
-			Game.getInstance().reset(Integer.parseInt(moves));
-			createBoard();
-
-		} catch (NumberFormatException nfe) {
-			JOptionPane.showMessageDialog(null, "Not a number!");
+	public void actionPerformed(ActionEvent e) {
+		// How can we intercept all command and dispatch it as event
+		// May be we can use factory pattern to create different event
+		switch(e.getActionCommand()) {
+		case "NewGameEvent":
+			eventMgr.fireEvent(new GameNewEvent(view));
+			break;
+			default:
 		}
 	}
 }
