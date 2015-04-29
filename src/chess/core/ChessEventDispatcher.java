@@ -4,7 +4,6 @@
  */
 package chess.core;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -14,11 +13,11 @@ import chess.prototype.events.listener.EventListener;
 public class ChessEventDispatcher {
 	private static ChessEventDispatcher instance = null;
 
-	private Map<String, ArrayList<EventListener>> services;
+	private Map<String, EventListener> services;
 
 	private ChessEventDispatcher() {
 		super();
-		services = new Hashtable<String, ArrayList<EventListener>>();
+		services = new Hashtable<String, EventListener>();
 	}
 
 	public static ChessEventDispatcher getInstance() {
@@ -28,26 +27,16 @@ public class ChessEventDispatcher {
 		return instance;
 	}
 
-	public void addListener(String eventName, EventListener observer) {
-		if (!this.services.containsKey(eventName)) {
-			this.services.put(eventName, new ArrayList<EventListener>());
-		}
-
-		for (EventListener oldObserver : this.services.get(eventName)) {
-			if(oldObserver.equals(observer)) return;
-		}
-
-		this.services.get(eventName).add(observer);
+	public void addListener(String eventName, EventListener listener) {
+		this.services.put(eventName, listener);
 	}
 
-	public void removeListener(String eventName, EventListener observer) {
+	public void removeListener(String eventName, EventListener listener) {
 		/*
 		 * TODO: remove an IObserver from listener list
 		 */
-		if (!this.services.containsKey(eventName)) {
-			return;
-		}
-		this.services.get(eventName).remove(observer);
+		if (!this.services.containsKey(eventName)) return;
+		this.services.remove(eventName);
 	}
 
 	/*
@@ -59,16 +48,11 @@ public class ChessEventDispatcher {
 		/*
 		 * Nothing to notify
 		 */
-		if (!this.services.containsKey(eventName)) {
-			return;
-		}
+		if (!this.services.containsKey(eventName)) return;
 
 		/*
 		 * Only notify objects interested in @eventName
 		 */
-		for (EventListener observer : this.services.get(eventName)) {
-			observer.update(event);
-		}
-
+		this.services.get(eventName).update(event);
 	}
 }
