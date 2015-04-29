@@ -2,9 +2,10 @@ package chess.app;
 
 import javax.swing.SwingUtilities;
 
+import chess.core.ChessEventDispatcher;
 import chess.mvc.controllers.*;
 import chess.mvc.views.*;
-import chess.prototype.observer.*;
+import chess.prototype.events.*;
 
 public class Chess {
 

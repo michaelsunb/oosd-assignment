@@ -3,13 +3,14 @@ package chess.tests;
 import static org.junit.Assert.*;
 
 import org.junit.*;
+
 import chess.core.*;
-import chess.prototype.commands.*;
-import chess.prototype.observer.*;
+import chess.prototype.events.*;
+import chess.prototype.events.listener.PieceSelectedEventListener;
 
 public class PieceSelectedTest {
 	private ChessEventDispatcher eventMgr;
-	private PieceSelectedCommand command;
+	private PieceSelectedEventListener command;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -17,7 +18,7 @@ public class PieceSelectedTest {
 		Game.getInstance().reset(10);
 		eventMgr = ChessEventDispatcher.getInstance();
 		
-		command = new PieceSelectedCommand();
+		command = new PieceSelectedEventListener();
 		
 		eventMgr.addListener("PieceSelectedEvent", command);
 	}

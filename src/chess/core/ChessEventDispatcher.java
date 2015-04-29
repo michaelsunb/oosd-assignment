@@ -2,20 +2,23 @@
  * Author: Sokun CHORN
  * Student Number: s3338291
  */
-package chess.prototype.observer;
+package chess.core;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
+import chess.prototype.events.ChessEvent;
+import chess.prototype.events.listener.EventListener;
+
 public class ChessEventDispatcher {
 	private static ChessEventDispatcher instance = null;
 
-	private Map<String, ArrayList<IObserver>> services;
+	private Map<String, ArrayList<EventListener>> services;
 
 	private ChessEventDispatcher() {
 		super();
-		services = new Hashtable<String, ArrayList<IObserver>>();
+		services = new Hashtable<String, ArrayList<EventListener>>();
 	}
 
 	public static ChessEventDispatcher getInstance() {
@@ -25,19 +28,19 @@ public class ChessEventDispatcher {
 		return instance;
 	}
 
-	public void addListener(String eventName, IObserver observer) {
+	public void addListener(String eventName, EventListener observer) {
 		if (!this.services.containsKey(eventName)) {
-			this.services.put(eventName, new ArrayList<IObserver>());
+			this.services.put(eventName, new ArrayList<EventListener>());
 		}
 
-		for (IObserver oldObserver : this.services.get(eventName)) {
+		for (EventListener oldObserver : this.services.get(eventName)) {
 			if(oldObserver.equals(observer)) return;
 		}
 
 		this.services.get(eventName).add(observer);
 	}
 
-	public void removeListener(String eventName, IObserver observer) {
+	public void removeListener(String eventName, EventListener observer) {
 		/*
 		 * TODO: remove an IObserver from listener list
 		 */
@@ -63,7 +66,7 @@ public class ChessEventDispatcher {
 		/*
 		 * Only notify objects interested in @eventName
 		 */
-		for (IObserver observer : this.services.get(eventName)) {
+		for (EventListener observer : this.services.get(eventName)) {
 			observer.update(event);
 		}
 

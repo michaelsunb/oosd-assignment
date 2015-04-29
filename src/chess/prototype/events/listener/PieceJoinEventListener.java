@@ -2,14 +2,14 @@
  * Author: Siang Ling
  * Number: s3295217
  */
-package chess.prototype.commands;
+package chess.prototype.events.listener;
 
 import chess.core.Piece;
-import chess.mvc.models.PieceJoinEvent;
 import chess.prototype.composite.CombinePiece;
-import chess.prototype.observer.ChessEvent;
+import chess.prototype.events.ChessEvent;
+import chess.prototype.events.PieceJoinEvent;
 
-public class PieceJoinCommand extends CommandBase {
+public class PieceJoinEventListener extends EventListenerBase {
 
 	@Override
 	public void update(ChessEvent event) {

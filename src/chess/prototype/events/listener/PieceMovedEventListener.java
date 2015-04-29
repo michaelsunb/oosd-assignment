@@ -1,14 +1,14 @@
-package chess.prototype.commands;
+package chess.prototype.events.listener;
 
 import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceCapturedEvent;
-import chess.mvc.models.PieceJoinEvent;
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.observer.ChessEvent;
+import chess.prototype.events.ChessEvent;
+import chess.prototype.events.PieceCapturedEvent;
+import chess.prototype.events.PieceJoinEvent;
+import chess.prototype.events.PieceMovedEvent;
 
-public class PieceMovedCommand extends CommandBase {
+public class PieceMovedEventListener extends EventListenerBase {
 	private PieceMovedEvent currentEvent;
 
 	private int newPosition;

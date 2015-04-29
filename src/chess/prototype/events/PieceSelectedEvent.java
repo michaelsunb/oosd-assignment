@@ -2,10 +2,9 @@
  * Author: Michaelsun BALUYOS
  * Student Number: s3110401
  */
-package chess.mvc.models;
+package chess.prototype.events;
 
 import chess.mvc.views.ChessboardViewPanel;
-import chess.prototype.observer.ChessEvent;
 
 public class PieceSelectedEvent implements ChessEvent {
 	private ChessboardViewPanel chessPane;

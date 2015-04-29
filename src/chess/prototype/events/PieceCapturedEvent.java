@@ -2,15 +2,14 @@
  * Author: Sokun CHORN
  * Student Number: s3338291
  */
-package chess.mvc.models;
+package chess.prototype.events;
 
-import chess.prototype.observer.ChessEvent;
 
-public class PieceMovedEvent implements ChessEvent {
+public class PieceCapturedEvent implements ChessEvent {
 	private int newPosition;
 	private int previousPosition;
 
-	public PieceMovedEvent(int previousPosition, int newPosition) {
+	public PieceCapturedEvent(int previousPosition, int newPosition) {
 		super();
 		this.newPosition = newPosition;
 		this.previousPosition = previousPosition;

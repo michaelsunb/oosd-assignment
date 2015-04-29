@@ -9,22 +9,22 @@ import org.junit.Test;
 import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.commands.PieceCapturedCommand;
-import chess.prototype.commands.PieceJoinCommand;
-import chess.prototype.commands.PieceMovedCommand;
+import chess.prototype.events.PieceMovedEvent;
+import chess.prototype.events.listener.PieceCapturedEventListener;
+import chess.prototype.events.listener.PieceJoinEventListener;
+import chess.prototype.events.listener.PieceMovedEventListener;
 
 public class CommandDecisionTest extends GameTestBase {
-	private PieceMovedCommand commandMove;
-	private PieceJoinCommand commandJoin;
-	private PieceCapturedCommand commandCapture;
+	private PieceMovedEventListener commandMove;
+	private PieceJoinEventListener commandJoin;
+	private PieceCapturedEventListener commandCapture;
 	
 	@Before
 	public void setUp() throws Exception {
 
-		commandMove = new PieceMovedCommand();
-		commandJoin = new PieceJoinCommand();
-		commandCapture = new PieceCapturedCommand();
+		commandMove = new PieceMovedEventListener();
+		commandJoin = new PieceJoinEventListener();
+		commandCapture = new PieceCapturedEventListener();
 		
 		eventMgr.addListener("PieceMovedEvent", commandMove);
 		eventMgr.addListener("PieceJoinEvent", commandJoin);

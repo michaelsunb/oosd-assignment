@@ -1,12 +1,12 @@
-package chess.prototype.commands;
+package chess.prototype.events.listener;
 
 import javax.swing.JOptionPane;
 
 import chess.core.Game;
 import chess.mvc.models.*;
-import chess.prototype.observer.*;
+import chess.prototype.events.*;
 
-public class NewGameCommand extends CommandBase {
+public class NewGameEventListener extends EventListenerBase {
 
 	@Override
 	public void update(ChessEvent event) {

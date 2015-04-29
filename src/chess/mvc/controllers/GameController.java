@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import chess.mvc.models.GameNewEvent;
+import chess.core.ChessEventDispatcher;
 import chess.mvc.views.*;
-import chess.prototype.commands.*;
-import chess.prototype.observer.*;
+import chess.prototype.events.*;
+import chess.prototype.events.listener.EventListener;
+import chess.prototype.events.listener.NewGameEventListener;
+import chess.prototype.events.listener.PieceSelectedEventListener;
 
 public class GameController extends AbstractAction {
 	private MainFrame view;
@@ -21,12 +23,12 @@ public class GameController extends AbstractAction {
 		this.view.setVisible(true);
 	}
 	
-	public IObserver newGame() {
-		return new NewGameCommand();
+	public EventListener newGame() {
+		return new NewGameEventListener();
 	}
 	
-	public IObserver pieceSelected() {
-		return new PieceSelectedCommand();
+	public EventListener pieceSelected() {
+		return new PieceSelectedEventListener();
 	}
 
 	@Override

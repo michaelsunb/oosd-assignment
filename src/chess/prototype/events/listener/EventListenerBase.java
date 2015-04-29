@@ -1,20 +1,19 @@
-package chess.prototype.commands;
+package chess.prototype.events.listener;
 
+import chess.core.ChessEventDispatcher;
 import chess.core.Game;
 import chess.core.IBoard;
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.ChessEventDispatcher;
-import chess.prototype.observer.IObserver;
+import chess.prototype.events.ChessEvent;
+import chess.prototype.events.PieceMovedEvent;
 
-public abstract class CommandBase implements IObserver {
+public abstract class EventListenerBase implements EventListener {
 	protected Game game;
 	protected IBoard board;
 	protected ChessEventDispatcher eventMgr;
 	
-	public CommandBase() {
+	public EventListenerBase() {
 		game = Game.getInstance();
 		board = game.getBoardInstance();
 		eventMgr = ChessEventDispatcher.getInstance();

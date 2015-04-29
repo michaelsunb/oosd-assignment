@@ -7,18 +7,18 @@ import org.junit.Test;
 
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.commands.PieceCapturedCommand;
-import chess.prototype.commands.PieceMovedCommand;
+import chess.prototype.events.PieceMovedEvent;
+import chess.prototype.events.listener.PieceCapturedEventListener;
+import chess.prototype.events.listener.PieceMovedEventListener;
 
 public class PieceCapturedTest extends GameTestBase {
-	private PieceCapturedCommand command;
+	private PieceCapturedEventListener command;
 	
 	@Before
 	public void setUp() throws Exception {
-		command = new PieceCapturedCommand();
+		command = new PieceCapturedEventListener();
 
-		eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
+		eventMgr.addListener("PieceMovedEvent", new PieceMovedEventListener());
 		eventMgr.addListener("PieceCapturedEvent", command);
 	}
 	

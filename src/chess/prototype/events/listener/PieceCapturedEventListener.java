@@ -1,11 +1,11 @@
-package chess.prototype.commands;
+package chess.prototype.events.listener;
 
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceCapturedEvent;
-import chess.prototype.observer.ChessEvent;
+import chess.prototype.events.ChessEvent;
+import chess.prototype.events.PieceCapturedEvent;
 
-public class PieceCapturedCommand extends CommandBase {
+public class PieceCapturedEventListener extends EventListenerBase {
 
 	@Override
 	public void update(ChessEvent event) {
