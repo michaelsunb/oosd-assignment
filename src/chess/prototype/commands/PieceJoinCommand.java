@@ -28,9 +28,10 @@ public class PieceJoinCommand extends CommandBase {
 		CombinePiece piece = new CombinePiece();
 		piece.add(pieceSelected);
 		piece.add(pieceTarget);
-
 		piece.setOwner(pieceSelected.getOwner());
-
+		
+		pieceSelected.getOwner().increaseMove();
+		
 		this.getBoard().setPiece(newPos, piece);
 		this.getBoard().setPiece(oldPos, null);
 	}

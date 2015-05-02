@@ -15,18 +15,23 @@ public class PieceCapturedCommand extends CommandBase {
 	}
 
 	public void capture(PieceCapturedEvent event) {
+		
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
-		Piece pieceSelected = this.getBoard().getPiece(oldPos);
-		Piece pieceEnemy = this.getBoard().getPiece(newPos);
+		Piece selectedPiece = this.getBoard().getPiece(oldPos);
+		Piece enemyPiece = this.getBoard().getPiece(newPos);
 
-		if(pieceEnemy == null) return; // TODO
+		// Move to empty square is not the responsibility of this
+		// object
+		if(enemyPiece == null) return; 
 
-		Player playerSelected = pieceSelected.getOwner();
 
-		playerSelected.addScore(pieceEnemy.getScore());
-		playerSelected.increaseMove();
-		this.getBoard().setPiece(newPos, pieceSelected);
+		Player currentPlayer = selectedPiece.getOwner();
+
+		currentPlayer.addScore(enemyPiece.getScore());
+		currentPlayer.increaseMove();
+		
+		this.getBoard().setPiece(newPos, selectedPiece);
 	}
 }

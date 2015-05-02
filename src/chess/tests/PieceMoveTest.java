@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.commands.PieceMovedCommand;
+import chess.prototype.composite.CombinePiece;
 import chess.prototype.composite.Rook;
 
 public class PieceMoveTest extends GameTestBase {
@@ -34,4 +35,27 @@ public class PieceMoveTest extends GameTestBase {
 				.getPlayer(1).getNumberOfMove());
 	}
 
+	@Test
+	public void move_combined_piece() {
+		// arrange
+		CombinePiece combined = new CombinePiece();
+		combined.add(this.getBoard().getPiece(0));
+		combined.add(this.getBoard().getPiece(1));
+		combined.setOwner(this.getBoard().getPiece(0).getOwner());
+		
+		this.getBoard().setPiece(0, combined);
+		this.getBoard().setPiece(1, null);
+		
+		PieceMovedEvent event = new PieceMovedEvent(0, 6);
+
+		// act
+		this.eventMgr().fireEvent(event);
+
+		// assert
+		assertEquals("Nothing should be in previous position", null, this
+				.getBoard().getPiece(0));
+		assertEquals("Player 1 move increased by 1", 1, this.getGame()
+				.getPlayer(1).getNumberOfMove());
+		assertEquals("Combined piece moved", combined, this.getBoard().getPiece(6));
+	}
 }

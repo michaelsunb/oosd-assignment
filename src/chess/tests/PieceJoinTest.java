@@ -37,11 +37,17 @@ public class PieceJoinTest extends GameTestBase {
 				(rook.getScore() != this.getBoard().getPiece(1).getScore()));
 
 		assertEquals("Combine piece should equal rook + knight score",
-				rook.getScore() + knight.getScore(), this.getBoard()
-						.getPiece(1).getScore());
+				rook.getScore() + knight.getScore(), 
+				this.getBoard().getPiece(1).getScore());
 
-		assertEquals("Should be nothing at position zero", null, this
-				.getBoard().getPiece(0));
+		assertEquals("Should be nothing at position zero",
+				null, this.getBoard().getPiece(0));
+		
+		assertEquals("Player pieces reduced by 1", 
+				5, this.getGame().getPlayerPieces(1).size());
+		
+		assertEquals("Moved increased by 1", 
+				1, this.getGame().getPlayer(1).getNumberOfMove());
 	}
 
 }

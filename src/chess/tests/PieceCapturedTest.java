@@ -63,21 +63,20 @@ public class PieceCapturedTest extends GameTestBase {
 		Rook rook = new Rook();
 		rook.setOwner(this.getGame().getPlayer(2));
 		this.getBoard().setPiece(6, rook);
+		
 		PieceMovedEvent event = new PieceMovedEvent(0, 6);
-
+		int enemyPieces = this.getGame().getPlayerPieces(2).size();
+		
 		// act
 		this.eventMgr().fireEvent(event);
 
 		// assert
-		
 		assertEquals("Player 1: 5 score",
 				5, player1.getScore());
 		assertEquals("Player 1: move increased by 1", 
 				1, player1.getNumberOfMove());
+		assertEquals("Enemy piece reduced by 1", 
+				6, (enemyPieces -1) );
 	}
-	
-//	@Test
-//	public void capture_enemy_combine_piece() {
-//		fail("Not testing yet");
-//	}
+
 }
