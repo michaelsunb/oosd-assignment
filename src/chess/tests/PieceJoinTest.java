@@ -12,38 +12,36 @@ import chess.prototype.commands.PieceJoinCommand;
 import chess.prototype.commands.PieceMovedCommand;
 
 public class PieceJoinTest extends GameTestBase {
-	private PieceJoinCommand command;
-	
 	@Before
 	public void setUp() throws Exception {
-		command = new PieceJoinCommand();
-
-		eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
-		eventMgr.addListener("PieceJoinEvent", command);
+		this.eventMgr().removeAll();
+		this.eventMgr().addListener("PieceMovedEvent", new PieceMovedCommand());
+		this.eventMgr().addListener("PieceJoinEvent", new PieceJoinCommand());
+		
+		this.getGame().reset(10);
 	}
-	
+
 	@Test
 	public void merge_friendly_piece() {
 		// arrange
-		Piece rook = board.getPiece(0);
-		Piece knight = board.getPiece(1);
-		
-		PieceMovedEvent event = new PieceMovedEvent(0,1);
+		Piece rook = this.getBoard().getPiece(0);
+		Piece knight = this.getBoard().getPiece(1);
+
+		PieceMovedEvent event = new PieceMovedEvent(0, 1);
 
 		// act
-		eventMgr.fireEvent(event);
+		this.eventMgr().fireEvent(event);
 
 		// assert
 		assertTrue("combine piece should not equal rook's score",
-				(rook.getScore() != board.getPiece(1).getScore()));
+				(rook.getScore() != this.getBoard().getPiece(1).getScore()));
 
 		assertEquals("Combine piece should equal rook + knight score",
-				rook.getScore() + knight.getScore(),
-				board.getPiece(1).getScore());
+				rook.getScore() + knight.getScore(), this.getBoard()
+						.getPiece(1).getScore());
 
-		assertEquals("Should be nothing at position zero",
-				null,
-				board.getPiece(0));
+		assertEquals("Should be nothing at position zero", null, this
+				.getBoard().getPiece(0));
 	}
 
 }

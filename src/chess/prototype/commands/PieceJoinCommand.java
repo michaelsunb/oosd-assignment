@@ -15,15 +15,15 @@ public class PieceJoinCommand extends CommandBase {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceJoinEvent)) return;
 		
-		update((PieceJoinEvent) event);
+		joinPiece((PieceJoinEvent) event);
 	}
 
-	public void update(PieceJoinEvent event) {
+	public void joinPiece(PieceJoinEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
-		Piece pieceSelected = board.getPiece(oldPos);
-		Piece pieceTarget = board.getPiece(newPos);
+		Piece pieceSelected = this.getBoard().getPiece(oldPos);
+		Piece pieceTarget = this.getBoard().getPiece(newPos);
 
 		CombinePiece piece = new CombinePiece();
 		piece.add(pieceSelected);
@@ -31,7 +31,7 @@ public class PieceJoinCommand extends CommandBase {
 
 		piece.setOwner(pieceSelected.getOwner());
 
-		board.setPiece(newPos, piece);
-		board.setPiece(oldPos, null);
+		this.getBoard().setPiece(newPos, piece);
+		this.getBoard().setPiece(oldPos, null);
 	}
 }

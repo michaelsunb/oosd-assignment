@@ -1,6 +1,8 @@
 package chess.mvc.views;
 
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
 
 import javax.swing.*;
 
@@ -12,20 +14,16 @@ import chess.prototype.observer.IObserver;
  * A panel which render game status
  */
 public class GameStatusViewPanel extends JPanel implements IObserver {
-	private static final long serialVersionUID = 1L;
 	private int numberOfMoves = 0;
 	private int score = 0;
 
 	public GameStatusViewPanel() {
-		/*
-		 * Creating label for displaying player 1 info
-		 */
+		this.setLayout(new GridLayout (0, 1));
+
 		createStatus(1);
-
-		JLabel playerDivedLabel = new JLabel("\t|\t");
-		this.add(playerDivedLabel);
-
 		createStatus(2);
+		
+		this.setBounds(new Rectangle(60, 60));
 	}
 
 	private void createStatus(int player) {

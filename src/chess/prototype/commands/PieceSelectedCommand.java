@@ -13,8 +13,10 @@ public class PieceSelectedCommand extends CommandBase {
 		
 		PieceSelectedEvent selEvent = (PieceSelectedEvent)event;
 		
-		Piece piece = this.board.getPiece(selEvent.getPosition());
-		if (piece == null) return;
+		Piece piece = this.getBoard().getPiece(selEvent.getPosition());
+		if (piece == null) {
+			return;
+		}
 		
 		ChessboardViewPanel chessPane = selEvent.getChessboardViewPanel();
 		int currPos = selEvent.getPosition();

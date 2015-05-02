@@ -27,5 +27,7 @@ public interface IBoard {
 	 * Get the width of the chess board
 	 */
 	public int getWidth();
+	
+	public boolean isSqureEmpty(int pos);
 
 }

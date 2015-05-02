@@ -11,21 +11,22 @@ public class PieceCapturedCommand extends CommandBase {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceCapturedEvent)) return;
 		
-		update((PieceCapturedEvent) event);
+		capture((PieceCapturedEvent) event);
 	}
 
-	public void update(PieceCapturedEvent event) {
+	public void capture(PieceCapturedEvent event) {
 		int newPos = event.getNewPosition();
 		int oldPos = event.getPreviousPosition();
 
-		Piece pieceSelected = board.getPiece(oldPos);
-		Piece pieceEnemy = board.getPiece(newPos);
+		Piece pieceSelected = this.getBoard().getPiece(oldPos);
+		Piece pieceEnemy = this.getBoard().getPiece(newPos);
 
 		if(pieceEnemy == null) return; // TODO
 
 		Player playerSelected = pieceSelected.getOwner();
 
 		playerSelected.addScore(pieceEnemy.getScore());
-		board.setPiece(newPos, pieceSelected);
+		playerSelected.increaseMove();
+		this.getBoard().setPiece(newPos, pieceSelected);
 	}
 }

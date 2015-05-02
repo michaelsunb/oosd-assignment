@@ -7,19 +7,13 @@ import chess.core.*;
 import chess.prototype.commands.*;
 import chess.prototype.observer.*;
 
-public class PieceSelectedTest {
-	private ChessEventDispatcher eventMgr;
-	private PieceSelectedCommand command;
-	
+public class PieceSelectedTest extends GameTestBase {
 	@Before
-	public void setUp() throws Exception {
-		//
+	public void setUp() throws Exception {	
+		this.eventMgr().removeAll();
+		this.eventMgr().addListener("PieceSelectedEvent", new PieceSelectedCommand());
+		
 		Game.getInstance().reset(10);
-		eventMgr = ChessEventDispatcher.getInstance();
-		
-		command = new PieceSelectedCommand();
-		
-		eventMgr.addListener("PieceSelectedEvent", command);
 	}
 
 	@Test

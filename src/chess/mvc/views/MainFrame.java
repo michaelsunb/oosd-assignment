@@ -1,12 +1,15 @@
 package chess.mvc.views;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private ChessboardViewPanel chessboardPane;
 	private GameStatusViewPanel statusPane;
+	private PieceViewPanel pieceViewPane;
+	
 	private AbstractAction actionHandler;
 	
 	public MainFrame(AbstractAction handler) {
@@ -24,9 +27,18 @@ public class MainFrame extends JFrame {
 		
 		// add game status
 		this.statusPane = new GameStatusViewPanel();
-		contentPane.add(this.statusPane, BorderLayout.SOUTH);
+		this.pieceViewPane = new PieceViewPanel(handler);
 		
-		setSize(605, 660);
+		JPanel gameInfo = new JPanel();
+		gameInfo.setLayout(new GridLayout(0, 1));
+		gameInfo.setBounds(new Rectangle(60, contentPane.getHeight()));
+		
+		gameInfo.add(this.statusPane); 
+		gameInfo.add(this.pieceViewPane);
+		
+		contentPane.add(gameInfo, BorderLayout.EAST);
+		
+		setSize(870, 660);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

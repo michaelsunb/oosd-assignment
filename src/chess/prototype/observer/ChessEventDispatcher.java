@@ -14,7 +14,6 @@ public class ChessEventDispatcher {
 	private Map<String, ArrayList<IObserver>> services;
 
 	private ChessEventDispatcher() {
-		super();
 		services = new Hashtable<String, ArrayList<IObserver>>();
 	}
 
@@ -38,9 +37,6 @@ public class ChessEventDispatcher {
 	}
 
 	public void removeListener(String eventName, IObserver observer) {
-		/*
-		 * TODO: remove an IObserver from listener list
-		 */
 		if (!this.services.containsKey(eventName)) {
 			return;
 		}
@@ -67,5 +63,9 @@ public class ChessEventDispatcher {
 			observer.update(event);
 		}
 
+	}
+
+	public void removeAll() {
+		services = new Hashtable<String, ArrayList<IObserver>>();
 	}
 }

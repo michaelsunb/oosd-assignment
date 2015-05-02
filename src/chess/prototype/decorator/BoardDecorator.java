@@ -4,6 +4,7 @@ import chess.core.IBoard;
 import chess.core.Piece;
 
 public abstract class BoardDecorator implements IBoard {
+
 	protected IBoard board;
 
 	public BoardDecorator(IBoard board) {
@@ -36,5 +37,10 @@ public abstract class BoardDecorator implements IBoard {
 	@Override
 	public int getWidth() {
 		return this.board.getWidth();
+	}
+	
+	@Override
+	public boolean isSqureEmpty(int pos) {
+		return this.board.isSqureEmpty(pos);
 	}
 }

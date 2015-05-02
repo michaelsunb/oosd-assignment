@@ -31,25 +31,27 @@ public class PieceMovedCommand extends CommandBase {
 
 		if(landingOnFriend()) {
 			PieceJoinEvent join = new PieceJoinEvent(oldPosition, newPosition);
-			eventMgr.fireEvent(join);
+			this.eventMgr().fireEvent(join);
 			return;
 		}
 		
 		if(landingOnEnemy()) {
 			PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
-			eventMgr.fireEvent(capture);
+			this.eventMgr().fireEvent(capture);
 			return;
 		}
 		
 		// destination is empty so just occupy
-		board.getPieces()[newPosition] = board.getPiece(oldPosition);
-		board.getPieces()[oldPosition] = null;
+		Piece piece = this.getBoard().getPiece(oldPosition);
+		this.getBoard().getPieces()[newPosition] = piece;
+		this.getBoard().getPieces()[oldPosition] = null;
+		piece.getOwner().increaseMove();
 	}
 
 	private boolean landingOnFriend() {
 		selectedOwner = selectedPiece.getOwner();
-		targetOwner = (board.getPiece(newPosition) != null) ? board
-				.getPiece(newPosition).getOwner() : null;
+		targetOwner = !this.getBoard().isSqureEmpty(newPosition) 
+				? this.getBoard().getPiece(newPosition).getOwner() : null;
 
 		if(selectedOwner == targetOwner) {
 			return true;
@@ -60,7 +62,7 @@ public class PieceMovedCommand extends CommandBase {
 
 	private boolean landingOnEnemy() {
 
-		if(!((Board) board).isSqureEmpty(newPosition) &&
+		if(!this.getBoard().isSqureEmpty(newPosition) &&
 				(targetOwner == null || selectedOwner != targetOwner)) {
 			return true;
 		}
@@ -69,7 +71,7 @@ public class PieceMovedCommand extends CommandBase {
 	}
 
 	private boolean isSelectedPieceValid() {
-		selectedPiece = board.getPiece(oldPosition);
+		selectedPiece = this.getBoard().getPiece(oldPosition);
 
 		if (selectedPiece == null || // selected piece is an empty square
 				(selectedPiece != null && // selected piece has no owner

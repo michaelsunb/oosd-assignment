@@ -14,7 +14,7 @@ public class Game implements Serializable {
 	private Board board;
 	private static Game instance;
 	private int maxMoves = 10;
-
+	
 	private Game() {
 		reset(maxMoves);
 	}
@@ -149,4 +149,5 @@ public class Game implements Serializable {
 		
 		return false;
 	}
+	
 }
