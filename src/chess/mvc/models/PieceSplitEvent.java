@@ -5,31 +5,29 @@
 package chess.mvc.models;
 
 import chess.core.Piece;
+import chess.mvc.views.PieceViewPanel;
+import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 
 /*
  * Provide useful information about the piece needed to be split
  */
 public class PieceSplitEvent implements ChessEvent {
-	private Piece currentPiece;
+	private CombinePiece currentPiece;
 	private Piece splitPiece;
-	private int splitToPosition;
-	private int splitFromPosition;
+	
+	private int newPos;
 
-	public PieceSplitEvent(Piece currentPiece, Piece splitPiece,
-			int splitToPosition, int splitFromPosition) {
-		super();
-		this.currentPiece = currentPiece;
+	public PieceSplitEvent(CombinePiece mainPiece, Piece splitPiece,
+			int splitToPosition) {
+
+		this.currentPiece = mainPiece;
 		this.splitPiece = splitPiece;
-		this.splitToPosition = splitToPosition;
-		this.splitFromPosition = splitFromPosition;
+		this.newPos = splitToPosition;
+		
 	}
 
-	public int getSplitPosition() {
-		return splitFromPosition;
-	}
-
-	public Piece getCurrentPiece() {
+	public CombinePiece getCurrentPiece() {
 		return currentPiece;
 	}
 
@@ -38,6 +36,6 @@ public class PieceSplitEvent implements ChessEvent {
 	}
 
 	public int getSplitToPosition() {
-		return splitToPosition;
+		return newPos;
 	}
 }

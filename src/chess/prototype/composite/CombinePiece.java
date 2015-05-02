@@ -20,7 +20,8 @@ public class CombinePiece extends Piece {
 
 	public Piece remove(Piece piece) {
 		if (piece instanceof CombinePiece) {
-			for(Piece p: ((CombinePiece)piece).getPieces()) {
+			List<Piece> splitPieces =  ((CombinePiece)piece).getPieces();
+			for(Piece p: splitPieces) {
 				this.pieces.remove(p);
 				this.score -= piece.getScore();	
 			}
