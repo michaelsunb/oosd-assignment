@@ -43,4 +43,10 @@ public abstract class BoardDecorator implements IBoard {
 	public boolean isSqureEmpty(int pos) {
 		return this.board.isSqureEmpty(pos);
 	}
+
+	@Override
+	public int getPiecePosition(Piece currentPiece) {
+		return this.board.getPiecePosition(currentPiece);
+	}
+	
 }

@@ -18,9 +18,22 @@ public class CombinePiece extends Piece {
 		return true;
 	}
 
-	public void remove(Piece piece) {
-		this.pieces.remove(piece);
-		this.score -= piece.getScore();
+	public Piece remove(Piece piece) {
+		if (piece instanceof CombinePiece) {
+			for(Piece p: ((CombinePiece)piece).getPieces()) {
+				this.pieces.remove(p);
+				this.score -= piece.getScore();	
+			}
+		} else {
+			this.pieces.remove(piece);
+			this.score -= piece.getScore();	
+		}
+
+		if (this.pieces.size() == 1) {
+			return this.pieces.get(0);
+		}
+		
+		return this;
 	}
 
 	@Override
@@ -49,5 +62,9 @@ public class CombinePiece extends Piece {
 			symbols += p.getSymbol();
 		}
 		return symbols;
+	}
+	
+	public List<Piece> getPieces() {
+		return this.pieces;
 	}
 }

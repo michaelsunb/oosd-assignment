@@ -50,4 +50,15 @@ public class Board implements IBoard, Serializable {
 	public boolean isSqureEmpty(int pos) {
 		return (squares[pos] == null) ? true : false;
 	}
+
+	@Override
+	public int getPiecePosition(Piece currentPiece) {
+		for(int i = 0; i < this.squares.length; i++) {
+			if(this.squares[i] != null &&
+					this.squares[i].equals(currentPiece)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }
