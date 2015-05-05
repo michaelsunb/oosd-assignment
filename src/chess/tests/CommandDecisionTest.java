@@ -9,26 +9,27 @@ import org.junit.Test;
 import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.commands.PieceCapturedCommand;
-import chess.prototype.commands.PieceJoinCommand;
-import chess.prototype.commands.PieceMovedCommand;
+import chess.prototype.events.PieceMovedEvent;
+import chess.prototype.events.listener.PieceCapturedEventListener;
+import chess.prototype.events.listener.PieceJoinEventListener;
+import chess.prototype.events.listener.PieceMovedEventListener;
+import chess.prototype.template_method.PieceMovedTemplateMethod;
 
 public class CommandDecisionTest extends GameTestBase {
-	private PieceMovedCommand commandMove;
-	private PieceJoinCommand commandJoin;
-	private PieceCapturedCommand commandCapture;
+	private PieceMovedTemplateMethod commandMove;
+	private PieceMovedTemplateMethod commandJoin;
+	private PieceMovedTemplateMethod commandCapture;
 	
 	@Before
 	public void setUp() throws Exception {
 
-		commandMove = new PieceMovedCommand();
-		commandJoin = new PieceJoinCommand();
-		commandCapture = new PieceCapturedCommand();
+		commandMove = new PieceMovedEventListener();
+		commandJoin = new PieceJoinEventListener();
+		commandCapture = new PieceCapturedEventListener();
 		
 		eventMgr.addListener("PieceMovedEvent", commandMove);
-		eventMgr.addListener("PieceJoinEvent", commandJoin);
-		eventMgr.addListener("PieceCapturedEvent", commandCapture);
+		eventMgr.addListener("PieceMovedEvent", commandJoin);
+		eventMgr.addListener("PieceMovedEvent", commandCapture);
 	}
 	
 	@Test
@@ -82,6 +83,21 @@ public class CommandDecisionTest extends GameTestBase {
 				board.getPiece(0));
 	}
 
+	/**
+	 *  TODO: When testing whole test package
+	 *  this test case fails because for some reason
+	 *  when in PieceMovedCommand it does not detect
+	 *  the selected piece but then when in
+	 *  PieceCapturedCommand selected piece is detected
+	 *  and isSqureEmpty at new position is not true.
+	 *  
+	 *  UPDATE: Some reason event manager has another
+	 *  instance of game and board.
+	 *  
+	 *  UPDATE2: Both move command and capture
+	 *  command are being called and they have
+	 *  different instances of Board.
+	 */
 	@Test
 	public void move_piece() {
 		// arrange
@@ -100,17 +116,17 @@ public class CommandDecisionTest extends GameTestBase {
 	@Test
 	public void piece_did_not_move() {
 		// arrange
-		Piece prevCurrentPiece = board.getPiece(0);
-		Piece prevDestinePiece = board.getPiece(30);
 		PieceMovedEvent event = new PieceMovedEvent(0,30);
 		
 		// act
-		eventMgr.fireEvent(event);
+
 		
 		// assert
-		assertEquals("Position 0 should still have a piece",
-				prevCurrentPiece, board.getPiece(0));
-		assertEquals("Position 30 should still have a piece",
-				prevDestinePiece, board.getPiece(30));
+		assertTrue("Piece cannot be moved",
+				!commandMove.isMoveValid(event));
+		assertTrue("Piece cannot be joined",
+				!commandJoin.isMoveValid(event));
+		assertTrue("Piece cannot be captured",
+				!commandCapture.isMoveValid(event));
 	}
 }

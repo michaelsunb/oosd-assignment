@@ -1,7 +1,6 @@
-package chess.mvc.models;
+package chess.prototype.events;
 
 import chess.core.Player;
-import chess.prototype.observer.ChessEvent;
 
 public class GameStatusEvent implements ChessEvent {
 

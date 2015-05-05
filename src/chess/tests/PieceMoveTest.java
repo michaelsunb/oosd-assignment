@@ -5,16 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.commands.PieceMovedCommand;
 import chess.prototype.composite.Rook;
+import chess.prototype.events.PieceMovedEvent;
+import chess.prototype.events.listener.PieceMovedEventListener;
 
 public class PieceMoveTest extends GameTestBase {
-	private PieceMovedCommand command;
+	private PieceMovedEventListener command;
 	
 	@Before
 	public void setUp() throws Exception {
-		command = new PieceMovedCommand();
+		command = new PieceMovedEventListener();
 		
 		eventMgr.addListener("PieceMovedEvent", command);
 	}

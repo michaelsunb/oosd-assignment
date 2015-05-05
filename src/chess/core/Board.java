@@ -1,6 +1,8 @@
 package chess.core;
 
-public class Board implements IBoard {
+import java.io.Serializable;
+
+public class Board implements IBoard, Serializable {
 	private int height;
 	private int width;
 	private Piece[] squares;

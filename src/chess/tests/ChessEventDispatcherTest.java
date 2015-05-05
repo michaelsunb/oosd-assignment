@@ -8,8 +8,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import chess.mvc.models.PieceMovedEvent;
-import chess.prototype.observer.*;
+import chess.core.ChessEventDispatcher;
+import chess.prototype.events.*;
+import chess.prototype.events.listener.EventListener;
 
 public class ChessEventDispatcherTest {
 
@@ -58,7 +59,7 @@ public class ChessEventDispatcherTest {
 				listener1.getTestString());
 	}
 
-	class SimpleObserver implements IObserver {
+	class SimpleObserver implements EventListener {
 
 		private String testString = "";
 

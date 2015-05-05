@@ -4,14 +4,14 @@
  */
 package chess.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import chess.prototype.decorator.*;
 
-public class Game {
+public class Game implements Serializable {
 	private Player[] players;
-	private IBoard board;
+	private Board board;
 	private static Game instance;
 	private int maxMoves = 10;
 
@@ -92,12 +92,61 @@ public class Game {
 		Player player = this.getPlayer(p_num);
 		
 		List<Piece> pieces = new ArrayList<Piece>();
+
 		for(Piece p: this.board.getPieces()) {
+			if (p == null || p.getOwner() == null) continue;
 			if (p.getOwner().equals(player))
 			{
 				pieces.add(p);
 			}
 		}
 		return pieces;
+	}
+	
+	public boolean save() {
+		File file = new File("game.state");
+		if (file.exists()) file.delete();
+		
+		try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			// ignore
+		}
+		
+		try(FileOutputStream fos = new FileOutputStream(file);
+				ObjectOutputStream out = new ObjectOutputStream(fos) 
+				) {
+
+			out.writeObject(instance);
+			out.close();
+
+			return true;
+		} catch (IOException e) {
+			// ignore
+		}
+		
+		return false;
+	}
+	
+	public boolean restore() {
+		File file = new File("game.state");
+		if (!file.exists()) {
+			return false;
+		}
+
+		try(FileInputStream fis = new FileInputStream(file);
+				ObjectInputStream in = new ObjectInputStream(fis) 
+				) {
+			
+			// update instance
+			instance = (Game)in.readObject();
+			in.close();
+			return true;
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println(e.getMessage());
+			// ignore
+		}
+		
+		return false;
 	}
 }

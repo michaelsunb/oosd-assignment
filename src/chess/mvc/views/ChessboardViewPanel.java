@@ -7,74 +7,99 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import chess.core.*;
-import chess.mvc.models.GameStatusEvent;
-import chess.mvc.models.PieceMovedEvent;
-import chess.mvc.models.PieceSelectedEvent;
-import chess.prototype.observer.*;
+import chess.prototype.events.*;
 
-/*
- * Adapted from http://stackoverflow.com/questions/21077322/create-a-chess-board-with-jpanel
- * TODO: inject board data into the view
- */
+
 public class ChessboardViewPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
+
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-	private IBoard board;
-	private String setActionCommand = "pickPiece";
-	
+	private String setActionCommand = "pickPiece";	
 	private int prevPosition;
-
-	public ChessboardViewPanel() {
-		board = Game.getInstance().getBoardInstance();
-
-		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
-
-		this.setBorder(new LineBorder(Color.BLACK));
-
-		renderBoard(initialComponenets());
+	private Component[] components;
+	private AbstractAction actionHandler;
+	
+	public ChessboardViewPanel(AbstractAction handler) {
+		this.actionHandler = handler;
 	}
 
-	private Component[] initialComponenets() {
+	private void initialComponent() {
+		IBoard board = Game.getInstance().getBoardInstance();
+		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
+		this.setBorder(new LineBorder(Color.BLACK));
+		
 		int boardSize = board.getHeight() * board.getWidth();
-		Component[] comp = new Component[boardSize];
+		this.components = new Component[boardSize];
 		for (int i = 0; i < boardSize; i++) {
 			JComponent b = new JButton();
-			comp[i] = b;
+			this.components[i] = b;
 		}
-		return comp;
 	}
-
-	private void renderBoard(Component[] component) {
+	public void redraw() {
+		this.redraw(false);
+	}
+	
+	public void redraw(boolean clearView) {
+		if (clearView) {
+			this.removeAll();
+			initialComponent();
+		}
+		
+		IBoard board = Game.getInstance().getBoardInstance();
 		int pos = 0;
-		for (Component comp : component) {
+		for (Component comp : this.components) {
+			JButton btn = (JButton)comp;
+			
 			int x = (pos % board.getWidth());
 			int y = (pos / board.getHeight());
-			/*
-			 * Sokun's comment: need refactoring
-			 */
+
 			if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
-				comp.setBackground(Color.LIGHT_GRAY);
+				btn.setBackground(Color.LIGHT_GRAY);
 			} else {
-				comp.setBackground(Color.GRAY);
+				btn.setBackground(Color.GRAY);
 			}
 
 			Piece piece = board.getPiece(pos);
 			String symbol = "";
+					
 			if (piece != null) {
-				symbol = board.getPiece(pos).getSymbol();
-
-				((AbstractButton) comp).setFont(font);
+				symbol = piece.getSymbol();	
+				btn.setFont(font);
+				//((AbstractButton) comp).setFont(font);
+				
 				if (piece.getOwner() != null) {
-					((AbstractButton) comp).setForeground(piece.getOwner().getColour());
+					btn.setForeground(piece.getOwner().getColour());
+					// ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
 				}
-			}
-			((AbstractButton) comp).setAction(new GameAction(symbol,
-					setActionCommand, pos));
-			this.add(comp);
+			}	
+			
+			btn.setText(symbol);
+
+			/*
+			 * TODO: What if we build a special format string & use it as actionCommand?
+			 * e.g PieceSelectedEvent 1; then have a command parser which turn this string into ChessEvent?
+			 */
+			btn.setActionCommand("PieceSelectedEvent:" +  pos);
+			btn.addActionListener(this.actionHandler);
+			
+			this.add(btn);
 			pos++;
 		}
+		this.validate();
 	}
-
+	
+	public void clearPath() {
+		for(Component comp: this.components) {
+			if (comp.getBackground() == Color.RED) {
+				// what is the default color
+				comp.setBackground(Color.GRAY);
+			}
+		}
+	}
+	
+	public void markPath(int pos) {
+		components[pos].setBackground(Color.RED);
+	}
+	
 	/*
 	 * Sokun's comment: refactor to use Observer pattern instead of extending
 	 * AbstractAction
@@ -110,13 +135,12 @@ public class ChessboardViewPanel extends JPanel {
 
 				// fire two events
 				int numOfMoves = Game.getInstance().getMaxMoves();
-				ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), numOfMoves);
-				ChessEvent eventSelect = new PieceSelectedEvent(position, p,
-						currentSource);
+//				ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), numOfMoves);
+//				ChessEvent eventSelect = new PieceSelectedEvent(position, currentSource);
 
-				renderBoard(listComponents);
-				eventMgr.fireEvent(eventStatus);
-				eventMgr.fireEvent(eventSelect);
+				redraw(false);
+//				eventMgr.fireEvent(eventStatus);
+//				eventMgr.fireEvent(eventSelect);
 				
 				prevPosition = position;
 				break;
@@ -126,9 +150,10 @@ public class ChessboardViewPanel extends JPanel {
 				ChessEvent movePieceEvent = new PieceMovedEvent(position,prevPosition);
 				eventMgr.fireEvent(movePieceEvent);
 
-				renderBoard(listComponents);
+				redraw();
 				break;
 			}
 		}
 	}
+
 }
