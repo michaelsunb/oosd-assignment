@@ -1,7 +1,5 @@
 package chess.core;
 
-import chess.prototype.composite.CombinePiece;
-
 public interface IBoard {
 	/*
 	 * Initialize the board object
@@ -24,7 +22,7 @@ public interface IBoard {
 	 * Get the height of the chess board
 	 */
 	public int getHeight();
-
+	
 	/*
 	 * Get the width of the chess board
 	 */
@@ -33,5 +31,7 @@ public interface IBoard {
 	public boolean isSqureEmpty(int pos);
 
 	public int getPiecePosition(Piece currentPiece);
+	
+	public void reset(int height, int width);
 
 }

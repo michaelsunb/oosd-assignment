@@ -61,4 +61,14 @@ public class Board implements IBoard, Serializable {
 		}
 		return -1;
 	}
+
+	@Override
+	public void reset(int height, int width) {
+		this.width = width;
+		this.height = height;
+		
+		// clear object
+		int boardSize = height * width;
+		squares = new Piece[boardSize];
+	}
 }

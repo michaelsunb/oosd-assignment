@@ -49,4 +49,7 @@ public abstract class BoardDecorator implements IBoard {
 		return this.board.getPiecePosition(currentPiece);
 	}
 	
+	public void reset(int height, int width) {
+		this.board.reset(height, width);
+	}
 }

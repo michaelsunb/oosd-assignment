@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import chess.core.Board;
@@ -17,15 +18,48 @@ import chess.prototype.composite.Knight;
 import chess.prototype.composite.Rook;
 import chess.prototype.decorator.GameMapDecorator;
 
-public class CustomMapCreationTest {
-
+public class CustomMapCreationTest extends GameTestBase {
+	@Before
+	public void setUp() throws Exception {
+		this.getGame();
+	}
+	
 	@Test
-	public void test() {
-		Player[] players;
-		players = new Player[2];
-		players[0] = new Player();
-		players[1] = new Player();
+	public void decorate_chessboard_using_map() {
+		ArrayList<String> userInput = new ArrayList<String>();
+		userInput.add("RBKRBKBR");
+		userInput.add("SSSSSSSS");
+		userInput.add("SSSSSSSS");
+		userInput.add("XXXXXXXX");
+				
+		new GameMapDecorator(this.getBoard(), userInput).init();
+			
+		//assert correct piece at correct place
+		assertEquals(new Rook().getClass(), this.getBoard().getPiece(0).getClass());
+		assertEquals(new Bishop().getClass(), this.getBoard().getPiece(4).getClass());
+		assertEquals(new Knight().getClass(), this.getBoard().getPiece(5).getClass());
 		
+		//mirroring done correctly
+		assertEquals(new Rook().getClass(), this.getBoard().getPiece(56).getClass());
+		assertEquals(new Bishop().getClass(), this.getBoard().getPiece(57).getClass());
+		assertEquals(new Knight().getClass(), this.getBoard().getPiece(61).getClass());
+		
+		//correct owners
+		assertEquals(this.getGame().getPlayer(2), this.getBoard().getPiece(61).getOwner());
+		assertEquals(null, this.getBoard().getPiece(24).getOwner());
+		assertEquals(this.getGame().getPlayer(1), this.getBoard().getPiece(0).getOwner());
+		
+		//nulls and barriers placed correctly
+		assertEquals(null, this.getBoard().getPiece(8));
+		assertEquals(null, this.getBoard().getPiece(23));
+		assertEquals(null, this.getBoard().getPiece(40));
+		assertEquals(null, this.getBoard().getPiece(55));
+		assertEquals(new Barrier().getClass(), this.getBoard().getPiece(24).getClass());
+		assertEquals(new Barrier().getClass(), this.getBoard().getPiece(39).getClass());
+	}
+	
+	@Test
+	public void map_validation() {
 		ArrayList<String> userInput = new ArrayList<String>();
 		userInput.add("RBKRBKBR");
 		userInput.add("SSSSSSSS");
@@ -39,37 +73,11 @@ public class CustomMapCreationTest {
 		userInput2.add("XXXXXXXX");
 		userInput2.add("XXXXXXXX");
 		
-		IBoard board = new Board(userInput.get(0).length(),userInput.get(0).length());
-		board.init();
-		
-		new GameMapDecorator(board, userInput, players).init();
-		
 		//mapsquarevalidity function checks
-		assertTrue(GameMapDecorator.gameSquareMapValidity(userInput));
-		assertFalse(GameMapDecorator.gameSquareMapValidity(userInput2));
-		
-		//assert correct piece at correct place
-		assertEquals(new Rook().getClass(), board.getPiece(0).getClass());
-		assertEquals(new Bishop().getClass(), board.getPiece(4).getClass());
-		assertEquals(new Knight().getClass(), board.getPiece(5).getClass());
-		
-		//mirroring done correctly
-		assertEquals(new Rook().getClass(), board.getPiece(56).getClass());
-		assertEquals(new Bishop().getClass(), board.getPiece(57).getClass());
-		assertEquals(new Knight().getClass(), board.getPiece(61).getClass());
-		
-		//correct owners
-		assertEquals(players[1], board.getPiece(61).getOwner());
-		assertEquals(null, board.getPiece(24).getOwner());
-		assertEquals(players[0], board.getPiece(0).getOwner());
-		
-		//nulls and barriers placed correctly
-		assertEquals(null, board.getPiece(8));
-		assertEquals(null, board.getPiece(23));
-		assertEquals(null, board.getPiece(40));
-		assertEquals(null, board.getPiece(55));
-		assertEquals(new Barrier().getClass(), board.getPiece(24).getClass());
-		assertEquals(new Barrier().getClass(), board.getPiece(39).getClass());
+		assertTrue("A valid chessboard", 
+				GameMapDecorator.gameSquareMapValidity(userInput));
+		assertFalse("Map height != width /2 are invalid", 
+				GameMapDecorator.gameSquareMapValidity(userInput2));
 	}
 
 }
