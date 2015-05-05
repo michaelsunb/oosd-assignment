@@ -52,14 +52,27 @@ public class MainFrame extends JFrame {
 	private void buildMenuBar() {
 		final JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Game");
+		// new game
 		JMenuItem newGame = new JMenuItem("New Game");
 		newGame.setActionCommand("NewGameEvent");
-		
-		newGame.addActionListener(this.actionHandler);
-		
+		newGame.addActionListener(this.actionHandler);	
 		menu.add(newGame);
-		menuBar.add(menu);
 		
+		menu.addSeparator();
+		
+		// save
+		JMenuItem saveGame = new JMenuItem("Save");
+		saveGame.setActionCommand("SaveGameEvent");
+		saveGame.addActionListener(this.actionHandler);
+		menu.add(saveGame);
+		
+		// restore
+		JMenuItem restoreGame = new JMenuItem("Restore");
+		restoreGame.setActionCommand("RestoreGameEvent");
+		restoreGame.addActionListener(this.actionHandler);
+		menu.add(restoreGame);
+		
+		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
 	}
 

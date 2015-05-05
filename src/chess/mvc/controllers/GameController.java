@@ -35,6 +35,7 @@ public class GameController extends AbstractAction {
 		// May be we can use factory pattern to create different event
 		switch(e.getActionCommand()) {
 		case "NewGameEvent":
+			// TODO: load a UI to take game option
 			eventMgr.fireEvent(new GameNewEvent(view));
 			break;
 			default:

@@ -23,6 +23,7 @@ public class Chess {
 
 				eventMgr.addListener("GameNewEvent", gameController.newGame());
 				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());
+				
 				/*
 				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
 				eventMgr.addListener("GameNewEvent", gameController);
