@@ -28,6 +28,12 @@ public class PieceSplitEventListener extends EventListenerBase {
 		Piece fragment = split.getPieceToSplit();
 		composite.remove(fragment);
 
-		eventMgr.fireEvent(capture);
+		if(new PieceJoinEventListener().isMoveValid(capture)) {
+			eventMgr.fireEvent(capture);
+		} else {
+			eventMgr.fireEvent(capture);
+			board.getPieces()[newPosition] = fragment;
+		}
+		board.getPieces()[oldPosition] = composite;
 	}
 }

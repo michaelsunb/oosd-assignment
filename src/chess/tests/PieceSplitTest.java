@@ -1,11 +1,13 @@
 package chess.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import chess.core.Piece;
+import chess.prototype.composite.CombinePiece;
 import chess.prototype.events.PieceMovedEvent;
 import chess.prototype.events.PieceSplitEvent;
 import chess.prototype.events.listener.PieceCapturedEventListener;
@@ -41,16 +43,24 @@ public class PieceSplitTest extends GameTestBase {
 		Piece knight = board.getPiece(1);
 		eventMgr.fireEvent(new PieceMovedEvent(0,1));
 
+		assertTrue("Check first if piece have combined",
+				(board.getPiece(1) instanceof CombinePiece));
+
 		// act
 		PieceSplitEvent event = new PieceSplitEvent(rook, 1,7);
 		eventMgr.fireEvent(event);
-
+		
 		// assert
-		assertTrue("Piece should equal rook's score",
-				(rook.getScore() == board.getPiece(7).getScore()));
+		// TODO: Should this be true?
+		assertTrue("Check now if piece is still combined",
+				(board.getPiece(1) instanceof CombinePiece));
+		
+		assertTrue("Piece at position 1 should not equal knight + rook score",
+				((knight.getScore() + rook.getScore()) !=
+						board.getPiece(1).getScore()));
 
-		assertEquals("Combine piece should equal knight score",
-				knight.getScore(), board.getPiece(1).getScore());
+		assertEquals("Piece at position 7 should equal rook's score",
+				rook.getScore(), board.getPiece(7).getScore());
 
 		assertEquals("Rook should be at position 7",
 				rook,
