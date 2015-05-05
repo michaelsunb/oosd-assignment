@@ -37,6 +37,7 @@ public class ChessboardViewPanel extends JPanel {
 			this.components[i] = b;
 		}
 	}
+	
 	public void redraw() {
 		this.redraw(false);
 	}
@@ -90,7 +91,12 @@ public class ChessboardViewPanel extends JPanel {
 		this.validate();
 	}
 	
+	/*
+	 * @pre.condition: this.components != null
+	 */
 	public void clearPath() {
+		if (this.components == null) return;
+		
 		for(Component comp: this.components) {
 			if (comp.getBackground() == Color.RED) {
 				// what is the default color
@@ -157,6 +163,15 @@ public class ChessboardViewPanel extends JPanel {
 				break;
 			}
 		}
+	}
+
+	/*
+	 * @pre.condition: i between 0 to this.components.length
+	 * @post.condition: return a null or an instance of the component object
+	 */
+	public Component getSquare(int i) {
+		if (i < 0 || i > this.components.length) return null;
+		return this.components[i];
 	}
 
 }

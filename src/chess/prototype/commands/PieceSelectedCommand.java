@@ -18,7 +18,9 @@ public class PieceSelectedCommand extends CommandBase {
 			return;
 		}
 		
-		ChessboardViewPanel chessPane = selEvent.getChessboardViewPanel();
+		this.getGame().setSelectedPiece(piece);
+		
+		ChessboardViewPanel chessPane = selEvent.getMainFrame().getChessBoardPane();
 		int currPos = selEvent.getPosition();
 		
 		int movablePos[] = piece.getMovablePositions(currPos);

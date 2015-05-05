@@ -4,21 +4,21 @@
  */
 package chess.mvc.models;
 
-import chess.mvc.views.ChessboardViewPanel;
+import chess.mvc.views.MainFrame;
 import chess.prototype.observer.ChessEvent;
 
 public class PieceSelectedEvent implements ChessEvent {
-	private ChessboardViewPanel chessPane;
+	private MainFrame mainFrame;
 	private int position;
 
 	public PieceSelectedEvent(int currentPosition, 
-			ChessboardViewPanel component) {
+			MainFrame mainFrame) {
 		this.position = currentPosition;
-		this.chessPane = component;
+		this.mainFrame = mainFrame;
 	}
 
-	public final ChessboardViewPanel getChessboardViewPanel() {
-		return chessPane;
+	public final MainFrame getMainFrame() {
+		return mainFrame;
 	}
 
 	public final int getPosition() {
