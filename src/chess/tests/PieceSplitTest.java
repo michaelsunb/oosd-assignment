@@ -16,11 +16,15 @@ import chess.prototype.composite.Rook;
 public class PieceSplitTest extends GameTestBase {
 	private CombinePiece combined;
 	private Piece p0, p1, p2;
+
 	@Before
 	public void setUp() throws Exception {
 		this.eventMgr().removeAll();
 		
 		this.eventMgr().addListener("PieceSplitEvent", new PieceSplitCommand());
+		this.eventMgr().addListener("PieceMovedEvent", new PieceMovedCommand());
+		this.eventMgr().addListener("PieceJoinEvent", new PieceJoinCommand());
+		this.eventMgr().addListener("PieceCapturedEvent", new PieceCapturedCommand());
 		
 		this.getGame().reset(10);
 		
@@ -78,7 +82,35 @@ public class PieceSplitTest extends GameTestBase {
 	
 	@Test
 	public void split_a_piece_and_land_on_enemy_piece() {
-		fail("Not yet implement");
+		// arrange
+		Player player1 = this.getGame().getPlayer(1);
+		PieceSplitEvent event = new PieceSplitEvent(combined, p1, 12);
+		
+		// act
+		this.eventMgr().fireEvent(event);
+
+		// after act
+		int totalBarriers = numOfBarrier();
+
+		// assert
+		assertEquals("A piece is splitted", p1,
+				this.getBoard().getPiece(12));
+		assertEquals("Number of Barriers reduced to 11",
+				11, totalBarriers);
+		assertEquals("Player 1: 1 score",
+				1, player1.getScore());
+		assertEquals("Player 1: move increased by 1", 
+				1, player1.getNumberOfMove());
+	}
+
+	private int numOfBarrier() {
+		int tempcount = 0;
+		for(Piece p : this.getBoard().getPieces()){
+			if(p != null && p.getOwner() == null){
+				tempcount++;
+			}
+		}
+		return tempcount;
 	}
 
 }

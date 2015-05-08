@@ -5,7 +5,6 @@
 package chess.mvc.models;
 
 import chess.core.Piece;
-import chess.mvc.views.PieceViewPanel;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 
@@ -20,11 +19,9 @@ public class PieceSplitEvent implements ChessEvent {
 
 	public PieceSplitEvent(CombinePiece mainPiece, Piece splitPiece,
 			int splitToPosition) {
-
 		this.currentPiece = mainPiece;
 		this.splitPiece = splitPiece;
 		this.newPos = splitToPosition;
-		
 	}
 
 	public CombinePiece getCurrentPiece() {

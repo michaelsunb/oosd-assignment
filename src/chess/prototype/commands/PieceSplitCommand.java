@@ -5,38 +5,40 @@ import chess.mvc.models.*;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 
-public class PieceSplitCommand extends CommandBase {
+public class PieceSplitCommand extends MovedDecision {
+	private PieceSplitEvent split;
+	private CombinePiece composite;
 
 	@Override
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceSplitEvent)) return;
 		
-		PieceSplitEvent split = (PieceSplitEvent)event;
+		split = (PieceSplitEvent)event;
 		
-		CombinePiece composite = split.getCurrentPiece();
+		composite = split.getCurrentPiece();
 		
-		Piece fragment = split.getSplitPiece();
-		Piece remain = composite.remove(fragment);
-		
-		int oldPos = this.getBoard().getPiecePosition(composite);
-		int newPos = split.getSplitToPosition();
-		
-		/*
-		 * This is interesting
-		 * 1. If the detination is empty: move
-		 * 2. If destination is own piece: join
-		 * 3. If destination is enemy: capture
-		 */
-		if (this.getBoard().isSqureEmpty(newPos)) {
-			
-			this.getBoard().setPiece(newPos, fragment);
-			this.getBoard().setPiece(oldPos, remain);
-			
-			fragment.getOwner().increaseMove();
-			return;
-		}
-		
-		// this.getBoard().setPiece(split.getSplitToPosition(), );
+		oldPosition = this.getBoard().getPiecePosition(composite);
+		newPosition = split.getSplitToPosition();
+
+		if(!isSelectedPieceValid()) return;
+		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
+
+		this.getBoard().setPiece(oldPosition,split.getSplitPiece()); // hacky
+		move();
 	}
 
+	@Override
+	public boolean move() {
+		if(!super.move()) return false;
+
+		// destination is empty so just occupy
+		Piece fragment = split.getSplitPiece();
+		Piece piece = composite.remove(fragment);
+		
+		this.getBoard().getPieces()[newPosition] = fragment;
+		this.getBoard().getPieces()[oldPosition] = piece;
+
+		piece.getOwner().increaseMove();
+		return true;
+	}
 }
