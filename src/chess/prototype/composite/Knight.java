@@ -1,10 +1,7 @@
 package chess.prototype.composite;
 
-import java.util.ArrayList;
-
-import chess.core.Game;
-import chess.core.IBoard;
 import chess.core.Piece;
+import chess.prototype.builder.PathBuilder;
 
 public class Knight extends Piece {
 
@@ -18,61 +15,22 @@ public class Knight extends Piece {
 
 	@Override
 	public int[] getMovablePositions(int currPos) {
-		ArrayList<Integer> positions = new ArrayList<Integer>();
-
-		IBoard board = Game.getInstance().getBoardInstance();
-
-		int boardSize = board.getHeight() * board.getWidth();
-		int width = board.getWidth();
-		int height = board.getHeight();
-
-		if (currPos >= 0 && currPos < boardSize) {
-			int x = (currPos % width);
-			int y = (currPos / height);
-			if ((x - 2) >= 0) {
-				if ((y - 1) >= 0) {
-					positions.add(getCurrentPosition((x - 2), (y - 1)));
-				}
-				if ((y + 1) < height) {
-					positions.add(getCurrentPosition((x - 2), (y + 1)));
-				}
-			}
-			if ((x + 2) < width) {
-				if ((y - 1) >= 0) {
-					positions.add(getCurrentPosition((x + 2), (y - 1)));
-				}
-				if ((y + 1) < height) {
-					positions.add(getCurrentPosition((x + 2), (y + 1)));
-				}
-			}
-			if ((y - 2) >= 0) {
-				if ((x - 1) >= 0) {
-					positions.add(getCurrentPosition((x - 1), (y - 2)));
-				}
-				if ((x + 1) < width) {
-					positions.add(getCurrentPosition((x + 1), (y - 2)));
-				}
-			}
-			if ((y + 2) < height) {
-				if ((x - 1) >= 0) {
-					positions.add(getCurrentPosition((x - 1), (y + 2)));
-				}
-				if ((x + 1) < width) {
-					positions.add(getCurrentPosition((x + 1), (y + 2)));
-				}
-			}
+		PathBuilder buildPositions = null;
+		try {
+			buildPositions = new PathBuilder.Builder(currPos)
+				.eastTwoNorthOne()
+				.eastTwoSouthOne()
+				.northTwoEastOne()
+				.northTwoWestOne()
+				.southTwoEastOne()
+				.southTwoWestOne()
+				.westTwoNorthOne()
+				.westTwoSouthOne()
+				.build();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		int[] ret = new int[positions.size()];
-		int i = 0;
-		for (Integer pos : positions) {
-			ret[i++] = pos;
-		}
-
-		return ret;
-	}
-
-	private int getCurrentPosition(int x, int y) {
-		return (x + (y * Game.getInstance().getBoardInstance().getHeight()));
+		return buildPositions.getMovablePositions();
 	}
 }

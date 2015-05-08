@@ -3,24 +3,27 @@ package chess.prototype.composite;
 import chess.core.Piece;
 import chess.prototype.builder.PathBuilder;
 
-public class Bishop extends Piece {
-	public Bishop() {
+public class Jester extends Piece {
+
+	public Jester() {
 		this.score = 5;
 		/*
-		 * Bishop unicode character value
+		 * Knight Unicode
 		 */
-		this.symbol = '\u2657';
+		this.symbol = 'J';
 	}
 
 	@Override
-	public int[] getMovablePositions(int currPos) {
+	public int[] getMovablePositions(int pos) {
 		PathBuilder buildPositions = null;
 		try {
-			buildPositions = new PathBuilder.Builder(currPos)
-				.northEast()
-				.northWest()
-				.southEast()
-				.southWest()
+			buildPositions = new PathBuilder.Builder(pos)
+				.south()
+				.north()
+				.eastTwoNorthOne()
+				.eastTwoSouthOne()
+				.westTwoNorthOne()
+				.westTwoSouthOne()
 				.build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

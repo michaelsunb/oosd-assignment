@@ -3,13 +3,14 @@ package chess.prototype.composite;
 import chess.core.Piece;
 import chess.prototype.builder.PathBuilder;
 
-public class Bishop extends Piece {
-	public Bishop() {
+public class Musician extends Piece {
+
+	public Musician() {
 		this.score = 5;
 		/*
-		 * Bishop unicode character value
+		 * Knight Unicode
 		 */
-		this.symbol = '\u2657';
+		this.symbol = 'M';
 	}
 
 	@Override
@@ -17,10 +18,12 @@ public class Bishop extends Piece {
 		PathBuilder buildPositions = null;
 		try {
 			buildPositions = new PathBuilder.Builder(currPos)
-				.northEast()
-				.northWest()
-				.southEast()
-				.southWest()
+				.east()
+				.west()
+				.northTwoEastOne()
+				.northTwoWestOne()
+				.southTwoEastOne()
+				.southTwoWestOne()
 				.build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
