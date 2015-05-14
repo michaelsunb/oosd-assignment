@@ -2,9 +2,9 @@ package chess.app;
 
 import javax.swing.SwingUtilities;
 
-import chess.mvc.controllers.*;
-import chess.mvc.views.*;
-import chess.prototype.observer.*;
+import chess.mvc.controllers.GameController;
+import chess.mvc.views.MainFrame;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class Chess {
 
@@ -13,17 +13,22 @@ public class Chess {
 
 			@Override
 			public void run() {
+
 				ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
+				
 				
 				GameController gameController = new GameController();
 				MainFrame view = new MainFrame(gameController);
-				gameController.init(view);
 
 				// Register observers
-
 				eventMgr.addListener("GameNewEvent", gameController.newGame());
 				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());
-				
+				eventMgr.addListener("PieceMovedEvent", gameController.pieceMoved());
+				eventMgr.addListener("PieceCapturedEvent", gameController.pieceCapture());
+				eventMgr.addListener("PieceJoinEvent", gameController.pieceJoin());
+
+				eventMgr.addListener("UpdateUIEvent", view.getChessBoardPane());
+				eventMgr.addListener("UpdateUIEvent", view.getStatusPane());
 				/*
 				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
 				eventMgr.addListener("GameNewEvent", gameController);

@@ -5,6 +5,8 @@ import chess.core.IBoard;
 import chess.prototype.observer.ChessEventDispatcher;
 
 public abstract class GameTestBase {
+	protected ChessEventDispatcher eventMgr;
+	
 	protected IBoard getBoard() {
 		return Game.getInstance().getBoardInstance();
 	}
@@ -15,6 +17,10 @@ public abstract class GameTestBase {
 	
 	protected ChessEventDispatcher eventMgr() {
 		return ChessEventDispatcher.getInstance();
+	}
+	
+	protected void eventMagr() {
+		eventMgr = eventMgr();
 	}
 	
 }

@@ -4,16 +4,19 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import chess.mvc.controllers.GameController;
+
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private ChessboardViewPanel chessboardPane;
 	private GameStatusViewPanel statusPane;
 	private PieceViewPanel pieceViewPane;
 	
-	private AbstractAction actionHandler;
+	private GameController actionHandler;
 	
-	public MainFrame(AbstractAction handler) {
+	public MainFrame(GameController handler) {
 		this.actionHandler = handler;
+		this.actionHandler.init(this);
 		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -54,22 +57,19 @@ public class MainFrame extends JFrame {
 		JMenu menu = new JMenu("Game");
 		// new game
 		JMenuItem newGame = new JMenuItem("New Game");
-		newGame.setActionCommand("NewGameEvent");
-		newGame.addActionListener(this.actionHandler);	
+		newGame.addActionListener(this.actionHandler.new NewGameAction());	
 		menu.add(newGame);
 		
 		menu.addSeparator();
 		
 		// save
 		JMenuItem saveGame = new JMenuItem("Save");
-		saveGame.setActionCommand("SaveGameEvent");
-		saveGame.addActionListener(this.actionHandler);
+		saveGame.addActionListener(this.actionHandler.new SaveGameAction());
 		menu.add(saveGame);
 		
 		// restore
 		JMenuItem restoreGame = new JMenuItem("Restore");
-		restoreGame.setActionCommand("RestoreGameEvent");
-		restoreGame.addActionListener(this.actionHandler);
+		restoreGame.addActionListener(this.actionHandler.new LoadGameAction());
 		menu.add(restoreGame);
 		
 		menuBar.add(menu);

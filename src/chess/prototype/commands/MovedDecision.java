@@ -1,5 +1,6 @@
 package chess.prototype.commands;
 
+import chess.core.Game;
 import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceCapturedEvent;
@@ -36,6 +37,8 @@ public abstract class MovedDecision extends CommandBase {
 	}
 
 	protected boolean isSelectedPieceValid() {
+		if(oldPosition == newPosition) return false;
+		
 		selectedPiece = this.getBoard().getPiece(oldPosition);
 	
 		if (selectedPiece == null || // selected piece is an empty square

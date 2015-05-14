@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import javax.swing.*;
 
 import chess.mvc.models.GameStatusEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.IObserver;
 
@@ -43,7 +44,18 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 	public void update(ChessEvent event) {
 		if (event instanceof GameStatusEvent) {
 			updateGameStatus((GameStatusEvent) event);
+		} else if (event instanceof UpdateUIEvent) {
+			update((UpdateUIEvent)event);
 		}
+	}
+
+	public void update(UpdateUIEvent event) {
+		numberOfMoves = event.getgame().getMaxMoves() - numberOfMoves;
+		score += event.getgame().getCurrentPlayer().getScore();
+
+		this.removeAll();
+		createStatus(2);
+		createStatus(1);
 	}
 
 	private void updateGameStatus(GameStatusEvent event) {

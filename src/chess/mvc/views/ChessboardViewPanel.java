@@ -7,26 +7,39 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import chess.core.*;
+import chess.mvc.controllers.GameController;
 import chess.mvc.models.GameStatusEvent;
 import chess.mvc.models.PieceMovedEvent;
 import chess.mvc.models.PieceSelectedEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.observer.*;
 
 
-public class ChessboardViewPanel extends JPanel {
+public class ChessboardViewPanel extends JPanel implements IObserver {
 
 	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-	private String setActionCommand = "pickPiece";	
-	private int prevPosition;
+
 	private Component[] components;
-	private AbstractAction actionHandler;
+	private GameController actionHandler;
+	private IBoard board;
+
+	@Override
+	public void update(ChessEvent event) {
+		if (event instanceof UpdateUIEvent) {
+			this.setBoard(((UpdateUIEvent) event).getBoard());
+		}
+	}
 	
-	public ChessboardViewPanel(AbstractAction handler) {
+	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
+		this.setBoard(actionHandler.getBoard());
+	}
+	
+	public void setBoard(IBoard board) {
+		this.board = board;
 	}
 
 	private void initialComponent() {
-		IBoard board = Game.getInstance().getBoardInstance();
 		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
 		this.setBorder(new LineBorder(Color.BLACK));
 		
@@ -47,8 +60,7 @@ public class ChessboardViewPanel extends JPanel {
 			this.removeAll();
 			initialComponent();
 		}
-		
-		IBoard board = Game.getInstance().getBoardInstance();
+
 		int pos = 0;
 		for (Component comp : this.components) {
 			JButton btn = (JButton)comp;
@@ -75,15 +87,10 @@ public class ChessboardViewPanel extends JPanel {
 					// ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
 				}
 			}	
-			
-			btn.setText(symbol);
 
-			/*
-			 * TODO: What if we build a special format string & use it as actionCommand?
-			 * e.g PieceSelectedEvent 1; then have a command parser which turn this string into ChessEvent?
-			 */
-			btn.setActionCommand("PieceSelectedEvent:" +  pos);
-			btn.addActionListener(this.actionHandler);
+			//btn.setText(pos + "");
+			btn.setText(symbol);
+			btn.addMouseListener(this.actionHandler.new PieceAction(pos));
 			
 			this.add(btn);
 			pos++;
@@ -97,72 +104,11 @@ public class ChessboardViewPanel extends JPanel {
 	public void clearPath() {
 		if (this.components == null) return;
 		
-		for(Component comp: this.components) {
-			if (comp.getBackground() == Color.RED) {
-				// what is the default color
-				comp.setBackground(Color.GRAY);
-			}
-		}
+		this.redraw();
 	}
 	
 	public void markPath(int pos) {
 		components[pos].setBackground(Color.RED);
-	}
-	
-	/*
-	 * Sokun's comment: refactor to use Observer pattern instead of extending
-	 * AbstractAction
-	 */
-	class GameAction extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-		private int position;
-
-		public GameAction(String title, String command, int position) {
-			super(title);
-			this.position = position;
-			putValue(ACTION_COMMAND_KEY, command);
-			setActionCommand = command;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Component currentSource = ((Component) e.getSource());
-			Component[] listComponents = currentSource.getParent().getComponents();
-			Piece p = Game.getInstance().getBoardInstance().getPiece(position);
-
-			ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
-
-			switch (e.getActionCommand()) {
-			case "pickPiece":
-				if (p == null || p != null && p.getOwner() == null || p != null
-						&& p.getOwner() != null
-						&& p.getOwner() != Game.getInstance().getCurrentPlayer()) {
-					break;
-				}
-				setActionCommand = "movePiece";
-
-				// fire two events
-				int numOfMoves = Game.getInstance().getMaxMoves();
-//				ChessEvent eventStatus = new GameStatusEvent(p.getOwner(), numOfMoves);
-//				ChessEvent eventSelect = new PieceSelectedEvent(position, currentSource);
-
-				redraw(false);
-//				eventMgr.fireEvent(eventStatus);
-//				eventMgr.fireEvent(eventSelect);
-				
-				prevPosition = position;
-				break;
-			case "movePiece":
-				setActionCommand = "pickPiece";
-
-				ChessEvent movePieceEvent = new PieceMovedEvent(position,prevPosition);
-				eventMgr.fireEvent(movePieceEvent);
-
-				redraw();
-				break;
-			}
-		}
 	}
 
 	/*
@@ -173,5 +119,4 @@ public class ChessboardViewPanel extends JPanel {
 		if (i < 0 || i > this.components.length) return null;
 		return this.components[i];
 	}
-
 }

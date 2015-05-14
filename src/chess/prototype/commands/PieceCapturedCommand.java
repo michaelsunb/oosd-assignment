@@ -24,7 +24,7 @@ public class PieceCapturedCommand extends CommandBase {
 
 		// Move to empty square is not the responsibility of this
 		// object
-		if(enemyPiece == null) return; 
+		//if(enemyPiece == null) return; 
 
 
 		Player currentPlayer = selectedPiece.getOwner();
@@ -33,5 +33,6 @@ public class PieceCapturedCommand extends CommandBase {
 		currentPlayer.increaseMove();
 		
 		this.getBoard().setPiece(newPos, selectedPiece);
+		this.getBoard().setPiece(oldPos, null);
 	}
 }
