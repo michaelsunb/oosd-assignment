@@ -1,7 +1,10 @@
 package chess.mvc.views;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 
 import javax.swing.*;
@@ -21,41 +24,57 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 	private static final int PLAYER_TWO = 1;
 	
 	public GameStatusViewPanel() {
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 0; c.gridy = 0;
+		
 		JPanel statusPane = playerStats();
-		this.add(statusPane);
+		this.add(statusPane, c);
 
-		this.revalidate();
 		this.setBounds(new Rectangle(60, 60));
+		this.setBackground(Color.YELLOW);
 	}
 
 
-	private JPanel playerStats() {
+	private JPanel playerStats() {		
 		JPanel statusPane = new JPanel();
 		statusPane.setLayout(new GridBagLayout ());
 
 		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(3, 3, 3, 3);
 		c.gridx = 0;
 		c.gridy = 0;
 		
+		JLabel lbPlayer = new JLabel("Player: ", SwingConstants.RIGHT);
+		int lbHeight = lbPlayer.getPreferredSize().height;
+		int lbWidth =  60;
+		
+		lbPlayer.setPreferredSize(new Dimension(lbWidth, lbHeight));
 		c.anchor = GridBagConstraints.LINE_START;
 		// player one
-		statusPane.add(new JLabel("Player One"), c);
+		statusPane.add(lbPlayer, c);
+		c.gridx = 1;
+		statusPane.add(new JLabel("ONE"), c);
+		
 		c.anchor = GridBagConstraints.LINE_END;
+		c.gridx = 0;
 		c.gridy++;
-		statusPane.add(new JLabel("Move: "), c);
+		JLabel lbMove = new JLabel("Move: ", SwingConstants.RIGHT);
+		lbMove.setPreferredSize(new Dimension(lbWidth, lbHeight));
+		statusPane.add(lbMove, c);
 		
 		c.gridy++;
-		statusPane.add(new JLabel("Score: "), c);
+		JLabel lbScore = new JLabel("Score: ", SwingConstants.RIGHT); 
+		lbScore.setPreferredSize(new Dimension(lbWidth, lbHeight));
+		
+		statusPane.add(lbScore, c);
 
 		// player two
-		c.gridy++;
-		statusPane.add(new JLabel("Player Two"), c);
+		c.gridx = 3;
+		c.gridy = 0;
+		statusPane.add(new JLabel("TWO"), c);
 		c.anchor = GridBagConstraints.LINE_END;
-		c.gridy++;
-		statusPane.add(new JLabel("Move: "), c);
-		
-		c.gridy++;
-		statusPane.add(new JLabel("Score: "), c);
 		
 		// score & move
 		moves = new JLabel[] {
@@ -67,13 +86,18 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 				new JLabel("0")
 		};
 		
+		// column 2
 		c.gridx = 1;
 		c.gridy = 1;
+		
+		moves[0].setPreferredSize(new Dimension(20, lbHeight));
 		statusPane.add(moves[0], c);
 		c.gridy++;
+		scores[0].setPreferredSize(new Dimension(20, lbHeight));
 		statusPane.add(scores[0], c);
-
-		c.gridy += 2;
+		
+		c.gridx = 2;
+		c.gridy = 1;
 		statusPane.add(moves[1], c);
 		c.gridy++;
 		statusPane.add(scores[1], c);

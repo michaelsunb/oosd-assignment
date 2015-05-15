@@ -16,7 +16,6 @@ public class Chess {
 
 				ChessEventDispatcher eventMgr = ChessEventDispatcher.getInstance();
 				
-				
 				GameController gameController = new GameController();
 				MainFrame view = new MainFrame(gameController);
 

@@ -33,11 +33,13 @@ public class MainFrame extends JFrame {
 		this.pieceViewPane = new PieceViewPanel(handler);
 		
 		JPanel gameInfo = new JPanel();
-		gameInfo.setLayout(new GridLayout(0, 1));
-		gameInfo.setBounds(new Rectangle(60, contentPane.getHeight()));
+		gameInfo.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0; c.gridy = 0;
 		
-		gameInfo.add(this.statusPane); 
-		gameInfo.add(this.pieceViewPane);
+		gameInfo.add(this.statusPane, c); 
+		c.gridy ++;
+		gameInfo.add(this.pieceViewPane, c);
 		
 		contentPane.add(gameInfo, BorderLayout.EAST);
 		
