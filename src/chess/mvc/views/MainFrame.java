@@ -17,9 +17,10 @@ public class MainFrame extends JFrame {
 	public MainFrame(GameController handler) {
 		this.actionHandler = handler;
 		this.actionHandler.init(this);
+		int width = 870;
+		int height = 600;
 		
-		Container contentPane = getContentPane();
-		contentPane.setLayout(new BorderLayout());
+		JPanel contentPane = (JPanel)getContentPane();
 		
 		// build menu
 		buildMenuBar();
@@ -31,23 +32,21 @@ public class MainFrame extends JFrame {
 		// add game status
 		this.statusPane = new GameStatusViewPanel();
 		this.pieceViewPane = new PieceViewPanel(handler);
+
+		JPanel gameInfo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		Box box = Box.createVerticalBox();
+		contentPane.add(gameInfo, BorderLayout.EAST);
+		gameInfo.add(this.statusPane); 
+		gameInfo.add(this.pieceViewPane);
+		gameInfo.setPreferredSize(new Dimension( 200, 200 ));
 		
-		box.add(this.statusPane); 
-		box.add(this.pieceViewPane);
-		box.add(Box.createVerticalStrut(300));
+		setSize(width, height);
 		
-		contentPane.add(box, BorderLayout.EAST);
-		
-		setSize(870, 660);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setTitle("Simple Chess Game");
 		setLocationRelativeTo(null);
-		
-		//contentPane.revalidate();
 	}
 	
 	

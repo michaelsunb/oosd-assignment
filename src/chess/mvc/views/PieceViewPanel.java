@@ -2,6 +2,7 @@ package chess.mvc.views;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,7 +35,7 @@ public class PieceViewPanel extends JPanel {
 		c.gridy++;
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setSize(40, 40);
+		scrollPane.setPreferredSize(new Dimension(180, 80));
 		list = new JList();
 		scrollPane.setViewportView(list);
 		
@@ -45,9 +46,6 @@ public class PieceViewPanel extends JPanel {
 //		btnSplit.setActionCommand("PieceSplitEvent");
 //		btnSplit.addActionListener(handler.eventSequence(-1));
 		this.add(btnSplit, c);
-		
-		this.setBounds(new Rectangle(60, 60));
-		this.setBackground(Color.GREEN);
 	}
 
 	public void setSelectPiece(Piece piece) {

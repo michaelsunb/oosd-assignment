@@ -33,6 +33,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
 		this.setBoard(actionHandler.getBoard());
+		this.setBackground(Color.BLACK);
 	}
 	
 	public void setBoard(IBoard board) {
