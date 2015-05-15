@@ -55,4 +55,29 @@ public class PieceSelectedTest extends GameTestBase {
 	public void select_a_piece_then_right_click_on_diff_pos_equal_move() {
 		fail("Not yet implemented");
 	}
+	
+	@Test
+	public void player_select_enemy_piece_ignore_path() {
+		// arrange
+		GameController controller = new GameController();
+		MainFrame view = new MainFrame(controller);
+		view.getChessBoardPane().redraw(true);
+
+		PieceSelectedEvent event = new PieceSelectedEvent(30, view);
+
+		// act
+		this.eventMgr().fireEvent(event);
+
+		// assert
+		ChessboardViewPanel chessBoard = view.getChessBoardPane();
+		int[] positions = this.getBoard().getPiece(0).getMovablePositions(0);
+		
+		for (int i : positions) {
+			assertNotEquals("Player select on enemy piece should not see movable positions",
+					Color.RED,
+					((JButton) chessBoard.getSquare(i)).getBackground());
+		}
+		
+		assertNotNull("Selected Piece is not null", this.getGame().getSelectedPiece());
+	}
 }

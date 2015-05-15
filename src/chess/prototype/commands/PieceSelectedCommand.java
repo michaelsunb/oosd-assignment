@@ -14,7 +14,14 @@ public class PieceSelectedCommand extends CommandBase {
 		PieceSelectedEvent selEvent = (PieceSelectedEvent)event;
 		
 		Piece piece = this.getBoard().getPiece(selEvent.getPosition());
+		
 		if (piece == null) {
+			return;
+		}
+		
+		// not your piece mate :P
+		if (null != piece.getOwner() 
+				&& !piece.getOwner().equals(getGame().getCurrentPlayer())) {
 			return;
 		}
 		

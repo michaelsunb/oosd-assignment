@@ -67,4 +67,11 @@ public class Player implements Serializable {
 
 		this.score += value;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Player)) return false;
+		return ((Player)obj).getColour().equals(this.colour);
+	}
+	
 }
