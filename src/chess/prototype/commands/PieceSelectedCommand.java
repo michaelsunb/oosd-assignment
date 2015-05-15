@@ -37,6 +37,9 @@ public class PieceSelectedCommand extends CommandBase {
 		for (int pos : movablePos) {
 			chessPane.markPath(pos);
 		}
+
+		selEvent.getMainFrame().getPieceViewPane().setSelectPiece(piece);
+		
 	}
 
 }

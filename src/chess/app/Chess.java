@@ -21,7 +21,7 @@ public class Chess {
 
 				// Register observers
 				eventMgr.addListener("GameNewEvent", gameController.newGame());
-				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());
+				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());				
 				eventMgr.addListener("PieceMovedEvent", gameController.pieceMoved());
 				eventMgr.addListener("PieceCapturedEvent", gameController.pieceCapture());
 				eventMgr.addListener("PieceJoinEvent", gameController.pieceJoin());

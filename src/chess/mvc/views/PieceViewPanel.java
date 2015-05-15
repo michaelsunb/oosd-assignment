@@ -9,8 +9,13 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+
+import javafx.scene.control.SelectionMode;
 
 import javax.swing.*;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import chess.core.Piece;
 import chess.mvc.controllers.GameController;
@@ -22,7 +27,8 @@ import chess.prototype.composite.CombinePiece;
 public class PieceViewPanel extends JPanel {
 	private JList list;
 	private JButton btnSplit;
-
+	private Piece currentPiece;
+	
 	public PieceViewPanel(GameController handler) {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -37,6 +43,8 @@ public class PieceViewPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(180, 80));
 		list = new JList();
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		list.setCellRenderer(new PieceListCellRenderer());
 		scrollPane.setViewportView(list);
 		
 		this.add(scrollPane, c);
@@ -49,23 +57,43 @@ public class PieceViewPanel extends JPanel {
 	}
 
 	public void setSelectPiece(Piece piece) {
-		if (piece instanceof CombinePiece) {
-
-		} else {
-
-		}
+		this.list.setModel(new PieceListModel(piece));
 	}
+	
+	private class PieceListModel extends AbstractListModel<Piece>  {
+		private CombinePiece composite;
+		
+		public PieceListModel(Piece piece) {
+			if (!(piece instanceof CombinePiece)) {
+				composite = new CombinePiece();
+				composite.add(piece);
+			} else {
+				this.composite = (CombinePiece)piece;
+			}
+			
+		}
+		
+		@Override
+		public Piece getElementAt(int index) {
+			return composite.getPieces().get(index);
+		}
 
-	private static class RadioButtonListCellRenderer extends
+		@Override
+		public int getSize() {
+			return composite.getPieces().size();
+		}
+		
+	}
+	
+	private static class PieceListCellRenderer extends
 			DefaultListCellRenderer {
 
 		@Override
 		public Component getListCellRendererComponent(JList<?> list,
 				Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
-
-			// TODO Auto-generated method stub
-			return super.getListCellRendererComponent(list, value, index,
+			
+			return super.getListCellRendererComponent(list, value.getClass().getSimpleName(), index,
 					isSelected, cellHasFocus);
 
 		}

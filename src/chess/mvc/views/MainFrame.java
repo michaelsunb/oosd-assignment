@@ -81,4 +81,8 @@ public class MainFrame extends JFrame {
 	public GameStatusViewPanel getStatusPane() {
 		return this.statusPane;
 	}
+	
+	public PieceViewPanel getPieceViewPane() {
+		return this.pieceViewPane;
+	}
 }

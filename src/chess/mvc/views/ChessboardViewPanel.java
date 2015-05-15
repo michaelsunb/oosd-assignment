@@ -70,9 +70,9 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			int y = (pos / board.getHeight());
 
 			if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
-				btn.setBackground(Color.LIGHT_GRAY);
+				btn.setBackground(Color.WHITE);
 			} else {
-				btn.setBackground(Color.GRAY);
+				btn.setBackground(Color.BLACK);
 			}
 
 			Piece piece = board.getPiece(pos);
