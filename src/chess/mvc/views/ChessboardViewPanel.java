@@ -16,10 +16,7 @@ import chess.prototype.observer.*;
 
 
 public class ChessboardViewPanel extends JPanel implements IObserver {
-
-	private static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
-
-	private Component[] components;
+	private Square[] squares;
 	private GameController actionHandler;
 
 	@Override
@@ -31,7 +28,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	
 	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
-		this.setBackground(Color.BLACK);
+		//this.setBackground(Color.BLACK);
 	}
 
 	private void initialComponent() {
@@ -40,10 +37,9 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 		this.setBorder(new LineBorder(Color.BLACK));
 		
 		int boardSize = board.getHeight() * board.getWidth();
-		this.components = new Component[boardSize];
+		this.squares = new Square[boardSize];
 		for (int i = 0; i < boardSize; i++) {
-			JComponent b = new JButton();
-			this.components[i] = b;
+			this.squares[i] = new Square();
 		}
 	}
 	
@@ -59,39 +55,27 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 
 		int pos = 0;
 		IBoard board = actionHandler.getBoard();
-		for (Component comp : this.components) {
-			JButton btn = (JButton)comp;
+		for (Square square : this.squares) {
 			
 			int x = (pos % board.getWidth());
 			int y = (pos / board.getHeight());
 
 			if ((y % 2 == 1 && x % 2 == 1) || (y % 2 == 0 && x % 2 == 0)) {
-				btn.setBackground(Color.WHITE);
+				square.setBackground(Color.GRAY);
 			} else {
-				btn.setBackground(Color.BLACK);
+				square.setBackground(Color.LIGHT_GRAY);
 			}
 
 			Piece piece = board.getPiece(pos);
-			String symbol = "";
 					
 			if (piece != null) {
-				symbol = piece.getSymbol();	
-				btn.setFont(font);
-				//((AbstractButton) comp).setFont(font);
-				
-				if (piece.getOwner() != null) {
-					btn.setForeground(piece.getOwner().getColour());
-					// ((AbstractButton) comp).setForeground(piece.getOwner().getColour());
-				}
-			}	
+				square.draw(piece);
+			} else {
+				square.empty();
+			}
 
-			//btn.setText(pos + "");
-			// try to hide the position inside action command
-			btn.setActionCommand(pos + "");
-			btn.setText(symbol);
-			//btn.addMouseListener(this.actionHandler.new PieceAction(pos));
-			btn.addMouseListener(new MouseHandler(pos, this.actionHandler));
-			this.add(btn);
+			square.addMouseListener(new MouseHandler(pos, this.actionHandler));
+			this.add(square);
 			pos++;
 		}
 		this.validate();
@@ -101,13 +85,13 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	 * @pre.condition: this.components != null
 	 */
 	public void clearPath() {
-		if (this.components == null) return;
+		if (this.squares == null) return;
 		
 		this.redraw();
 	}
 	
 	public void markPath(int pos) {
-		components[pos].setBackground(Color.RED);
+		squares[pos].setBackground(Color.RED);
 	}
 
 	/*
@@ -115,7 +99,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	 * @post.condition: return a null or an instance of the component object
 	 */
 	public Component getSquare(int i) {
-		if (i < 0 || i > this.components.length) return null;
-		return this.components[i];
+		if (i < 0 || i > this.squares.length) return null;
+		return this.squares[i];
 	}
 }

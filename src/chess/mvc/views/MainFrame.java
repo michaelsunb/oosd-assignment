@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(gameInfo, BorderLayout.EAST);
 		gameInfo.add(this.statusPane); 
 		gameInfo.add(this.pieceViewPane);
-		gameInfo.setPreferredSize(new Dimension( 200, 200 ));
+		gameInfo.setPreferredSize(new Dimension( 200, 320 ));
 		
 		setSize(width, height);
 		

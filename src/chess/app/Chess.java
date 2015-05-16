@@ -28,16 +28,6 @@ public class Chess {
 
 				eventMgr.addListener("UpdateUIEvent", view.getChessBoardPane());
 				eventMgr.addListener("UpdateUIEvent", view.getStatusPane());
-				
-				/*
-				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
-				eventMgr.addListener("GameNewEvent", gameController);
-				eventMgr.addListener("PieceSelectedEvent", new PieceSelectedCommand());
-				eventMgr.addListener("PieceMovedEvent", new PieceMovedCommand());
-				eventMgr.addListener("PieceMovedEvent", new PieceCapturedCommand());
-				eventMgr.addListener("PieceMovedEvent", new PieceJoinCommand());
-				eventMgr.addListener("GameStatusEvent", statusView);
-				*/
 			}
 
 		});

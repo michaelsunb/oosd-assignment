@@ -24,6 +24,8 @@ public class MouseHandler extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if (SwingUtilities.isRightMouseButton(e)) {
 			Piece piece = Game.getInstance().getSelectedPiece();
+			if (piece == null) return;
+			
 			int current = Game.getInstance().getBoardInstance().getPiecePosition(piece);
 			
 			if (piece.canMoveTo(current, this.position)) {

@@ -1,19 +1,11 @@
 package chess.mvc.views;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import javax.swing.*;
 
 import chess.core.Game;
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.IObserver;
+import chess.prototype.observer.*;
 
 /*
  * A panel which render game status
@@ -22,13 +14,22 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 	private JLabel[] players;
 	private JLabel[] moves; 
 	private JLabel[] scores;
+	private JLabel gameState;
 	private JLabel timeCounter;
 	private static final int PLAYER_ONE = 0;
 	private static final int PLAYER_TWO = 1;
 	
 	public GameStatusViewPanel() {
+		// game state
+		this.gameState = new JLabel("");
+		Font font = this.gameState.getFont();
+		this.gameState.setFont(new Font(font.getFontName(), Font.BOLD,  14));
+		this.add(this.gameState);
+		
 		JPanel statusPane = playerStats();
 		this.add(statusPane);
+
+		this.setPreferredSize(new Dimension(200, 90));
 	}
 
 
@@ -37,15 +38,15 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		statusPane.setLayout(new GridLayout (3, 3));
 
 		// score & move
-		players = new JLabel[] {
+		this.players = new JLabel[] {
 				new JLabel("ONE"),
 				new JLabel("TWO")
 		};
-		moves = new JLabel[] {
+		this.moves = new JLabel[] {
 				new JLabel("0"),
 				new JLabel("0")
 		};
-		scores = new JLabel[] {
+		this.scores = new JLabel[] {
 				new JLabel("0"),
 				new JLabel("0")
 		};
@@ -56,21 +57,21 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		
 		lbPlayer.setPreferredSize(new Dimension(lbWidth, lbHeight));
 		statusPane.add(lbPlayer);
-		statusPane.add(players[0]);
-		statusPane.add(players[1]);
+		statusPane.add(this.players[0]);
+		statusPane.add(this.players[1]);
 		
 		JLabel lbMove = new JLabel("Move ");
 		lbMove.setPreferredSize(new Dimension(lbWidth, lbHeight));
 		statusPane.add(lbMove);
-		statusPane.add(moves[0]);
-		statusPane.add(moves[1]);
+		statusPane.add(this.moves[0]);
+		statusPane.add(this.moves[1]);
 		
 		JLabel lbScore = new JLabel("Score "); 
 		lbScore.setPreferredSize(new Dimension(lbWidth, lbHeight));
 		statusPane.add(lbScore);
-		scores[0].setPreferredSize(new Dimension(20, lbHeight));
-		statusPane.add(scores[0]);
-		statusPane.add(scores[1]);
+		this.scores[0].setPreferredSize(new Dimension(20, lbHeight));
+		statusPane.add(this.scores[0]);
+		statusPane.add(this.scores[1]);
 		
 		return statusPane;
 	}
@@ -82,13 +83,22 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		// all we need is someone call this method
 		Game g = Game.getInstance();
 		
-		moves[PLAYER_ONE].setText("" + g.getPlayer(1).getNumberOfMove());
-		scores[PLAYER_ONE].setText("" + g.getPlayer(1).getScore());
+		this.moves[PLAYER_ONE].setText("" + g.getPlayer(1).getNumberOfMove());
+		this.scores[PLAYER_ONE].setText("" + g.getPlayer(1).getScore());
 		
-		moves[PLAYER_TWO].setText("" + g.getPlayer(2).getNumberOfMove());
-		scores[PLAYER_TWO].setText("" + g.getPlayer(2).getScore());
+		this.moves[PLAYER_TWO].setText("" + g.getPlayer(2).getNumberOfMove());
+		this.scores[PLAYER_TWO].setText("" + g.getPlayer(2).getScore());
 		
-		players[0].setForeground(g.getPlayer(1).isTurn() ? Color.BLUE : Color.BLACK);
-		players[1].setForeground(g.getPlayer(2).isTurn() ? Color.BLUE : Color.BLACK);
+		this.players[0].setForeground(g.getPlayer(1).isTurn() ? Color.BLUE : Color.BLACK);
+		this.players[1].setForeground(g.getPlayer(2).isTurn() ? Color.BLUE : Color.BLACK);
+		
+
+		if (g.isGameOver()) {
+			this.gameState.setForeground(Color.RED);
+			this.gameState.setText("GAME OVER!!!");
+		} else {
+			this.gameState.setForeground(Color.BLUE);
+			this.gameState.setText("GAME PLAY");
+		}
 	}
 }
