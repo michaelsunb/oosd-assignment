@@ -159,4 +159,9 @@ public class Game implements Serializable {
 		this.selectedPiece = selectedPiece;
 	}
 	
+	public boolean isGameOver() {
+		return
+				this.players[0].getNumberOfMove() == this.maxMoves
+				&& this.players[1].getNumberOfMove() == this.maxMoves;
+	}
 }

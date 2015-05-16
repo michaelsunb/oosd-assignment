@@ -65,7 +65,7 @@ public class PieceSelectedTest extends GameTestBase {
 
 		// assert
 		ChessboardViewPanel chessBoard = view.getChessBoardPane();
-		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(30);
+		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(pos);
 		
 		for (int i : positions) {
 			assertNotEquals("Player select on enemy piece should not see movable positions",
@@ -95,5 +95,29 @@ public class PieceSelectedTest extends GameTestBase {
 		assertTrue("Barrier can't move", positions.length == 0);
 		
 		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
+	}
+	
+	@Test
+	public void selected_event_ignore_if_game_is_over()
+	{
+		// arrange
+		Game.getInstance().reset(0);
+		GameController controller = new GameController();
+		MainFrame view = new MainFrame(controller);
+		view.getChessBoardPane().redraw(true);
+		int pos = 0;
+		PieceSelectedEvent event = new PieceSelectedEvent(0, view);
+
+		// act
+		this.eventMgr().fireEvent(event);
+
+		// assert
+		ChessboardViewPanel chessBoard = view.getChessBoardPane();
+		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(pos);
+		for (int i : positions) {
+			assertNotEquals("Game is over: no path shall be marked.",
+					Color.RED,
+					((JButton) chessBoard.getSquare(i)).getBackground());
+		}
 	}
 }

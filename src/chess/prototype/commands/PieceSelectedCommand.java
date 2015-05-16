@@ -10,7 +10,8 @@ public class PieceSelectedCommand extends CommandBase {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!((event instanceof PieceSelectedEvent))) return;
+		if (!(event instanceof PieceSelectedEvent)
+				|| Game.getInstance().isGameOver()) return;
 		
 		PieceSelectedEvent selEvent = (PieceSelectedEvent)event;
 		
