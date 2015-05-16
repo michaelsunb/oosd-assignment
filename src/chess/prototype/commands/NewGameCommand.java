@@ -23,9 +23,10 @@ public class NewGameCommand extends CommandBase {
 			}
 			
 			Game.getInstance().reset(Integer.parseInt(moves));
+			
 			gameNewEvent.getMainFame().getChessBoardPane().redraw(true);
 			gameNewEvent.getMainFame().revalidate();
-
+			
 		} catch (NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(null, "Not a number!");
 		}

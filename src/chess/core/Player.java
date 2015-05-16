@@ -11,13 +11,13 @@ import java.io.Serializable;
 public class Player implements Serializable {
 
 	private Color colour;
-	private List<Piece> pieces;
+//	private List<Piece> pieces;
 	private int numberOfMove = 0;
 	private Boolean turn = false;
 	private int score = 0;
 
 	public Player() {
-		pieces = new ArrayList<Piece>();
+//		pieces = new ArrayList<Piece>();
 	}
 
 	public Boolean isTurn() {
@@ -32,13 +32,13 @@ public class Player implements Serializable {
 		this.numberOfMove++;
 	}
 
-	public List<Piece> getPieces() {
-		return pieces;
-	}
-
-	public void setPieces(List<Piece> pieces) {
-		this.pieces = pieces;
-	}
+//	public List<Piece> getPieces() {
+//		return pieces;
+//	}
+//
+//	public void setPieces(List<Piece> pieces) {
+//		this.pieces = pieces;
+//	}
 
 	public int getNumberOfMove() {
 		return numberOfMove;

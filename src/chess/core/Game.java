@@ -12,7 +12,7 @@ import chess.prototype.decorator.*;
 
 public class Game implements Serializable {
 	private Player[] players;
-	private static Board board;
+	private Board board;
 	private static Game instance;
 	private int maxMoves = 10;
 	private Piece selectedPiece;
