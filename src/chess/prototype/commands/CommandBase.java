@@ -10,8 +10,10 @@ import chess.prototype.observer.ChessEventDispatcher;
 import chess.prototype.observer.IObserver;
 
 public abstract class CommandBase implements IObserver {
+	protected int oldPosition;
 	
 	public CommandBase() {
+		this.oldPosition = getBoard().getPiecePosition(getGame().getSelectedPiece());
 	}
 	
 	@Override

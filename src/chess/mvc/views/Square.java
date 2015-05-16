@@ -29,14 +29,21 @@ public class Square extends JPanel {
 	
 	public void draw(Piece piece) {
 		if (piece != null) {
-			String iconFle = GetExecutionPath() + "\\" + piece.getClass().getSimpleName() + ".png";
+			String pieceName = piece.getClass().getSimpleName();
+			
+			if (piece.getOwner() != null) {
+				if (piece.getOwner().getColour() == Color.BLACK) {
+					pieceName += ".BLACK";
+				} else {
+					pieceName += ".WHITE";
+				}
+			}
+			
+			String iconFle = GetExecutionPath() + "\\" + pieceName  + ".png";
 			
 			BufferedImage rawImage;
 			try {
 				rawImage = ImageIO.read(new File(iconFle));
-				if (piece.getOwner() != null) {
-					rawImage = colorImage(rawImage, piece.getOwner().getColour());
-				}
 				
 				this.removeAll();
 				ImageIcon icon = new ImageIcon(rawImage);
@@ -59,20 +66,20 @@ public class Square extends JPanel {
 	}
 	
 	// http://stackoverflow.com/questions/16054596/change-color-of-non-transparent-parts-of-png-in-java
-    private static BufferedImage colorImage(BufferedImage image, Color color) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        for (int xx = 0; xx < width; xx++) {
-            for (int yy = 0; yy < height; yy++) {
-            	if (!(image.getRGB(xx, yy) == Color.BLACK.getRGB())) continue;
-
-            	image.setRGB(xx, yy, color.getRGB());
-            }
-        }
-        return image;
-    }
-    
+//    private static BufferedImage colorImage(BufferedImage image, Color color) {
+//        int width = image.getWidth();
+//        int height = image.getHeight();
+//
+//        for (int xx = 0; xx < width; xx++) {
+//            for (int yy = 0; yy < height; yy++) {
+//            	if (!(image.getRGB(xx, yy) == Color.BLACK.getRGB())) continue;
+//
+//            	image.setRGB(xx, yy, color.getRGB());
+//            }
+//        }
+//        return image;
+//    }
+//    
     private String GetExecutionPath(){
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
        return new File(absolutePath).getParent();

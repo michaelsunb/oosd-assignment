@@ -45,7 +45,7 @@ public class PieceSelectedTest extends GameTestBase {
 		for (int i : positions) {
 			assertEquals("Movable square should has red background.",
 					Color.RED,
-					((JButton) chessBoard.getSquare(i)).getBackground());
+					chessBoard.getSquare(i).getBackground());
 		}
 		
 		assertNotNull("Selected Piece is not null", this.getGame().getSelectedPiece());
@@ -70,7 +70,7 @@ public class PieceSelectedTest extends GameTestBase {
 		for (int i : positions) {
 			assertNotEquals("Player select on enemy piece should not see movable positions",
 					Color.RED,
-					((JButton) chessBoard.getSquare(i)).getBackground());
+					chessBoard.getSquare(i).getBackground());
 		}
 		
 		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
@@ -117,7 +117,7 @@ public class PieceSelectedTest extends GameTestBase {
 		for (int i : positions) {
 			assertNotEquals("Game is over: no path shall be marked.",
 					Color.RED,
-					((JButton) chessBoard.getSquare(i)).getBackground());
+					chessBoard.getSquare(i).getBackground());
 		}
 	}
 }

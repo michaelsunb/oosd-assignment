@@ -4,6 +4,7 @@
  */
 package chess.core;
 
+import java.awt.Color;
 import java.io.*;
 import java.util.*;
 
@@ -37,8 +38,11 @@ public class Game implements Serializable {
 		 */
 		players = new Player[2];
 		players[0] = new Player();
+		players[0].setColour(Color.WHITE);
+		
 		players[1] = new Player();
-
+		players[1].setColour(Color.BLACK);
+		
 		new PlayerPieceDecorator(board, players[0]).init();
 		new BarrierPieceDecorator(board).init();
 		new PlayerPieceDecorator(board, players[1]).init();

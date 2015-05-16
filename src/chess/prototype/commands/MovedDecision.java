@@ -6,9 +6,8 @@ import chess.mvc.models.PieceCapturedEvent;
 import chess.mvc.models.PieceJoinEvent;
 
 public abstract class MovedDecision extends CommandBase {
-
+	
 	protected int newPosition;
-	protected int oldPosition;
 	protected Piece selectedPiece;
 	private Player selectedOwner;
 	private Player targetOwner;
@@ -56,6 +55,7 @@ public abstract class MovedDecision extends CommandBase {
 		}
 		
 		if(landingOnEnemy()) {
+			
 			PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
 			this.eventMgr().fireEvent(capture);
 			return false;
