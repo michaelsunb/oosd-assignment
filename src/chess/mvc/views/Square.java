@@ -29,7 +29,7 @@ public class Square extends JPanel {
 	
 	public void draw(Piece piece) {
 		if (piece != null) {
-			String iconFle = "E:\\GitHub\\oosd-assignment\\"  + piece.getClass().getSimpleName() + ".png";
+			String iconFle = GetExecutionPath() + "\\" + piece.getClass().getSimpleName() + ".png";
 			
 			BufferedImage rawImage;
 			try {
@@ -72,5 +72,9 @@ public class Square extends JPanel {
         }
         return image;
     }
-
+    
+    private String GetExecutionPath(){
+        String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+       return new File(absolutePath).getParent();
+    }
 }
