@@ -31,7 +31,9 @@ public abstract class Piece implements Serializable {
 	public abstract int[] getMovablePositions(int pos);
 
 	public boolean canMoveTo(int current, int destination) {
-		return Arrays.binarySearch(this.getMovablePositions(current), destination) >= -1;
+		int[] positions = this.getMovablePositions(current);
+		Arrays.sort(positions);
+		return Arrays.binarySearch(positions, destination) >= -1;
 	}
 	
 	public String getSymbol() {

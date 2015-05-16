@@ -36,7 +36,8 @@ public class PathBuilderTest extends GameTestBase {
 			e.printStackTrace();
 		}
 
-		int[] testPositions = {6,12,1,2,3,4,5};
+		int[] testPositions = {6,12,1};//,2,3,4,5}; positions is blocked
+									   // because barriers is in the way
 
 		for(int i : testPositions) {
 			assertTrue("Testing this position: " + i,
@@ -65,8 +66,8 @@ public class PathBuilderTest extends GameTestBase {
 			e.printStackTrace();
 		}
 
-		int[] testPositions = {3,6,7,8,10,11};
-
+		int[] testPositions = {2,4,16,14};
+		
 		for(int i : testPositions) {
 			assertTrue("Testing this position: " + i,
 					canMoveTo(buildPositions.getMovablePositions(),i));
@@ -79,7 +80,49 @@ public class PathBuilderTest extends GameTestBase {
 		}
 	}
 
+	@Test
+	public void quick_test_canMoveTo_method() {
+		int[] testPositions = {6,4,16,14};
+		int[] samePositions = {6,4,16,14};
+		int[] sortPositions = {4,6,14,16};
+		int[] failPositions = {7,3,15,12};
+		int[] failSortPositions = {3,7,12,15};
+		int[] failPassPositions = {3,4,16,15};
+		int[] failLongPositions = {3,7,19,15,9,10,11};
+		
+		for(int i : testPositions) {
+			assertTrue("Pass position: " + i,
+					canMoveTo(samePositions,i));
+		}
+		for(int i : testPositions) {
+			assertTrue("Pass position: " + i,
+					canMoveTo(sortPositions,i));
+		}
+		for(int i : testPositions) {
+			assertFalse("Fail position: " + i,
+					canMoveTo(failPositions,i));
+		}
+		for(int i : testPositions) {
+			assertFalse("Fail position: " + i,
+					canMoveTo(failSortPositions,i));
+		}
+		for(int i : testPositions) {
+			assertFalse("Fail position: " + i,
+					canMoveTo(failLongPositions,i));
+		}
+		for(int i : testPositions) {
+			if(i == 4 || i == 16) {
+				assertTrue("Pass at position 4 and 16",
+						canMoveTo(failPassPositions,i));
+			} else {
+				assertFalse("Fail position: " + i,
+						canMoveTo(failPassPositions,i));
+			}
+		}
+	}
+
 	private boolean canMoveTo(int[] positions, int destination) {
+		Arrays.sort(positions);
 		return Arrays.binarySearch(positions, destination) >= -1;
 	}
 }

@@ -2,10 +2,6 @@
 /.project
 /bin
 
-*.state
-
 .swp
-game.state
-game.state
 *.state
-*.state
+game.state

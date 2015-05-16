@@ -68,7 +68,7 @@ public class PieceSelectedTest extends GameTestBase {
 		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(pos);
 		
 		for (int i : positions) {
-			assertNotEquals("Player select on enemy piece should not see movable positions",
+			assertNotSame("Player select on enemy piece should not see movable positions",
 					Color.RED,
 					chessBoard.getSquare(i).getBackground());
 		}
@@ -115,7 +115,7 @@ public class PieceSelectedTest extends GameTestBase {
 		ChessboardViewPanel chessBoard = view.getChessBoardPane();
 		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(pos);
 		for (int i : positions) {
-			assertNotEquals("Game is over: no path shall be marked.",
+			assertNotSame("Game is over: no path shall be marked.",
 					Color.RED,
 					chessBoard.getSquare(i).getBackground());
 		}
