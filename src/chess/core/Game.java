@@ -11,7 +11,7 @@ import chess.prototype.decorator.*;
 
 public class Game implements Serializable {
 	private Player[] players;
-	private Board board;
+	private static Board board;
 	private static Game instance;
 	private int maxMoves = 10;
 	private Piece selectedPiece;
@@ -28,7 +28,7 @@ public class Game implements Serializable {
 	}
 
 	public void reset(int maxMove) {
-
+		this.selectedPiece = null;
 		this.maxMoves = maxMove;
 		board = new Board();
 		board.init();

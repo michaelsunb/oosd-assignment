@@ -21,26 +21,21 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 
 	private Component[] components;
 	private GameController actionHandler;
-	private IBoard board;
 
 	@Override
 	public void update(ChessEvent event) {
 		if (event instanceof UpdateUIEvent) {
-			this.setBoard(((UpdateUIEvent) event).getBoard());
+			this.redraw(false);
 		}
 	}
 	
 	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
-		this.setBoard(actionHandler.getBoard());
 		this.setBackground(Color.BLACK);
-	}
-	
-	public void setBoard(IBoard board) {
-		this.board = board;
 	}
 
 	private void initialComponent() {
+		IBoard board = actionHandler.getBoard();
 		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
 		this.setBorder(new LineBorder(Color.BLACK));
 		
@@ -63,6 +58,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 		}
 
 		int pos = 0;
+		IBoard board = actionHandler.getBoard();
 		for (Component comp : this.components) {
 			JButton btn = (JButton)comp;
 			
@@ -90,9 +86,11 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			}	
 
 			//btn.setText(pos + "");
+			// try to hide the position inside action command
+			btn.setActionCommand(pos + "");
 			btn.setText(symbol);
-			btn.addMouseListener(this.actionHandler.new PieceAction(pos));
-			
+			//btn.addMouseListener(this.actionHandler.new PieceAction(pos));
+			btn.addMouseListener(new MouseHandler(pos, this.actionHandler));
 			this.add(btn);
 			pos++;
 		}

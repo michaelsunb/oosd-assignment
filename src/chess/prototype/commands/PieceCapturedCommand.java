@@ -3,7 +3,9 @@ package chess.prototype.commands;
 import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceCapturedEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class PieceCapturedCommand extends CommandBase {
 
@@ -34,5 +36,9 @@ public class PieceCapturedCommand extends CommandBase {
 		
 		this.getBoard().setPiece(newPos, selectedPiece);
 		this.getBoard().setPiece(oldPos, null);
+		
+		this.getGame().swapPlayer();
+		// redraw
+		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

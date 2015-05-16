@@ -1,5 +1,6 @@
 package chess.prototype.commands;
 
+import chess.core.Game;
 import chess.core.Piece;
 import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.ChessEvent;
@@ -30,6 +31,7 @@ public class PieceMovedCommand extends MovedDecision {
 		this.getBoard().getPieces()[newPosition] = piece;
 		this.getBoard().getPieces()[oldPosition] = null;
 		piece.getOwner().increaseMove();
+		Game.getInstance().swapPlayer();
 		return true;
 	}
 }

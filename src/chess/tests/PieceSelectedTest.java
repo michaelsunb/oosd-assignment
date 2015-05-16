@@ -50,11 +50,6 @@ public class PieceSelectedTest extends GameTestBase {
 		
 		assertNotNull("Selected Piece is not null", this.getGame().getSelectedPiece());
 	}
-
-	@Test
-	public void select_a_piece_then_right_click_on_diff_pos_equal_move() {
-		fail("Not yet implemented");
-	}
 	
 	@Test
 	public void player_select_enemy_piece_ignore_path() {
@@ -62,15 +57,15 @@ public class PieceSelectedTest extends GameTestBase {
 		GameController controller = new GameController();
 		MainFrame view = new MainFrame(controller);
 		view.getChessBoardPane().redraw(true);
-
-		PieceSelectedEvent event = new PieceSelectedEvent(30, view);
+		int pos = 30;
+		PieceSelectedEvent event = new PieceSelectedEvent(pos, view);
 
 		// act
 		this.eventMgr().fireEvent(event);
 
 		// assert
 		ChessboardViewPanel chessBoard = view.getChessBoardPane();
-		int[] positions = this.getBoard().getPiece(0).getMovablePositions(0);
+		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(30);
 		
 		for (int i : positions) {
 			assertNotEquals("Player select on enemy piece should not see movable positions",
@@ -78,6 +73,27 @@ public class PieceSelectedTest extends GameTestBase {
 					((JButton) chessBoard.getSquare(i)).getBackground());
 		}
 		
-		assertNotNull("Selected Piece is not null", this.getGame().getSelectedPiece());
+		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
+	}
+	
+	@Test
+	public void player_select_barrier_piece_ignore_path() {
+		// arrange
+		GameController controller = new GameController();
+		MainFrame view = new MainFrame(controller);
+		view.getChessBoardPane().redraw(true);
+		int pos = 12;
+		PieceSelectedEvent event = new PieceSelectedEvent(pos, view);
+
+		// act
+		this.eventMgr().fireEvent(event);
+
+		// assert
+		ChessboardViewPanel chessBoard = view.getChessBoardPane();
+		int[] positions = this.getBoard().getPiece(pos).getMovablePositions(pos);
+		
+		assertTrue("Barrier can't move", positions.length == 0);
+		
+		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
 	}
 }

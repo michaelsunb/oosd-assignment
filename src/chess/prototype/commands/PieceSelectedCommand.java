@@ -3,6 +3,7 @@ package chess.prototype.commands;
 import chess.core.*;
 import chess.mvc.models.*;
 import chess.mvc.views.ChessboardViewPanel;
+import chess.prototype.composite.Barrier;
 import chess.prototype.observer.*;
 
 public class PieceSelectedCommand extends CommandBase {
@@ -15,7 +16,7 @@ public class PieceSelectedCommand extends CommandBase {
 		
 		Piece piece = this.getBoard().getPiece(selEvent.getPosition());
 		
-		if (piece == null) {
+		if (piece == null || (piece instanceof Barrier)) {
 			return;
 		}
 		

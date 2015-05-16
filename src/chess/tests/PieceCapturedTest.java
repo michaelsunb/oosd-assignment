@@ -44,6 +44,8 @@ public class PieceCapturedTest extends GameTestBase {
 				1, player1.getScore());
 		assertEquals("Player 1: move increased by 1", 
 				1, player1.getNumberOfMove());
+		assertNotEquals("Swap Player", 
+				player1, this.getGame().getCurrentPlayer());
 	}
 
 	private int numOfBarrier() {
@@ -77,6 +79,8 @@ public class PieceCapturedTest extends GameTestBase {
 				1, player1.getNumberOfMove());
 		assertEquals("Enemy piece reduced by 1", 
 				6, (enemyPieces -1) );
+		assertNotEquals("Swap Player", 
+				player1, this.getGame().getCurrentPlayer());
 	}
 
 }

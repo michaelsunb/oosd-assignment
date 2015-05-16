@@ -28,6 +28,7 @@ public class Chess {
 
 				eventMgr.addListener("UpdateUIEvent", view.getChessBoardPane());
 				eventMgr.addListener("UpdateUIEvent", view.getStatusPane());
+				
 				/*
 				eventMgr.addListener("PieceCommandDecisionEvent", new CommandDecisionMake());
 				eventMgr.addListener("GameNewEvent", gameController);
