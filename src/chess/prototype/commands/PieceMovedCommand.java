@@ -3,7 +3,9 @@ package chess.prototype.commands;
 import chess.core.Game;
 import chess.core.Piece;
 import chess.mvc.models.PieceMovedEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class PieceMovedCommand extends MovedDecision {
 	private PieceMovedEvent currentEvent;
@@ -30,8 +32,10 @@ public class PieceMovedCommand extends MovedDecision {
 		Piece piece = this.getBoard().getPiece(oldPosition);
 		this.getBoard().getPieces()[newPosition] = piece;
 		this.getBoard().getPieces()[oldPosition] = null;
+		
 		piece.getOwner().increaseMove();
-		Game.getInstance().swapPlayer();
+		this.getGame().swapPlayer();
+		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 		return true;
 	}
 }

@@ -1,6 +1,5 @@
 package chess.prototype.commands;
 
-import chess.core.Game;
 import chess.core.Piece;
 import chess.core.Player;
 import chess.mvc.models.PieceCapturedEvent;

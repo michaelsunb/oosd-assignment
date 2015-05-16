@@ -24,21 +24,14 @@ public class PieceCapturedCommand extends CommandBase {
 		Piece selectedPiece = this.getBoard().getPiece(oldPos);
 		Piece enemyPiece = this.getBoard().getPiece(newPos);
 
-		// Move to empty square is not the responsibility of this
-		// object
-		//if(enemyPiece == null) return; 
-
-
 		Player currentPlayer = selectedPiece.getOwner();
-
 		currentPlayer.addScore(enemyPiece.getScore());
-		currentPlayer.increaseMove();
 		
 		this.getBoard().setPiece(newPos, selectedPiece);
 		this.getBoard().setPiece(oldPos, null);
 		
+		currentPlayer.increaseMove();
 		this.getGame().swapPlayer();
-		// redraw
 		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

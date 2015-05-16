@@ -6,8 +6,10 @@ package chess.prototype.commands;
 
 import chess.core.Piece;
 import chess.mvc.models.PieceJoinEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class PieceJoinCommand extends CommandBase {
 
@@ -30,9 +32,11 @@ public class PieceJoinCommand extends CommandBase {
 		piece.add(pieceTarget);
 		piece.setOwner(pieceSelected.getOwner());
 		
-		pieceSelected.getOwner().increaseMove();
-		
 		this.getBoard().setPiece(newPos, piece);
 		this.getBoard().setPiece(oldPos, null);
+		
+		pieceSelected.getOwner().increaseMove();
+		this.getGame().swapPlayer();
+		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }
