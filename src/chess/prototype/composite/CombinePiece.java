@@ -43,7 +43,9 @@ public class CombinePiece extends Piece {
 
 		for (Piece p : pieces) {
 			for (int position : p.getMovablePositions(currPos)) {
-				positions.add(position);
+				if(!positions.contains(position)) {
+					positions.add(position);
+				}
 			}
 		}
 

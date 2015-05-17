@@ -1,6 +1,8 @@
 package chess.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -8,17 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import chess.prototype.builder.PathBuilder;
-import chess.prototype.commands.PieceJoinCommand;
-import chess.prototype.commands.PieceMovedCommand;
 
 public class PathBuilderTest extends GameTestBase {
-	private int boardSize;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		this.getGame().reset(10);
-		boardSize = 
-				this.getBoard().getHeight() * this.getBoard().getWidth();
 	}
 
 	@Test
@@ -32,7 +29,6 @@ public class PathBuilderTest extends GameTestBase {
 				.west()
 				.build();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -48,6 +44,37 @@ public class PathBuilderTest extends GameTestBase {
 		for(int i : testFailPositions) {
 			assertEquals("Should not equal these positions: " + i,
 					false,canMoveTo(buildPositions.getMovablePositions(),i));
+		}
+	}
+
+	@Test
+	public void test_rook_dupl_path() {
+		PathBuilder buildPositions = null;
+		try {
+			buildPositions = new PathBuilder.Builder(0)
+				.north()
+				.north()
+				.south()
+				.south()
+				.east()
+				.east()
+				.west()
+				.west()
+				.build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		int[] moveablePositions = buildPositions.getMovablePositions();
+		int[] testPositions = {1,2,6,12,18};
+
+		assertFalse("Should be no duplicates",
+				((moveablePositions[0] == 1)) &&
+				(moveablePositions[1] == 1));
+	
+		for(int i : testPositions) {
+			assertTrue("Testing this position: " + i,
+					canMoveTo(moveablePositions,i));
 		}
 	}
 
@@ -81,43 +108,28 @@ public class PathBuilderTest extends GameTestBase {
 	}
 
 	@Test
-	public void quick_test_canMoveTo_method() {
-		int[] testPositions = {6,4,16,14};
-		int[] samePositions = {6,4,16,14};
-		int[] sortPositions = {4,6,14,16};
-		int[] failPositions = {7,3,15,12};
-		int[] failSortPositions = {3,7,12,15};
-		int[] failPassPositions = {3,4,16,15};
-		int[] failLongPositions = {3,7,19,15,9,10,11};
-		
-		for(int i : testPositions) {
-			assertTrue("Pass position: " + i,
-					canMoveTo(samePositions,i));
+	public void test_knight_path() {
+		PathBuilder buildPositions = null;
+		try {
+			buildPositions = new PathBuilder.Builder(9)
+				.northTwoEastOne()
+				.northTwoWestOne()
+				.southTwoEastOne()
+				.southTwoWestOne()
+				.eastTwoNorthOne()
+				.eastTwoSouthOne()
+				.westTwoNorthOne()
+				.westTwoSouthOne()
+				.build();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		int[] testPositions = {22,20,17,13,5,1};
 		for(int i : testPositions) {
-			assertTrue("Pass position: " + i,
-					canMoveTo(sortPositions,i));
-		}
-		for(int i : testPositions) {
-			assertFalse("Fail position: " + i,
-					canMoveTo(failPositions,i));
-		}
-		for(int i : testPositions) {
-			assertFalse("Fail position: " + i,
-					canMoveTo(failSortPositions,i));
-		}
-		for(int i : testPositions) {
-			assertFalse("Fail position: " + i,
-					canMoveTo(failLongPositions,i));
-		}
-		for(int i : testPositions) {
-			if(i == 4 || i == 16) {
-				assertTrue("Pass at position 4 and 16",
-						canMoveTo(failPassPositions,i));
-			} else {
-				assertFalse("Fail position: " + i,
-						canMoveTo(failPassPositions,i));
-			}
+			assertTrue("Testing this position: " + i,
+					canMoveTo(buildPositions.getMovablePositions(),i));
 		}
 	}
 

@@ -1,7 +1,6 @@
 package chess.prototype.builder;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import chess.core.Board;
 import chess.core.Game;
@@ -22,6 +21,20 @@ public class PathBuilder {
 	}
 
 	public static class Builder {
+		private enum Direction {
+			NORTH, SOUTH, EAST, WEST,
+			NORTHEAST, NORTHWEST,
+			SOUTHEAST, SOUTHWEST,
+			NORTH_TWO_EAST_ONE,
+			NORTH_TWO_WEST_ONE,
+			SOUTH_TWO_EAST_ONE,
+			SOUTH_TWO_WEST_ONE,
+			EAST_TWO_NORTH_ONE,
+			EAST_TWO_SOUTH_ONE,
+			WEST_TWO_NORTH_ONE,
+			WEST_TWO_SOUTH_ONE
+		}
+
 		private final int boardSize;
 		private final int currPos;
 		
@@ -29,7 +42,6 @@ public class PathBuilder {
 		private final int currY;
 
 		private static Board board;
-		private int movable;
 		
 		private ArrayList<Integer> positions = new ArrayList<Integer>();
 
@@ -39,7 +51,7 @@ public class PathBuilder {
 			currPos = currentPosition;
 
 			if (currPos < 0 || currPos > boardSize) {
-				throw new Exception();
+				throw new Exception("Current position is out of the board");
 			}
 
 			currX = (currPos % board.getWidth());
@@ -51,49 +63,41 @@ public class PathBuilder {
 		}
 		
 		public Builder north() {
-			movable = currY;
-			return setDirection(0,-1);
+			return setDirection(Direction.NORTH,-1);
 		}
 		
 		public Builder south() {
-			movable = currY;
-			return setDirection(1,1);
+			return setDirection(Direction.SOUTH,1);
 		}
 		
 		public Builder east() {
-			movable = currX;
-			return setDirection(2,1);
+			return setDirection(Direction.EAST,1);
 		}
 		
 		public Builder west() {
-			movable = currX;
-			return setDirection(3,-1);
+			return setDirection(Direction.WEST,-1);
 		}
 		
 		public Builder northEast() {
-			movable = currPos;
-			return setDirection(4,-(board.getWidth() - 1));
+			return setDirection(Direction.NORTHEAST,-(board.getWidth() - 1));
 		}
 		
 		public Builder northWest() {
-			movable = currPos;
-			return setDirection(5,-(board.getWidth() + 1));
+			return setDirection(Direction.NORTHWEST,-(board.getWidth() + 1));
 		}
 		
 		public Builder southEast() {
-			movable = currPos;
-			return setDirection(6, (board.getWidth() + 1));
+			return setDirection(Direction.SOUTHEAST, (board.getWidth() + 1));
 		}
 		
 		public Builder southWest() {
-			movable = currPos;
-			return setDirection(7, (board.getWidth() - 1));
+			return setDirection(Direction.SOUTHWEST, (board.getWidth() - 1));
 		}
-		
+
 		public Builder northTwoEastOne() {
 			if ((currY + 2) < board.getHeight()) {
 				if ((currX + 1) < board.getWidth()) {
-					positions.add(getCurrentPosition((currX + 1), (currY + 2)));
+					setAndFinish(true,(currX + 1), (currY + 2));
 				}
 			}
 			return this;
@@ -102,7 +106,7 @@ public class PathBuilder {
 		public Builder northTwoWestOne() {
 			if ((currY + 2) < board.getHeight()) {
 				if ((currX - 1) < board.getWidth()) {
-					positions.add(getCurrentPosition((currX - 1), (currY + 2)));
+					setAndFinish(true,(currX - 1), (currY + 2));
 				}
 			}
 			return this;
@@ -111,7 +115,7 @@ public class PathBuilder {
 		public Builder southTwoEastOne() {
 			if ((currY - 2) >= 0) {
 				if ((currX + 1) < board.getWidth()) {
-					positions.add(getCurrentPosition((currX + 1), (currY - 2)));
+					setAndFinish(true,(currX + 1), (currY - 2));
 				}
 			}
 			return this;
@@ -120,7 +124,7 @@ public class PathBuilder {
 		public Builder southTwoWestOne() {
 			if ((currY - 2) >= 0) {
 				if ((currX - 1) >= 0) {
-					positions.add(getCurrentPosition((currX - 1), (currY - 2)));
+					setAndFinish(true,(currX - 1), (currY - 2));
 				}
 			}
 			return this;
@@ -129,7 +133,7 @@ public class PathBuilder {
 		public Builder eastTwoNorthOne() {
 			if ((currX + 2) < board.getWidth()) {
 				if ((currY + 1) < board.getHeight()) {
-					positions.add(getCurrentPosition((currX + 2), (currY + 1)));
+					setAndFinish(true,(currX + 2), (currY + 1));
 				}
 			}
 			return this;
@@ -138,7 +142,7 @@ public class PathBuilder {
 		public Builder eastTwoSouthOne() {
 			if ((currX + 2) < board.getWidth()) {
 				if ((currY - 1) >= 0) {
-					positions.add(getCurrentPosition((currX + 2), (currY - 1)));
+					setAndFinish(true,(currX + 2), (currY - 1));
 				}
 			}
 			return this;
@@ -147,7 +151,7 @@ public class PathBuilder {
 		public Builder westTwoNorthOne() {
 			if ((currX - 2) >= 0) {
 				if ((currY + 1) < board.getHeight()) {
-					positions.add(getCurrentPosition((currX - 2), (currY + 1)));
+					setAndFinish(true,(currX - 2), (currY + 1));
 				}
 			}
 			return this;
@@ -156,43 +160,52 @@ public class PathBuilder {
 		public Builder westTwoSouthOne() {
 			if ((currX - 2) >= 0) {
 				if ((currY - 1) >= 0) {
-					positions.add(getCurrentPosition((currX - 2), (currY - 1)));
+					setAndFinish(true,(currX - 2), (currY - 1));
 				}
 			}
 			return this;
 		}
-
-		public Builder randomPosition() {
-		    Random rand = new Random();
-		    positions.add(rand.nextInt((boardSize - 0) + 1) + 0);
-		    return this;
-		}
 		
-		private Builder setDirection(int direction,int addOrMinus) {
+		private Builder setDirection(Direction direction,int addOrMinus) {
+			int movable;
+			switch(direction) {
+			case NORTH:
+			case SOUTH:
+				movable = currY;
+				break;
+			case EAST:
+			case WEST:
+				movable = currX;
+				break;
+			default:
+				movable = currPos;
+				break;
+			}
+			
 			int directionX;
 			int x = currX;
 			int y = currY;
 			boolean isDirection = true;
 			while(isDirection) {
-				this.movable += addOrMinus;
+				movable += addOrMinus;
 				switch(direction) {
-				case 0:
+				case NORTH:
 					isDirection = (movable < currY) && (movable >= 0);
 					y = movable;
 					break;
-				case 1:
+				case SOUTH:
 					isDirection = (movable > currY) && (movable < board.getHeight());
 					y = movable;
 					break;
-				case 2:
+				case EAST:
 					isDirection = (movable > currX) && (movable < board.getWidth());
 					x = movable;
 					break;
-				case 3:
+				case WEST:
 					isDirection = (movable < currX) && (movable >= 0);
 					x = movable;
 					break;
-				case 4:
+				case NORTHEAST:
 					directionX = movable % board.getWidth();
 					isDirection = (directionX > x) && (movable >= 0);
 
@@ -201,7 +214,7 @@ public class PathBuilder {
 						y = (movable / board.getWidth());
 					}
 					break;
-				case 5:
+				case NORTHWEST:
 					directionX = movable % board.getWidth();
 					isDirection = (directionX < x) && (movable >= 0);
 
@@ -210,7 +223,7 @@ public class PathBuilder {
 						y = (movable / board.getWidth());
 					}
 					break;
-				case 6:
+				case SOUTHEAST:
 					directionX = movable % board.getWidth();
 					isDirection = (directionX > x) && (movable < boardSize);
 
@@ -219,7 +232,7 @@ public class PathBuilder {
 						y = (movable / board.getWidth());
 					}
 					break;
-				case 7:
+				case SOUTHWEST:
 					directionX = movable % board.getWidth();
 					isDirection = (directionX < x) && (movable < boardSize);
 
@@ -228,6 +241,8 @@ public class PathBuilder {
 						y = (movable / board.getWidth());
 					}
 					break;
+				default:
+					return this;
 				}
 
 				if(setAndFinish(isDirection, x, y))
@@ -242,6 +257,7 @@ public class PathBuilder {
 			int currMovablePos = getCurrentPosition(x,y);
 			
 			if (currPos == currMovablePos) return false;
+			if (positions.contains(currMovablePos)) return false;
 			
 			positions.add(currMovablePos);
 			if (!board.isSqureEmpty(currMovablePos))
