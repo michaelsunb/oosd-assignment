@@ -28,15 +28,14 @@ public class MouseHandler extends MouseAdapter {
 			
 			int current = Game.getInstance().getBoardInstance().getPiecePosition(piece);
 			
-			if (piece.canMoveTo(current, this.position)) {
-				PieceMovedEvent movedEvent = new PieceMovedEvent(current, position);
-				ChessEventDispatcher.getInstance().fireEvent(movedEvent);
-				return;
-			}
+			if (!piece.canMoveTo(current, this.position)) return;
 			
-			// System.out.println(e.getSource() + " right click");
+			// TODO if we detect that user has select piece in (PieceViewPanel) instead of fire PieceMovedEvent
+			// fire PieceSplitEvent. We might need to retrieve selected Piece from the JList box
+			PieceMovedEvent movedEvent = new PieceMovedEvent(current, position);
+			ChessEventDispatcher.getInstance().fireEvent(movedEvent);
+			
 		} else if (SwingUtilities.isLeftMouseButton(e)) {
-			//System.out.println(e.getSource() + " left click");
 			PieceSelectedEvent selEvent = new PieceSelectedEvent(this.position, controller.getView());
 			ChessEventDispatcher.getInstance().fireEvent(selEvent);
 		}
