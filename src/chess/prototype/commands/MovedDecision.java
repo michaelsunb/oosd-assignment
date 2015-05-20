@@ -34,7 +34,7 @@ public abstract class MovedDecision extends CommandBase {
 		return false;
 	}
 
-	protected boolean isSelectedPieceValid() {
+	protected boolean isSelectedPieceNotEmptySqureBarrierOrEnemyPiece() {
 		if(oldPosition == newPosition) return false;
 		
 		selectedPiece = this.getBoard().getPiece(oldPosition);

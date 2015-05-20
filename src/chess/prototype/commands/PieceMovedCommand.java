@@ -17,10 +17,13 @@ public class PieceMovedCommand extends MovedDecision {
 		this.currentEvent = (PieceMovedEvent) event;
 		newPosition = this.currentEvent.getNewPosition();
 		oldPosition = this.currentEvent.getPreviousPosition();
-
-		if(!isSelectedPieceValid()) return;
+		
+		if (oldPosition == -1 || 
+				!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece()) {
+			return;
+		}
+		
 		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
-
 		move();
 	}
 

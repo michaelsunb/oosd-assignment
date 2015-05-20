@@ -11,30 +11,33 @@ public class PieceSplitCommand extends MovedDecision {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!(event instanceof PieceSplitEvent)) return;
-		
-		split = (PieceSplitEvent)event;
-		
+		if (!(event instanceof PieceSplitEvent))
+			return;
+
+		split = (PieceSplitEvent) event;
+
 		composite = split.getCurrentPiece();
-		
+
 		oldPosition = this.getBoard().getPiecePosition(composite);
 		newPosition = split.getSplitToPosition();
 
-		if(!isSelectedPieceValid()) return;
-		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
+		if (!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece() 
+				|| !selectedPiece.canMoveTo(oldPosition, newPosition))
+			return;
 
-		this.getBoard().setPiece(oldPosition,split.getSplitPiece()); // hacky
+		this.getBoard().setPiece(oldPosition, split.getSplitPiece());
 		move();
 	}
 
 	@Override
 	public boolean move() {
-		if(!super.move()) return false;
+		if (!super.move())
+			return false;
 
 		// destination is empty so just occupy
 		Piece fragment = split.getSplitPiece();
 		Piece piece = composite.remove(fragment);
-		
+
 		this.getBoard().getPieces()[newPosition] = fragment;
 		this.getBoard().getPieces()[oldPosition] = piece;
 

@@ -55,7 +55,7 @@ public class ChessEventDispatcher {
 		if (!this.services.containsKey(eventName)) {
 			return;
 		}
-
+		System.out.println("event fired: " + eventName);
 		/*
 		 * Only notify objects interested in @eventName
 		 */
