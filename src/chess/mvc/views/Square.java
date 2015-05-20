@@ -39,7 +39,7 @@ public class Square extends JPanel {
 				}
 			}
 			
-			String iconFle = GetExecutionPath() + "\\" + pieceName  + ".png";
+			String iconFle = GetExecutionPath() + File.separator + pieceName  + ".png";
 			
 			BufferedImage rawImage;
 			try {
