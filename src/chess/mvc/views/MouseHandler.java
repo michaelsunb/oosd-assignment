@@ -10,6 +10,9 @@ import chess.core.Piece;
 import chess.mvc.controllers.GameController;
 import chess.mvc.models.PieceMovedEvent;
 import chess.mvc.models.PieceSelectedEvent;
+import chess.mvc.models.PieceSplitEvent;
+import chess.prototype.composite.CombinePiece;
+import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.ChessEventDispatcher;
 
 public class MouseHandler extends MouseAdapter {
@@ -22,6 +25,8 @@ public class MouseHandler extends MouseAdapter {
 	}
 
 	public void mousePressed(MouseEvent e) {
+		ChessEvent event = null;
+
 		if (SwingUtilities.isRightMouseButton(e)) {
 			Piece piece = Game.getInstance().getSelectedPiece();
 			if (piece == null) return;
@@ -29,16 +34,21 @@ public class MouseHandler extends MouseAdapter {
 			int current = Game.getInstance().getBoardInstance().getPiecePosition(piece);
 			
 			if (!piece.canMoveTo(current, this.position)) return;
-			
-			// TODO if we detect that user has select piece in (PieceViewPanel) instead of fire PieceMovedEvent
-			// fire PieceSplitEvent. We might need to retrieve selected Piece from the JList box
-			PieceMovedEvent movedEvent = new PieceMovedEvent(current, position);
-			ChessEventDispatcher.getInstance().fireEvent(movedEvent);
+			PieceViewPanel pvp = controller.getView().getPieceViewPane();
+
+			if (pvp.needSplit()) {
+				event = new PieceSplitEvent((CombinePiece)piece, 
+						pvp.getSelectedPieces(), this.position);
+			} else {
+				event = new PieceMovedEvent(current, position);
+			}
 			
 		} else if (SwingUtilities.isLeftMouseButton(e)) {
-			PieceSelectedEvent selEvent = new PieceSelectedEvent(this.position, controller.getView());
-			ChessEventDispatcher.getInstance().fireEvent(selEvent);
+			event = new PieceSelectedEvent(this.position, controller.getView());
 		}
+		
+		if (event == null) return;
+		ChessEventDispatcher.getInstance().fireEvent(event);
 	}
 
 }

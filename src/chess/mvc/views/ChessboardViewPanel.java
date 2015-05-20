@@ -38,8 +38,10 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 		
 		int boardSize = board.getHeight() * board.getWidth();
 		this.squares = new Square[boardSize];
+		
 		for (int i = 0; i < boardSize; i++) {
 			this.squares[i] = new Square();
+			this.squares[i].addMouseListener(new MouseHandler(i, this.actionHandler));
 		}
 	}
 	
@@ -73,8 +75,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			} else {
 				square.empty();
 			}
-
-			square.addMouseListener(new MouseHandler(pos, this.actionHandler));
+			
 			this.add(square);
 			pos++;
 		}

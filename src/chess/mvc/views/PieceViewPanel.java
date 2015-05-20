@@ -40,7 +40,29 @@ public class PieceViewPanel extends JPanel {
 	}
 
 	public void setSelectPiece(Piece piece) {
+		// update
+		this.list.clearSelection();
 		this.list.setModel(new PieceListModel(piece));
+	}
+	
+	public boolean needSplit() {
+		boolean isCombinedPiece = (this.currentPiece instanceof CombinePiece);
+		if (!isCombinedPiece) return false;
+		
+		int numPiece = ((CombinePiece)this.currentPiece).getPieces().size();
+		int selPiece = this.list.getSelectedValuesList().size();
+		
+		boolean hasPartialPicked = (numPiece != selPiece);
+		
+		return hasPartialPicked;
+	}
+	
+	public Piece getSelectedPieces() {
+		CombinePiece composite = new CombinePiece();
+		for(Object obj : this.list.getSelectedValuesList()) {
+			composite.add((Piece)obj);
+		}
+		return composite;
 	}
 	
 	private class PieceListModel extends AbstractListModel<Piece>  {
