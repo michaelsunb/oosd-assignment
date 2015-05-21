@@ -4,8 +4,10 @@ import chess.core.*;
 import chess.mvc.models.*;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
+import chess.prototype.template.MovedDecisionTemplate;
 
-public class PieceSplitCommand extends MovedDecision {
+public class PieceSplitCommand extends MovedDecisionTemplate {
 	private PieceSplitEvent split;
 	private CombinePiece composite;
 
@@ -13,27 +15,18 @@ public class PieceSplitCommand extends MovedDecision {
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceSplitEvent))
 			return;
-
 		split = (PieceSplitEvent) event;
-
 		composite = split.getCurrentPiece();
-
 		oldPosition = this.getBoard().getPiecePosition(composite);
 		newPosition = split.getSplitToPosition();
-
-		if (!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece() 
-				|| !selectedPiece.canMoveTo(oldPosition, newPosition))
+		if (!selectedPiece.canMoveTo(oldPosition, newPosition))
 			return;
-
 		this.getBoard().setPiece(oldPosition, split.getSplitPiece());
-		move();
+		this.moveDecider();
 	}
 
 	@Override
-	public boolean move() {
-		if (!super.move())
-			return false;
-
+	public void fireMoveCommand() {
 		// destination is empty so just occupy
 		Piece fragment = split.getSplitPiece();
 		Piece piece = composite.remove(fragment);
@@ -42,6 +35,6 @@ public class PieceSplitCommand extends MovedDecision {
 		this.getBoard().getPieces()[oldPosition] = piece;
 
 		piece.getOwner().increaseMove();
-		return true;
+		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }
