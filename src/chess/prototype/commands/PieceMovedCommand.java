@@ -17,7 +17,10 @@ public class PieceMovedCommand extends MovedDecisionTemplate {
 		newPosition = this.currentEvent.getNewPosition();
 		oldPosition = this.currentEvent.getPreviousPosition();
 		if (oldPosition == -1) return;
-		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
+		if (!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece())
+			return;
+		if(!selectedPiece.canMoveTo(oldPosition, newPosition))
+			return;
 
 		this.moveDecider();
 	}

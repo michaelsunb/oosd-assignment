@@ -21,22 +21,22 @@ public abstract class MovedDecisionTemplate extends CommandBase {
 		targetOwner = !this.getBoard().isSqureEmpty(newPosition) 
 				? this.getBoard().getPiece(newPosition).getOwner() : null;
 	
-		if(selectedOwner == targetOwner) return;
+		if(selectedOwner != targetOwner) return;
 
 		this.nextEvent = new PieceJoinEvent(oldPosition, newPosition);
 	}
 
 	private void landingOnEnemy() {
 	
-		if(!this.getBoard().isSqureEmpty(newPosition) &&
-				(targetOwner == null || selectedOwner != targetOwner)) {
+		if(this.getBoard().isSqureEmpty(newPosition) ||
+				selectedOwner == targetOwner) {
 			return;
 		}
 	
 		this.nextEvent = new PieceCapturedEvent(oldPosition, newPosition);
 	}
 
-	private boolean isSelectedPieceNotEmptySqureBarrierOrEnemyPiece() {
+	protected boolean isSelectedPieceNotEmptySqureBarrierOrEnemyPiece() {
 		if(oldPosition == newPosition) return false;
 		
 		selectedPiece = this.getBoard().getPiece(oldPosition);
@@ -49,7 +49,6 @@ public abstract class MovedDecisionTemplate extends CommandBase {
 	}
 
 	public void moveDecider() {
-		if(!this.isSelectedPieceNotEmptySqureBarrierOrEnemyPiece()) return;
 		this.landingOnFriend();
 		this.landingOnEnemy();
 		

@@ -19,6 +19,8 @@ public class PieceSplitCommand extends MovedDecisionTemplate {
 		composite = split.getCurrentPiece();
 		oldPosition = this.getBoard().getPiecePosition(composite);
 		newPosition = split.getSplitToPosition();
+		if (!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece())
+			return;
 		if (!selectedPiece.canMoveTo(oldPosition, newPosition))
 			return;
 		this.getBoard().setPiece(oldPosition, split.getSplitPiece());
