@@ -1,16 +1,17 @@
+/*
+ * Author: Siang Ling
+ * Number: 3295217
+ */
 package chess.prototype.factory;
 
 import chess.core.Piece;
-import chess.prototype.composite.Barrier;
-import chess.prototype.composite.Bishop;
-import chess.prototype.composite.Knight;
-import chess.prototype.composite.Rook;
+import chess.prototype.composite.*;
 
 public class ChessPieceFactory {
 	
-	public Piece generateChessPiece(String pieceIndicator){
+	public Piece generateChessPiece(String symbol){
 
-		switch(pieceIndicator){
+		switch(symbol){
 			case "k": return(new Knight());
 			case "r": return(new Rook());
 			case "b": return(new Bishop());
@@ -20,3 +21,4 @@ public class ChessPieceFactory {
 		}
 	}
 }
+
