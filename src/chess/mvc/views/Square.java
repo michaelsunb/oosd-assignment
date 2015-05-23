@@ -3,9 +3,10 @@ package chess.mvc.views;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -15,7 +16,6 @@ import javax.swing.JPanel;
 import chess.core.Piece;
 
 public class Square extends JPanel {
-	private Piece piece = null;
 	private JLabel lblIcon = new JLabel();
 	
 	public Square() {
@@ -64,24 +64,15 @@ public class Square extends JPanel {
 	        }
 	    }
 	}
-	
-	// http://stackoverflow.com/questions/16054596/change-color-of-non-transparent-parts-of-png-in-java
-//    private static BufferedImage colorImage(BufferedImage image, Color color) {
-//        int width = image.getWidth();
-//        int height = image.getHeight();
-//
-//        for (int xx = 0; xx < width; xx++) {
-//            for (int yy = 0; yy < height; yy++) {
-//            	if (!(image.getRGB(xx, yy) == Color.BLACK.getRGB())) continue;
-//
-//            	image.setRGB(xx, yy, color.getRGB());
-//            }
-//        }
-//        return image;
-//    }
-//    
+
     private String GetExecutionPath(){
-        String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-       return new File(absolutePath).getParent();
+    	String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+    	try {
+    		// Needed in case path has spaces
+    		return URLDecoder.decode(new File(absolutePath).getParent(), "UTF-8");
+    	} catch (UnsupportedEncodingException e) {
+    		// It's okay. Just return normally
+    	}
+    	return absolutePath;
     }
 }
