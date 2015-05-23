@@ -33,7 +33,7 @@ public abstract class Piece implements Serializable {
 	public boolean canMoveTo(int current, int destination) {
 		int[] positions = this.getMovablePositions(current);
 		Arrays.sort(positions);
-		return Arrays.binarySearch(positions, destination) >= -1;
+		return Arrays.binarySearch(positions, destination) > -1;
 	}
 	
 	public String getSymbol() {

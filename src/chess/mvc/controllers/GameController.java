@@ -25,6 +25,7 @@ import chess.prototype.commands.PieceCapturedCommand;
 import chess.prototype.commands.PieceJoinCommand;
 import chess.prototype.commands.PieceMovedCommand;
 import chess.prototype.commands.PieceSelectedCommand;
+import chess.prototype.commands.PieceSplitCommand;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.ChessEventDispatcher;
@@ -55,6 +56,10 @@ public class GameController extends AbstractAction {
 
 	public IObserver pieceSelected() {
 		return new PieceSelectedCommand();
+	}
+
+	public IObserver pieceSplit() {
+		return new PieceSplitCommand();
 	}
 
 	public IObserver pieceMoved() {
@@ -88,15 +93,6 @@ public class GameController extends AbstractAction {
 		}
 	}
 
-	private class PopUpDemo extends JPopupMenu {
-		JMenuItem anItem;
-
-		public PopUpDemo() {
-			anItem = new JMenuItem("Click Me!");
-			add(anItem);
-		}
-	}
-
 	public class LoadGameAction extends ActionController {
 		public LoadGameAction() {
 			super(eventMgr);
@@ -108,87 +104,10 @@ public class GameController extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "PieceSelectedEvent":
-			
 			eventMgr.fireEvent(new GameNewEvent(view));
 			break;
-
 		default:
-			//this.view.setTitle(e.getActionCommand());
+			break;
 		}
 	}
-//	public class PieceAction extends MouseAdapter {
-//		private final IBoard board = game.getBoardInstance();
-//		private Piece splitPiece;
-//		private int position;
-//		private int prevPosition;
-//		private int nextPosition;
-//		private ChessEvent event;
-//
-//		public PieceAction(int position) {
-//			this.position = position;
-//		}
-//
-//		public PieceAction(int position, Piece splitPiece) {
-//			this.position = position;
-//			this.splitPiece = splitPiece;
-//		}
-//
-//		public void mousePressed(MouseEvent e) {
-//			if (SwingUtilities.isRightMouseButton(e)) {
-//				// my code
-//			}
-//			prevPosition = position;
-//			event = new PieceSelectedEvent(prevPosition, view);
-//			System.out.println("mouse pressed");
-//			actionPerformed(null);
-//		}
-//
-//		public void mouseReleased(MouseEvent e) {
-//			System.out.println("mouse released");
-//
-//			calcPosition(e);
-//			if (SwingUtilities.isRightMouseButton(e)) {
-//				if (nextPosition != position) {
-//					return;
-//				}
-//				PopUpDemo menu = new PopUpDemo();
-//				menu.show(e.getComponent(), e.getX(), e.getY());
-//				return;
-//			}
-//
-//			Piece mainPiece = board.getPiece(prevPosition);
-//			if (mainPiece instanceof CombinePiece) {
-//				event = new PieceSplitEvent((CombinePiece) mainPiece,
-//						splitPiece, nextPosition);
-//			} else {
-//				event = new PieceMovedEvent(prevPosition, nextPosition);
-//				actionPerformed(null);
-//				//event = new UpdateUIEvent((CommandBase) pieceMoved());
-//				actionPerformed(null);
-//				view.getChessBoardPane().redraw(true);
-//			}
-//		}
-//
-//		private void calcPosition(MouseEvent e) {
-//			int x = (position % board.getWidth());
-//			int y = (position / board.getWidth());
-//
-//			int newY = (y + e.getY() / 100);
-//			if ((y + e.getY() % 100) < 0) {
-//				newY--;
-//			}
-//
-//			int newX = (x + e.getX() / 100);
-//			if ((x + e.getX() % 100) < 0) {
-//				newX--;
-//			}
-//			nextPosition = (newX + (newY * board.getHeight()));
-//		}
-//
-//		private void actionPerformed(ActionEvent e) {
-//			eventMgr.fireEvent(event);
-//		}
-//	}
-//
-
 }

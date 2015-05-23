@@ -28,14 +28,14 @@ public class PieceJoinCommand extends CommandBase {
 		Piece pieceTarget = this.getBoard().getPiece(newPos);
 
 		CombinePiece piece = new CombinePiece();
-		piece.add(pieceSelected);
-		piece.add(pieceTarget);
 		piece.setOwner(pieceSelected.getOwner());
+		if(!piece.add(pieceSelected)) return;
+		if(!piece.add(pieceTarget)) return;
 		
 		this.getBoard().setPiece(newPos, piece);
 		this.getBoard().setPiece(oldPos, null);
 		
-		pieceSelected.getOwner().increaseMove();
+		piece.getOwner().increaseMove();
 		this.getGame().swapPlayer();
 		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}

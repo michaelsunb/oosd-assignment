@@ -5,8 +5,19 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import chess.core.Game;
 import chess.core.Piece;
 import chess.mvc.controllers.GameController;
 import chess.prototype.composite.CombinePiece;
@@ -46,21 +57,26 @@ public class PieceViewPanel extends JPanel {
 	}
 	
 	public boolean needSplit() {
+		this.currentPiece = Game.getInstance().getSelectedPiece();
+		
 		boolean isCombinedPiece = (this.currentPiece instanceof CombinePiece);
 		if (!isCombinedPiece) return false;
 		
 		int numPiece = ((CombinePiece)this.currentPiece).getPieces().size();
 		int selPiece = this.list.getSelectedValuesList().size();
-		
-		boolean hasPartialPicked = (numPiece != selPiece);
-		
-		return hasPartialPicked;
+
+		return (numPiece != selPiece) && (selPiece != 0);
 	}
 	
 	public Piece getSelectedPieces() {
 		CombinePiece composite = new CombinePiece();
+		
 		for(Object obj : this.list.getSelectedValuesList()) {
-			composite.add((Piece)obj);
+			Piece p = (Piece)obj;
+			if(this.list.getSelectedValuesList().size() == 1) {
+				return p;
+			}
+			composite.add(p);
 		}
 		return composite;
 	}
@@ -96,7 +112,7 @@ public class PieceViewPanel extends JPanel {
 		public Component getListCellRendererComponent(JList<?> list,
 				Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
-			
+
 			return super.getListCellRendererComponent(list, value.getClass().getSimpleName(), index,
 					isSelected, cellHasFocus);
 

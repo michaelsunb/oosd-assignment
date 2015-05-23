@@ -7,13 +7,23 @@ public class CombinePiece extends Piece {
 	private List<Piece> pieces = new ArrayList<Piece>();
 
 	public boolean add(Piece piece) {
+		if(piece == null) return false;
+		if((this.score + piece.getScore()) >= 20) return false;
+
 		for (Piece p : pieces) {
 			if (p.getClass().equals(piece.getClass())) {
 				return false;
 			}
 		}
 
-		this.pieces.add(piece);
+		if(piece instanceof CombinePiece){
+			for (Piece p : ((CombinePiece)piece).getPieces()) {
+				pieces.add(p);
+			}
+		} else {
+			this.pieces.add(piece);
+		}
+
 		this.score += piece.getScore();
 		return true;
 	}

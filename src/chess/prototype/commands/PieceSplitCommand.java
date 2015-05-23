@@ -10,6 +10,8 @@ import chess.prototype.template.MovedDecisionTemplate;
 public class PieceSplitCommand extends MovedDecisionTemplate {
 	private PieceSplitEvent split;
 	private CombinePiece composite;
+	private Piece fragment;
+	private Piece piece;
 
 	@Override
 	public void update(ChessEvent event) {
@@ -23,20 +25,24 @@ public class PieceSplitCommand extends MovedDecisionTemplate {
 			return;
 		if (!selectedPiece.canMoveTo(oldPosition, newPosition))
 			return;
-		this.getBoard().setPiece(oldPosition, split.getSplitPiece());
+
+		fragment = split.getSplitPiece();
+		piece = composite.remove(fragment);
+		this.getBoard().setPiece(oldPosition, fragment);
 		this.moveDecider();
+		this.getBoard().getPieces()[oldPosition] = piece;
+		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 
 	@Override
 	public void fireMoveCommand() {
 		// destination is empty so just occupy
-		Piece fragment = split.getSplitPiece();
-		Piece piece = composite.remove(fragment);
 
 		this.getBoard().getPieces()[newPosition] = fragment;
 		this.getBoard().getPieces()[oldPosition] = piece;
 
 		piece.getOwner().increaseMove();
+		this.getGame().swapPlayer();
 		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }
