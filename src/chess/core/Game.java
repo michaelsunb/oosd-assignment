@@ -27,8 +27,12 @@ public class Game implements Serializable {
 		}
 		return instance;
 	}
-
+	
 	public void reset(int maxMove) {
+		reset(maxMove, true);
+	}
+	
+	public void reset(int maxMove, boolean defaultBoard) {
 		this.selectedPiece = null;
 		this.maxMoves = maxMove;
 		board = new Board();
@@ -43,9 +47,11 @@ public class Game implements Serializable {
 		players[1] = new Player();
 		players[1].setColour(Color.BLACK);
 		
-		new PlayerPieceDecorator(board, players[0]).init();
-		new BarrierPieceDecorator(board).init();
-		new PlayerPieceDecorator(board, players[1]).init();
+		if (defaultBoard) {
+			new PlayerPieceDecorator(board, players[0]).init();
+			new BarrierPieceDecorator(board).init();
+			new PlayerPieceDecorator(board, players[1]).init();
+		}
 	}
 
 	/*
@@ -82,10 +88,14 @@ public class Game implements Serializable {
 		return this.players[0];
 	}
 
-	public IBoard getBoardInstance() {
+	public Board getBoardInstance() {
 		return this.board;
 	}
-
+	
+	public void setBoardInstance(Board board) {
+		this.board = board;
+	}
+	
 	/*
 	 * pre.condition: number of valid move can't be zero
 	 */

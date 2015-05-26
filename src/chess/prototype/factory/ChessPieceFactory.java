@@ -12,10 +12,12 @@ public class ChessPieceFactory {
 	public Piece generateChessPiece(String symbol){
 
 		switch(symbol){
-			case "k": return(new Knight());
-			case "r": return(new Rook());
-			case "b": return(new Bishop());
-			case "x": return(new Barrier());
+			case "k": return new Knight();
+			case "r": return new Rook();
+			case "b": return new Bishop();
+			case "x": return new Barrier();
+			case "j": return new Jester();
+			case "m": return new Musician();
 			case "s": return null;
 			default: return null;
 		}
