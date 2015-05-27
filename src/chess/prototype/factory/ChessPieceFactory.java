@@ -9,16 +9,16 @@ import chess.prototype.composite.*;
 
 public class ChessPieceFactory {
 	
-	public Piece generateChessPiece(String symbol){
+	public Piece generateChessPiece(char symbol){
 
 		switch(symbol){
-			case "k": return new Knight();
-			case "r": return new Rook();
-			case "b": return new Bishop();
-			case "x": return new Barrier();
-			case "j": return new Jester();
-			case "m": return new Musician();
-			case "s": return null;
+			case 'k': return new Knight();
+			case 'r': return new Rook();
+			case 'b': return new Bishop();
+			case 'x': return new Barrier();
+			case 'j': return new Jester();
+			case 'm': return new Musician();
+			case 's': return null;
 			default: return null;
 		}
 	}

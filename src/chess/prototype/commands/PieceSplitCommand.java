@@ -27,6 +27,7 @@ public class PieceSplitCommand extends MovedDecisionTemplate {
 			return;
 
 		fragment = split.getSplitPiece();
+		fragment.setOwner(composite.getOwner());
 		piece = composite.remove(fragment);
 		this.getBoard().setPiece(oldPosition, fragment);
 		this.moveDecider();

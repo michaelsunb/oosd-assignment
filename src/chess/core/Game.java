@@ -43,6 +43,7 @@ public class Game implements Serializable {
 		players = new Player[2];
 		players[0] = new Player();
 		players[0].setColour(Color.WHITE);
+		players[0].setTurn(true);
 		
 		players[1] = new Player();
 		players[1].setColour(Color.BLACK);
@@ -60,9 +61,11 @@ public class Game implements Serializable {
 	 * @post.condition: only a one user can take turn
 	 */
 	public void swapPlayer() {
-		for (Player p : this.players) {
-			p.setTurn(!p.isTurn());
-		}
+		this.players[0].setTurn(!this.players[0].isTurn());
+		this.players[1].setTurn(!this.players[1].isTurn());
+//		for (Player p : this.players) {
+//			p.setTurn(!p.isTurn());
+//		}
 	}
 
 	/*

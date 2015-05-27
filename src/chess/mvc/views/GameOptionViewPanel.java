@@ -39,13 +39,8 @@ public class GameOptionViewPanel extends JDialog {
 		// advance mapping
 		panel.add(new JLabel("Custom Chessboard"));
 		this.txtMap = new JTextArea(4, 20);
-		this.txtMap.setText("RBKJMKBR\r\nSSSSSSSS\r\nSSSSSSSS\r\nXXXXXXXX");
+		this.txtMap.setText("RBKJMKBR\nSSSSSSSS\nSSSSSSSS\nXXXXXXXX");
 		panel.add(this.txtMap);
-
-		// Timeout
-//		panel.add(new JLabel("Timeout"));
-//		this.txtTimeout = new JTextField();
-//		panel.add(this.txtTimeout);
 		
 		this.add(panel, BorderLayout.CENTER);
 		
@@ -74,10 +69,11 @@ public class GameOptionViewPanel extends JDialog {
 					maxMove = 10;
 				}
 				
-				String lines[] = txtMap.getText().split("\\r?\\n");
+				String lines[] = txtMap.getText().split("\\n");
 				ArrayList<String> map = new ArrayList<>(Arrays.asList(lines));
 
-				if (GameMapDecorator.gameSquareMapValidity(map)) {
+				// here how the actual game get setup
+				if (GameMapDecorator.gameSquareMapValidity(map)) {					
 					Game.getInstance().reset(maxMove, false);
 					new GameMapDecorator(Game.getInstance().getBoardInstance(),
 							map).init();

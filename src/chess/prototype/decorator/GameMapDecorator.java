@@ -44,10 +44,6 @@ public class GameMapDecorator extends BoardDecorator{
 			return false;
 		}
 		
-		if(boardHeight != boardWidth/2){
-			return false;
-		}
-		
 		for(String x:userInput){
 			if(x.length() != boardWidth){
 				return false;
@@ -61,9 +57,8 @@ public class GameMapDecorator extends BoardDecorator{
 		int currPos = 0;
 		
 		for(String x:userInput){
-			String[] tokenizedString = x.split("");
-			for(String token:tokenizedString){
-				Piece newPiece = pieceFactory.generateChessPiece(token.toLowerCase());
+			for(char token:x.toLowerCase().toCharArray()){
+				Piece newPiece = pieceFactory.generateChessPiece(token);
 				if(newPiece != null && !(newPiece instanceof Barrier)){
 					newPiece.setOwner(game.getPlayer(1));
 				}
@@ -75,9 +70,8 @@ public class GameMapDecorator extends BoardDecorator{
 		Collections.reverse(userInput);
 		
 		for(String x:userInput){
-			String[] tokenizedString = x.split("");
-			for(String token:tokenizedString){
-				Piece newPiece = pieceFactory.generateChessPiece(token.toLowerCase());
+			for(char token:x.toLowerCase().toCharArray()){
+				Piece newPiece = pieceFactory.generateChessPiece(token);
 				if(newPiece != null && !(newPiece instanceof Barrier)){
 					newPiece.setOwner(game.getPlayer(2));
 				}

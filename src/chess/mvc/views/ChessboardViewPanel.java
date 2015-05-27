@@ -33,7 +33,10 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 
 	private void initialComponent() {
 		IBoard board = actionHandler.getBoard();
-		this.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
+		int w = board.getWidth();
+		int h = board.getHeight();
+
+		this.setLayout(new GridLayout(h, w));
 		this.setBorder(new LineBorder(Color.BLACK));
 		
 		int boardSize = board.getHeight() * board.getWidth();
