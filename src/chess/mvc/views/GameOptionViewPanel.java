@@ -27,6 +27,7 @@ public class GameOptionViewPanel extends JDialog {
 		
 		super(frame, "Game Options", JDialog.ModalityType.DOCUMENT_MODAL);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

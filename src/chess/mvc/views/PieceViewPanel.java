@@ -57,7 +57,9 @@ public class PieceViewPanel extends JPanel {
 	}
 	
 	public boolean needSplit() {
-		this.currentPiece = Game.getInstance().getSelectedPiece();
+		this.currentPiece = Game.getInstance()
+				.getBoardInstance()
+				.getPiece(Game.getInstance().getSelPosition());
 		
 		boolean isCombinedPiece = (this.currentPiece instanceof CombinePiece);
 		if (!isCombinedPiece) return false;

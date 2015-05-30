@@ -12,12 +12,14 @@ public class PieceSplitCommand extends MovedDecisionTemplate {
 	private CombinePiece composite;
 	private Piece fragment;
 	private Piece piece;
-
+	
 	@Override
 	public void update(ChessEvent event) {
 		if (!(event instanceof PieceSplitEvent))
 			return;
+		
 		split = (PieceSplitEvent) event;
+		
 		composite = split.getCurrentPiece();
 		oldPosition = this.getBoard().getPiecePosition(composite);
 		newPosition = split.getSplitToPosition();

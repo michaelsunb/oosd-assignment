@@ -48,7 +48,7 @@ public class PieceSelectedTest extends GameTestBase {
 					chessBoard.getSquare(i).getBackground());
 		}
 		
-		assertNotNull("Selected Piece is not null", this.getGame().getSelectedPiece());
+		assertNotEquals("Selected Piece is not -1", -1, this.getGame().getSelPosition());
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class PieceSelectedTest extends GameTestBase {
 					chessBoard.getSquare(i).getBackground());
 		}
 		
-		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
+		assertEquals("Selected Piece is -1", -1, this.getGame().getSelPosition());
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class PieceSelectedTest extends GameTestBase {
 		
 		assertTrue("Barrier can't move", positions.length == 0);
 		
-		assertNull("Selected Piece is null", this.getGame().getSelectedPiece());
+		assertEquals("Selected Piece is -1", -1, this.getGame().getSelPosition());
 	}
 	
 	@Test

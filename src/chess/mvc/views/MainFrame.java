@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import chess.core.Game;
 import chess.mvc.controllers.GameController;
+import chess.mvc.models.UpdateUIEvent;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -64,12 +67,29 @@ public class MainFrame extends JFrame {
 		
 		// save
 		JMenuItem saveGame = new JMenuItem("Save");
-		saveGame.addActionListener(this.actionHandler.new SaveGameAction());
+		saveGame.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Game.getInstance().save();
+			}
+		});
 		menu.add(saveGame);
 		
 		// restore
 		JMenuItem restoreGame = new JMenuItem("Restore");
-		restoreGame.addActionListener(this.actionHandler.new LoadGameAction());
+		restoreGame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Game.getInstance().restore();
+				
+				getChessBoardPane().redraw(true);
+				revalidate();
+				
+				ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
+			}
+		});
 		menu.add(restoreGame);
 		
 		menu.addSeparator();

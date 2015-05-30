@@ -15,7 +15,7 @@ public class Game implements Serializable {
 	private Board board;
 	private static Game instance;
 	private int maxMoves = 10;
-	private Piece selectedPiece;
+	private int selectedPiece;
 	
 	private Game() {
 		reset(maxMoves);
@@ -33,7 +33,7 @@ public class Game implements Serializable {
 	}
 	
 	public void reset(int maxMove, boolean defaultBoard) {
-		this.selectedPiece = null;
+		this.selectedPiece = -1;
 		this.maxMoves = maxMove;
 		board = new Board();
 		board.init();
@@ -168,12 +168,13 @@ public class Game implements Serializable {
 		return false;
 	}
 
-	public Piece getSelectedPiece() {
+	// store the location of the piece
+	public int getSelPosition() {
 		return selectedPiece;
 	}
-
-	public void setSelectedPiece(Piece selectedPiece) {
-		this.selectedPiece = selectedPiece;
+	
+	public void setSelPosition(int pos) {
+		this.selectedPiece = pos;
 	}
 	
 	public boolean isGameOver() {

@@ -30,6 +30,7 @@ public class Board implements IBoard, Serializable {
 
 	@Override
 	public Piece getPiece(int pos) {
+		if (pos < 0 || pos > this.squares.length) return null;
 		return squares[pos];
 	}
 
@@ -55,7 +56,7 @@ public class Board implements IBoard, Serializable {
 	public int getPiecePosition(Piece currentPiece) {
 		for(int i = 0; i < this.squares.length; i++) {
 			if(this.squares[i] != null &&
-					this.squares[i].equals(currentPiece)) {
+				this.squares[i].equals(currentPiece)) {
 				return i;
 			}
 		}

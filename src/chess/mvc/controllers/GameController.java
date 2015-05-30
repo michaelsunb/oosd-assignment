@@ -86,19 +86,19 @@ public class GameController extends AbstractAction {
 		}
 	}
 
-	public class SaveGameAction extends ActionController {
-		public SaveGameAction() {
-			super(eventMgr);
-			// event = new SaveGameEvent(board?);
-		}
-	}
-
-	public class LoadGameAction extends ActionController {
-		public LoadGameAction() {
-			super(eventMgr);
-			// event = new LoadGameEvent(board?);
-		}
-	}
+//	public class SaveGameAction extends ActionController {
+//		public SaveGameAction() {
+//			super(eventMgr);
+//			//event = new SaveGameEvent(board?);
+//		}
+//	}
+//
+//	public class LoadGameAction extends ActionController {
+//		public LoadGameAction() {
+//			super(eventMgr);
+//			// event = new LoadGameEvent(board?);
+//		}
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

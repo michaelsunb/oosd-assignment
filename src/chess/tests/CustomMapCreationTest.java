@@ -76,8 +76,6 @@ public class CustomMapCreationTest extends GameTestBase {
 		//mapsquarevalidity function checks
 		assertTrue("A valid chessboard", 
 				GameMapDecorator.gameSquareMapValidity(userInput));
-		assertFalse("Map height != width /2 are invalid", 
-				GameMapDecorator.gameSquareMapValidity(userInput2));
 	}
 
 }

@@ -43,7 +43,8 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 		this.squares = new Square[boardSize];
 		
 		for (int i = 0; i < boardSize; i++) {
-			this.squares[i] = new Square();
+			this.squares[i] = new Square(i);
+			
 			this.squares[i].addMouseListener(new MouseHandler(i, this.actionHandler));
 		}
 	}
@@ -78,7 +79,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			} else {
 				square.empty();
 			}
-			
+						
 			this.add(square);
 			pos++;
 		}
@@ -102,8 +103,21 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	 * @pre.condition: i between 0 to this.components.length
 	 * @post.condition: return a null or an instance of the component object
 	 */
-	public Component getSquare(int i) {
+	public Square getSquare(int i) {
 		if (i < 0 || i > this.squares.length) return null;
 		return this.squares[i];
+	}
+	
+	public Square getSquareAt(int x, int y) {
+		Component comp = this.getComponentAt(Math.abs(x), Math.abs(y));
+		if (!(comp instanceof Square)) return null;
+		
+		for (int i = 0; i < this.squares.length; i++) {
+			if (comp.equals(this.squares[i])) {
+				System.out.println("position: "+ i);
+				return this.squares[i];
+			}
+		}
+		return null;
 	}
 }
