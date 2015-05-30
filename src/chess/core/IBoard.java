@@ -22,10 +22,16 @@ public interface IBoard {
 	 * Get the height of the chess board
 	 */
 	public int getHeight();
-
+	
 	/*
 	 * Get the width of the chess board
 	 */
 	public int getWidth();
+	
+	public boolean isSqureEmpty(int pos);
+
+	public int getPiecePosition(Piece currentPiece);
+	
+	public void reset(int height, int width);
 
 }

@@ -1,5 +1,6 @@
 package chess.prototype.events.listener;
 
+<<<<<<< HEAD:src/chess/prototype/events/listener/PieceMovedEventListener.java
 import chess.core.Board;
 import chess.core.Piece;
 import chess.core.Player;
@@ -9,13 +10,16 @@ import chess.prototype.events.PieceJoinEvent;
 import chess.prototype.events.PieceMovedEvent;
 
 public class PieceMovedEventListener extends EventListenerBase {
-	private PieceMovedEvent currentEvent;
+=======
+import chess.mvc.models.PieceMovedEvent;
+import chess.mvc.models.UpdateUIEvent;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.ChessEventDispatcher;
+import chess.prototype.template.MovedDecisionTemplate;
 
-	private int newPosition;
-	private int oldPosition;
-	private Piece selectedPiece;
-	private Player selectedOwner;
-	private Player targetOwner;
+public class PieceMovedCommand extends MovedDecisionTemplate {
+>>>>>>> origin/stabilize-part-2:src/chess/prototype/commands/PieceMovedCommand.java
+	private PieceMovedEvent currentEvent;
 
 	@Override
 	public void update(ChessEvent event) {
@@ -24,58 +28,21 @@ public class PieceMovedEventListener extends EventListenerBase {
 		this.currentEvent = (PieceMovedEvent) event;
 		newPosition = this.currentEvent.getNewPosition();
 		oldPosition = this.currentEvent.getPreviousPosition();
-
-		if(!isSelectedPieceValid()) return;
-
-		if(!selectedPiece.canMoveTo(oldPosition, newPosition)) return;
-
-		if(landingOnFriend()) {
-			PieceJoinEvent join = new PieceJoinEvent(oldPosition, newPosition);
-			eventMgr.fireEvent(join);
+		if (oldPosition == -1) return;
+		if (!isSelectedPieceNotEmptySqureBarrierOrEnemyPiece())
 			return;
-		}
-		
-		if(landingOnEnemy()) {
-			PieceCapturedEvent capture = new PieceCapturedEvent(oldPosition, newPosition);
-			eventMgr.fireEvent(capture);
+		if(!selectedPiece.canMoveTo(oldPosition, newPosition))
 			return;
-		}
 		
+		this.moveDecider();
+	}
+
+	public void fireMoveCommand() {
 		// destination is empty so just occupy
-		board.getPieces()[newPosition] = board.getPiece(oldPosition);
-		board.getPieces()[oldPosition] = null;
-	}
-
-	private boolean landingOnFriend() {
-		selectedOwner = selectedPiece.getOwner();
-		targetOwner = (board.getPiece(newPosition) != null) ? board
-				.getPiece(newPosition).getOwner() : null;
-
-		if(selectedOwner == targetOwner) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean landingOnEnemy() {
-
-		if(!((Board) board).isSqureEmpty(newPosition) &&
-				(targetOwner == null || selectedOwner != targetOwner)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean isSelectedPieceValid() {
-		selectedPiece = board.getPiece(oldPosition);
-
-		if (selectedPiece == null || // selected piece is an empty square
-				(selectedPiece != null && // selected piece has no owner
-						selectedPiece.getOwner() == null))
-			return false;
+		this.getBoard().getPieces()[newPosition] = selectedPiece;
+		this.getBoard().getPieces()[oldPosition] = null;
 		
-		return true;
+		selectedPiece.getOwner().increaseMove();
+		this.getGame().swapPlayer();
 	}
 }

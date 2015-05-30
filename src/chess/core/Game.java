@@ -4,17 +4,29 @@
  */
 package chess.core;
 
-import java.io.*;
-import java.util.*;
+import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import chess.prototype.decorator.*;
+import chess.prototype.decorator.BarrierPieceDecorator;
+import chess.prototype.decorator.PlayerPieceDecorator;
+import chess.prototype.momento.GameCaretaker;
 
 public class Game implements Serializable {
 	private Player[] players;
 	private Board board;
 	private static Game instance;
 	private int maxMoves = 10;
-
+	private GameCaretaker caretaker;
+	private int selectedPiece;
+	
 	private Game() {
 		reset(maxMoves);
 	}
@@ -25,9 +37,18 @@ public class Game implements Serializable {
 		}
 		return instance;
 	}
-
+	
 	public void reset(int maxMove) {
-
+		reset(maxMove, true);
+	}
+	
+	/**
+	 * @pre.condition: an integer and boolean passed
+	 * 
+	 * @post.condition: game restarted, board re-decorated
+	 */
+	public void reset(int maxMove, boolean defaultBoard) {
+		this.selectedPiece = -1;
 		this.maxMoves = maxMove;
 		board = new Board();
 		board.init();
@@ -36,11 +57,24 @@ public class Game implements Serializable {
 		 */
 		players = new Player[2];
 		players[0] = new Player();
+		players[0].setColour(Color.WHITE);
+		players[0].setTurn(true);
+		
 		players[1] = new Player();
-
-		new PlayerPieceDecorator(board, players[0]).init();
-		new BarrierPieceDecorator(board).init();
-		new PlayerPieceDecorator(board, players[1]).init();
+		players[1].setColour(Color.BLACK);
+		
+		// Create new caretaker
+		caretaker = new GameCaretaker();
+		
+		if (defaultBoard) {
+			new PlayerPieceDecorator(board, players[0]).init();
+			new BarrierPieceDecorator(board).init();
+			new PlayerPieceDecorator(board, players[1]).init();
+		}
+	}
+	
+	public GameCaretaker getCaretaker() {
+		return caretaker;
 	}
 
 	/*
@@ -49,9 +83,11 @@ public class Game implements Serializable {
 	 * @post.condition: only a one user can take turn
 	 */
 	public void swapPlayer() {
-		for (Player p : this.players) {
-			p.setTurn(!p.isTurn());
-		}
+		this.players[0].setTurn(!this.players[0].isTurn());
+		this.players[1].setTurn(!this.players[1].isTurn());
+//		for (Player p : this.players) {
+//			p.setTurn(!p.isTurn());
+//		}
 	}
 
 	/*
@@ -77,10 +113,14 @@ public class Game implements Serializable {
 		return this.players[0];
 	}
 
-	public IBoard getBoardInstance() {
+	public Board getBoardInstance() {
 		return this.board;
 	}
-
+	
+	public void setBoardInstance(Board board) {
+		this.board = board;
+	}
+	
 	/*
 	 * pre.condition: number of valid move can't be zero
 	 */
@@ -102,7 +142,10 @@ public class Game implements Serializable {
 		}
 		return pieces;
 	}
-	
+
+	/**
+	 * @post.condition: game state saved to disk
+	 */
 	public boolean save() {
 		File file = new File("game.state");
 		if (file.exists()) file.delete();
@@ -122,12 +165,17 @@ public class Game implements Serializable {
 
 			return true;
 		} catch (IOException e) {
-			// ignore
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
 	}
-	
+
+	/**
+	 * @pre.condition: game state file exists
+	 * 
+	 * @post.condition: game loaded to state stored on disk
+	 */
 	public boolean restore() {
 		File file = new File("game.state");
 		if (!file.exists()) {
@@ -148,5 +196,20 @@ public class Game implements Serializable {
 		}
 		
 		return false;
+	}
+
+	// store the location of the piece
+	public int getSelPosition() {
+		return selectedPiece;
+	}
+	
+	public void setSelPosition(int pos) {
+		this.selectedPiece = pos;
+	}
+	
+	public boolean isGameOver() {
+		return
+				this.players[0].getNumberOfMove() == this.maxMoves
+				&& this.players[1].getNumberOfMove() == this.maxMoves;
 	}
 }

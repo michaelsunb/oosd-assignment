@@ -1,29 +1,65 @@
 package chess.prototype.events.listener;
 
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragSource;
+
 import chess.core.*;
 import chess.mvc.models.*;
 import chess.mvc.views.ChessboardViewPanel;
+<<<<<<< HEAD:src/chess/prototype/events/listener/PieceSelectedEventListener.java
 import chess.prototype.events.*;
+=======
+import chess.prototype.composite.Barrier;
+import chess.prototype.dnd.PieceDragGesture;
+import chess.prototype.dnd.PieceDropTarget;
+import chess.prototype.observer.*;
+>>>>>>> origin/stabilize-part-2:src/chess/prototype/commands/PieceSelectedCommand.java
 
 public class PieceSelectedEventListener extends EventListenerBase {
 
 	@Override
 	public void update(ChessEvent event) {
-		if (!((event instanceof PieceSelectedEvent))) return;
+		if (!(event instanceof PieceSelectedEvent)
+				|| Game.getInstance().isGameOver()) return;
 		
 		PieceSelectedEvent selEvent = (PieceSelectedEvent)event;
 		
-		Piece piece = this.board.getPiece(selEvent.getPosition());
-		if (piece == null) return;
+		Piece piece = this.getBoard().getPiece(selEvent.getPosition());
+		// any selected piece?
+		this.oldPosition = Game.getInstance().getSelPosition();
+		Piece currentPiece = Game.getInstance().getBoardInstance().getPiece(this.oldPosition);
+				
+		if (piece == null 
+				// author: Sokun
+				// don't need to fire twice 
+				|| piece == currentPiece 
+				|| (piece instanceof Barrier)) {
+			return;
+		}
 		
-		ChessboardViewPanel chessPane = selEvent.getChessboardViewPanel();
+		// not your piece mate :P
+		if (null != piece.getOwner() 
+				&& !piece.getOwner().equals(getGame().getCurrentPlayer())) {
+			return;
+		}
+
+		this.getGame().setSelPosition(selEvent.getPosition());
+		selEvent.getMainFrame().getPieceViewPane().setSelectPiece(piece);
+		
+		ChessboardViewPanel chessPane = selEvent.getMainFrame().getChessBoardPane();		
 		int currPos = selEvent.getPosition();
+		
+		// setup drag & drop
+		DragSource ds = new DragSource();
+		ds.createDefaultDragGestureRecognizer(chessPane.getSquare(currPos),
+				DnDConstants.ACTION_COPY, new PieceDragGesture());
 		
 		int movablePos[] = piece.getMovablePositions(currPos);
 		
 		chessPane.clearPath();
 		
 		for (int pos : movablePos) {
+			// mark path
 			chessPane.markPath(pos);
 		}
 	}
