@@ -9,6 +9,7 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
+import java.awt.dnd.InvalidDnDOperationException;
 
 import chess.core.Piece;
 import chess.mvc.views.Square;
@@ -25,8 +26,12 @@ public class PieceDragGesture implements DragGestureListener {
 		}
 		
 		Piece piece = square.getPiece();
-		
-		event.startDrag(cursor, new TransferablePiece(piece));
+
+		try {
+			event.startDrag(cursor, new TransferablePiece(piece));
+		} catch (InvalidDnDOperationException e) {
+			
+		}
 	}
 
 }
