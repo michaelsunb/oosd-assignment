@@ -47,6 +47,7 @@ public class PieceSplitTest extends GameTestBase {
 	@Test
 	public void split_a_piece() {
 		// arrange
+		this.getGame().setSelPosition(0);
 		int totalPieces = this.getGame().getPlayerPieces(1).size();
 		PieceSplitEvent event = new PieceSplitEvent(combined, p1, 1);
 		
@@ -62,6 +63,7 @@ public class PieceSplitTest extends GameTestBase {
 	@Test
 	public void split_combine_piece() {
 		// arrange
+		this.getGame().setSelPosition(0);
 		int totalPieces = this.getGame().getPlayerPieces(1).size();
 		CombinePiece splitPieces = new CombinePiece();
 		splitPieces.add(p0);
@@ -83,6 +85,7 @@ public class PieceSplitTest extends GameTestBase {
 	@Test
 	public void split_a_piece_and_land_on_enemy_piece() {
 		// arrange
+		this.getGame().setSelPosition(0);
 		Player player1 = this.getGame().getPlayer(1);
 		PieceSplitEvent event = new PieceSplitEvent(combined, p1, 12);
 		

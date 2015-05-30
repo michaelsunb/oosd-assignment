@@ -20,7 +20,7 @@ public class PieceDragGesture implements DragGestureListener {
 		Cursor cursor = null;
 		Square square = (Square) event.getComponent();
 		
-		if (event.getDragAction() == DnDConstants.ACTION_COPY) {
+		if (event.getDragAction() == DnDConstants.ACTION_MOVE) {
 			cursor = DragSource.DefaultCopyDrop;
 		}
 		

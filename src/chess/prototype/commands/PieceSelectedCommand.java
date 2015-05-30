@@ -55,8 +55,6 @@ public class PieceSelectedCommand extends CommandBase {
 		chessPane.clearPath();
 		
 		for (int pos : movablePos) {
-			// set drop target
-			new PieceDropTarget(chessPane.getSquare(pos));
 			// mark path
 			chessPane.markPath(pos);
 		}

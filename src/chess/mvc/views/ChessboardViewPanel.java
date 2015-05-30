@@ -12,6 +12,7 @@ import chess.mvc.models.GameStatusEvent;
 import chess.mvc.models.PieceMovedEvent;
 import chess.mvc.models.PieceSelectedEvent;
 import chess.mvc.models.UpdateUIEvent;
+import chess.prototype.dnd.PieceDropTarget;
 import chess.prototype.observer.*;
 
 
@@ -46,6 +47,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			this.squares[i] = new Square(i);
 			
 			this.squares[i].addMouseListener(new MouseHandler(i, this.actionHandler));
+			new PieceDropTarget(this.squares[i]);
 		}
 	}
 	
