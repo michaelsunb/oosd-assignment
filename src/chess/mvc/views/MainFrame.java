@@ -84,7 +84,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Game.getInstance().restore();
 				
-				getChessBoardPane().redraw(true);
+				getChessBoardPane().redraw(false);
 				revalidate();
 				
 				ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
