@@ -11,7 +11,7 @@ public abstract class CommandBase implements IObserver {
 	protected int newPosition;
 
 	public CommandBase() {
-		this.oldPosition = getBoard().getPiecePosition(getGame().getSelectedPiece());
+		this.oldPosition = getGame().getSelPosition();
 	}
 	
 	@Override

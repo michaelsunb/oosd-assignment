@@ -1,5 +1,6 @@
 package chess.prototype.momento;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 import chess.core.Game;
@@ -7,7 +8,7 @@ import chess.core.Piece;
 
 //adapted by Caspar from http://en.wikipedia.org/wiki/Memento_pattern
 //for OOSD sem 1, 2015
-public class GameCaretaker
+public class GameCaretaker implements Serializable
 {
 	private Stack<GameMemento> savedStates = new Stack<GameMemento>();
 

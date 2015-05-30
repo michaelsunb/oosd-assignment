@@ -1,10 +1,11 @@
 package chess.prototype.momento;
 
+import java.io.Serializable;
+
 import chess.core.Piece;
-import chess.core.Player;
 
 
-public class GameMemento
+public class GameMemento implements Serializable
 {
 	private final int oldPosition;
 	private final int newPosition;

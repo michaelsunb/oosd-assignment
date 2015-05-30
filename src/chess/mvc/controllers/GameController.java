@@ -36,7 +36,6 @@ import chess.prototype.observer.IObserver;
 public class GameController extends AbstractAction {
 	private static final ChessEventDispatcher eventMgr = ChessEventDispatcher
 			.getInstance();
-	private static final Game game = Game.getInstance();
 
 	private MainFrame view;
 
@@ -44,7 +43,7 @@ public class GameController extends AbstractAction {
 	}
 
 	public IBoard getBoard() {
-		return game.getBoardInstance();
+		return Game.getInstance().getBoardInstance();
 	}
 
 	public void init(MainFrame view) {
@@ -89,20 +88,6 @@ public class GameController extends AbstractAction {
 		public NewGameAction() {
 			super(eventMgr);
 			event = new GameNewEvent(view);
-		}
-	}
-
-	public class SaveGameAction extends ActionController {
-		public SaveGameAction() {
-			super(eventMgr);
-			// event = new SaveGameEvent(board?);
-		}
-	}
-
-	public class LoadGameAction extends ActionController {
-		public LoadGameAction() {
-			super(eventMgr);
-			// event = new LoadGameEvent(board?);
 		}
 	}
 

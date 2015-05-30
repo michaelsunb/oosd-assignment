@@ -9,7 +9,11 @@ import chess.core.Piece;
 import chess.core.Player;
 import chess.prototype.composite.Barrier;
 import chess.prototype.factory.ChessPieceFactory;
-
+/*
+ * Implement chess map idea per Halil recommendation :)
+ * Given: chess map as multiline string
+ * Then generate Chess board
+ */
 public class GameMapDecorator extends BoardDecorator{
 	
 	private ArrayList<String> userInput;

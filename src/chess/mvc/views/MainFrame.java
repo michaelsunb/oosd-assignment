@@ -11,6 +11,8 @@ import chess.mvc.controllers.GameController;
 import chess.prototype.momento.GameCaretaker;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.IObserver;
+import chess.mvc.models.UpdateUIEvent;
+import chess.prototype.observer.ChessEventDispatcher;
 
 public class MainFrame extends JFrame implements IObserver {
 	private static final long serialVersionUID = 1L;
@@ -68,12 +70,25 @@ public class MainFrame extends JFrame implements IObserver {
 		
 		// save
 		JMenuItem saveGame = new JMenuItem("Save");
-		saveGame.addActionListener(this.actionHandler.new SaveGameAction());
+		saveGame.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Game.getInstance().save();
+			}
+		});
 		menu.add(saveGame);
 		
 		// restore
 		JMenuItem restoreGame = new JMenuItem("Restore");
-		restoreGame.addActionListener(this.actionHandler.new LoadGameAction());
+		restoreGame.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Game.getInstance().restore();
+				ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
+			}
+		});
 		menu.add(restoreGame);
 		
 		menu.addSeparator();

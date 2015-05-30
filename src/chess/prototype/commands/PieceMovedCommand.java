@@ -21,7 +21,7 @@ public class PieceMovedCommand extends MovedDecisionTemplate {
 			return;
 		if(!selectedPiece.canMoveTo(oldPosition, newPosition))
 			return;
-
+		
 		this.moveDecider();
 	}
 
