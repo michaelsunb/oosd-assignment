@@ -1,19 +1,19 @@
 package chess.mvc.views;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import chess.core.*;
+import chess.core.IBoard;
+import chess.core.Piece;
 import chess.mvc.controllers.GameController;
-import chess.mvc.models.GameStatusEvent;
-import chess.mvc.models.PieceMovedEvent;
-import chess.mvc.models.PieceSelectedEvent;
 import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.dnd.PieceDropTarget;
-import chess.prototype.observer.*;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.IObserver;
 
 
 public class ChessboardViewPanel extends JPanel implements IObserver {
@@ -29,9 +29,11 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	
 	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
-		//this.setBackground(Color.BLACK);
 	}
 
+	/**
+	 * @post.condition: game board set up
+	 */
 	private void initialComponent() {
 		IBoard board = actionHandler.getBoard();
 		int w = board.getWidth();
@@ -54,7 +56,12 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	public void redraw() {
 		this.redraw(false);
 	}
-	
+
+	/**
+	 * @pre.condition: Game board initialized
+	 * 
+	 * @post.condition: Redraw game board
+	 */
 	public void redraw(boolean clearView) {
 		if (clearView) {
 			this.removeAll();

@@ -42,6 +42,11 @@ public class Game implements Serializable {
 		reset(maxMove, true);
 	}
 	
+	/**
+	 * @pre.condition: an integer and boolean passed
+	 * 
+	 * @post.condition: game restarted, board re-decorated
+	 */
 	public void reset(int maxMove, boolean defaultBoard) {
 		this.selectedPiece = -1;
 		this.maxMoves = maxMove;
@@ -138,6 +143,9 @@ public class Game implements Serializable {
 		return pieces;
 	}
 
+	/**
+	 * @post.condition: game state saved to disk
+	 */
 	public boolean save() {
 		File file = new File("game.state");
 		if (file.exists()) file.delete();
@@ -162,7 +170,12 @@ public class Game implements Serializable {
 		
 		return false;
 	}
-	
+
+	/**
+	 * @pre.condition: game state file exists
+	 * 
+	 * @post.condition: game loaded to state stored on disk
+	 */
 	public boolean restore() {
 		File file = new File("game.state");
 		if (!file.exists()) {

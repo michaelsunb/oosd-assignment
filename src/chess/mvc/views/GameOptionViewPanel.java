@@ -21,7 +21,6 @@ import chess.prototype.decorator.GameMapDecorator;
 public class GameOptionViewPanel extends JDialog {
 	private JTextField txtMaxMove;
 	private JTextArea txtMap;
-//	private JTextField txtTimeout;
 
 	public GameOptionViewPanel(JFrame frame) {
 		

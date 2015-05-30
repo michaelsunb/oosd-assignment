@@ -30,6 +30,11 @@ public abstract class Piece implements Serializable {
 
 	public abstract int[] getMovablePositions(int pos);
 
+	/**
+	 * @pre.condition: 2 integers passed
+	 * 
+	 * @post.condition: returns boolean indicator if piece is allowed to move to destination
+	 */
 	public boolean canMoveTo(int current, int destination) {
 		int[] positions = this.getMovablePositions(current);
 		Arrays.sort(positions);

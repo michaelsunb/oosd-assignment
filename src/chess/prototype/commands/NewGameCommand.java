@@ -1,11 +1,8 @@
 package chess.prototype.commands;
 
-import javax.swing.JOptionPane;
-
-import chess.core.Game;
-import chess.mvc.models.*;
+import chess.mvc.models.GameNewEvent;
 import chess.mvc.views.GameOptionViewPanel;
-import chess.prototype.observer.*;
+import chess.prototype.observer.ChessEvent;
 
 public class NewGameCommand extends CommandBase {
 
@@ -18,25 +15,6 @@ public class NewGameCommand extends CommandBase {
 
 		theEvent.getMainFame().getChessBoardPane().redraw(true);
 		theEvent.getMainFame().revalidate();
-		
-//		try {
-//			String moves = JOptionPane.showInputDialog(
-//					gameNewEvent.getMainFame(),
-//					"How many moves?", "alert", JOptionPane.OK_CANCEL_OPTION);
-//
-//			if (moves == null) { // cancelled
-//				return;
-//			}
-//			
-//			Game.getInstance().reset(Integer.parseInt(moves));
-//			
-//			theEvent.getMainFame().getChessBoardPane().redraw(true);
-//			theEvent.getMainFame().revalidate();
-//			
-//		} catch (NumberFormatException nfe) {
-//			JOptionPane.showMessageDialog(null, "Not a number!");
-//		}
-		
 	}
 
 }
