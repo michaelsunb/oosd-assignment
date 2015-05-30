@@ -32,13 +32,9 @@ public class Player implements Serializable {
 		this.numberOfMove++;
 	}
 
-//	public List<Piece> getPieces() {
-//		return pieces;
-//	}
-//
-//	public void setPieces(List<Piece> pieces) {
-//		this.pieces = pieces;
-//	}
+	public void setNumberOfMove(int numberOfMove) {
+		this.numberOfMove = numberOfMove;
+	}
 
 	public int getNumberOfMove() {
 		return numberOfMove;
@@ -48,16 +44,20 @@ public class Player implements Serializable {
 		this.numberOfMove++;
 	}
 
-	public int getScore() {
-		return this.score;
-	}
-
 	public Color getColour() {
 		return colour;
 	}
 
 	public void setColour(Color black) {
 		this.colour = black;
+	}
+
+	public int getScore() {
+		return this.score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public void addScore(int value) {

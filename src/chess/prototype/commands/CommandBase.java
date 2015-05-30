@@ -2,16 +2,14 @@ package chess.prototype.commands;
 
 import chess.core.Game;
 import chess.core.IBoard;
-import chess.core.Piece;
-import chess.core.Player;
-import chess.mvc.models.PieceMovedEvent;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.ChessEventDispatcher;
 import chess.prototype.observer.IObserver;
 
 public abstract class CommandBase implements IObserver {
 	protected int oldPosition;
-	
+	protected int newPosition;
+
 	public CommandBase() {
 		this.oldPosition = getBoard().getPiecePosition(getGame().getSelectedPiece());
 	}
@@ -29,5 +27,13 @@ public abstract class CommandBase implements IObserver {
 	
 	public ChessEventDispatcher eventMgr() {
 		return ChessEventDispatcher.getInstance(); 
+	}
+	
+	public final int getNewPosition() {
+		return newPosition;
+	}
+
+	public final int getOldPosition() {
+		return oldPosition;
 	}
 }

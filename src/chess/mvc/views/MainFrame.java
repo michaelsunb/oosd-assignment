@@ -6,9 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import chess.core.Game;
 import chess.mvc.controllers.GameController;
+import chess.prototype.momento.GameCaretaker;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.IObserver;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements IObserver {
 	private static final long serialVersionUID = 1L;
 	private ChessboardViewPanel chessboardPane;
 	private GameStatusViewPanel statusPane;
@@ -73,6 +77,32 @@ public class MainFrame extends JFrame {
 		menu.add(restoreGame);
 		
 		menu.addSeparator();
+		
+		// Undo
+		JMenuItem undoGame = new JMenu("Undo");
+		JMenuItem undoOne = new JMenuItem("1");
+		JMenuItem undoTwo = new JMenuItem("2");
+		JMenuItem undoThree = new JMenuItem("3");
+		undoGame.add(undoOne);
+		undoGame.add(undoTwo);
+		undoGame.add(undoThree);
+
+		GameCaretaker caretaker = Game.getInstance().getCaretaker();
+
+		undoGame.setEnabled(false);
+		undoOne.setEnabled(false);
+		undoTwo.setEnabled(false);
+		undoThree.setEnabled(false);
+		if(caretaker.count() > 0) undoGame.setEnabled(true);
+		if(caretaker.count() > 0) undoOne.setEnabled(true);
+		if(caretaker.count() > 1) undoTwo.setEnabled(true);
+		if(caretaker.count() > 2) undoThree.setEnabled(true);
+		undoOne.addActionListener(this.actionHandler.new UndoGameAction(1));
+		undoTwo.addActionListener(this.actionHandler.new UndoGameAction(2));
+		undoThree.addActionListener(this.actionHandler.new UndoGameAction(3));
+		menu.add(undoGame);
+		
+		menu.addSeparator();
 		// exit
 		JMenuItem exit = new JMenuItem("Exit");
 		exit.addActionListener(new ActionListener() {
@@ -98,5 +128,10 @@ public class MainFrame extends JFrame {
 	
 	public PieceViewPanel getPieceViewPane() {
 		return this.pieceViewPane;
+	}
+
+	@Override
+	public void update(ChessEvent event) {
+		buildMenuBar();
 	}
 }

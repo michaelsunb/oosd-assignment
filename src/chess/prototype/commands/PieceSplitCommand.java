@@ -44,6 +44,5 @@ public class PieceSplitCommand extends MovedDecisionTemplate {
 
 		piece.getOwner().increaseMove();
 		this.getGame().swapPlayer();
-		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

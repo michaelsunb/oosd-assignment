@@ -17,21 +17,19 @@ public class PieceCapturedCommand extends CommandBase {
 	}
 
 	public void capture(PieceCapturedEvent event) {
-		
-		int newPos = event.getNewPosition();
-		int oldPos = event.getPreviousPosition();
+		newPosition = event.getNewPosition();
+		oldPosition = event.getPreviousPosition();
 
-		Piece selectedPiece = this.getBoard().getPiece(oldPos);
-		Piece enemyPiece = this.getBoard().getPiece(newPos);
+		Piece selectedPiece = this.getBoard().getPiece(oldPosition);
+		Piece enemyPiece = this.getBoard().getPiece(newPosition);
 
 		Player currentPlayer = selectedPiece.getOwner();
 		currentPlayer.addScore(enemyPiece.getScore());
 		
-		this.getBoard().setPiece(newPos, selectedPiece);
-		this.getBoard().setPiece(oldPos, null);
+		this.getBoard().setPiece(newPosition, selectedPiece);
+		this.getBoard().setPiece(oldPosition, null);
 		
 		currentPlayer.increaseMove();
 		this.getGame().swapPlayer();
-		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

@@ -5,10 +5,19 @@
 package chess.core;
 
 import java.awt.Color;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import chess.prototype.decorator.*;
+import chess.prototype.decorator.BarrierPieceDecorator;
+import chess.prototype.decorator.PlayerPieceDecorator;
+import chess.prototype.momento.GameCaretaker;
 
 public class Game implements Serializable {
 	private Player[] players;
@@ -16,6 +25,7 @@ public class Game implements Serializable {
 	private static Game instance;
 	private int maxMoves = 10;
 	private Piece selectedPiece;
+	private GameCaretaker caretaker;
 	
 	private Game() {
 		reset(maxMoves);
@@ -48,11 +58,18 @@ public class Game implements Serializable {
 		players[1] = new Player();
 		players[1].setColour(Color.BLACK);
 		
+		// Create new caretaker
+		caretaker = new GameCaretaker();
+		
 		if (defaultBoard) {
 			new PlayerPieceDecorator(board, players[0]).init();
 			new BarrierPieceDecorator(board).init();
 			new PlayerPieceDecorator(board, players[1]).init();
 		}
+	}
+	
+	public GameCaretaker getCaretaker() {
+		return caretaker;
 	}
 
 	/*
@@ -120,7 +137,7 @@ public class Game implements Serializable {
 		}
 		return pieces;
 	}
-	
+
 	public boolean save() {
 		File file = new File("game.state");
 		if (file.exists()) file.delete();

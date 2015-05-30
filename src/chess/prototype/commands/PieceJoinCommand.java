@@ -21,22 +21,21 @@ public class PieceJoinCommand extends CommandBase {
 	}
 
 	public void joinPiece(PieceJoinEvent event) {
-		int newPos = event.getNewPosition();
-		int oldPos = event.getPreviousPosition();
+		newPosition = event.getNewPosition();
+		oldPosition = event.getPreviousPosition();
 
-		Piece pieceSelected = this.getBoard().getPiece(oldPos);
-		Piece pieceTarget = this.getBoard().getPiece(newPos);
+		Piece pieceSelected = this.getBoard().getPiece(oldPosition);
+		Piece pieceTarget = this.getBoard().getPiece(newPosition);
 
 		CombinePiece piece = new CombinePiece();
 		piece.setOwner(pieceSelected.getOwner());
 		if(!piece.add(pieceSelected)) return;
 		if(!piece.add(pieceTarget)) return;
 		
-		this.getBoard().setPiece(newPos, piece);
-		this.getBoard().setPiece(oldPos, null);
+		this.getBoard().setPiece(newPosition, piece);
+		this.getBoard().setPiece(oldPosition, null);
 		
 		piece.getOwner().increaseMove();
 		this.getGame().swapPlayer();
-		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

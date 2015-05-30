@@ -26,11 +26,13 @@ public class Chess {
 				eventMgr.addListener("PieceSelectedEvent", gameController.pieceSelected());		
 				eventMgr.addListener("PieceJoinEvent", gameController.pieceJoin());
 				eventMgr.addListener("PieceCapturedEvent", gameController.pieceCapture());
-				eventMgr.addListener("PieceSplitEvent", gameController.pieceSplit());	
+				eventMgr.addListener("PieceSplitEvent", gameController.pieceSplit());
 				eventMgr.addListener("PieceMovedEvent", gameController.pieceMoved());
+				eventMgr.addListener("UndoEvent", gameController.undoGame());
 
 				eventMgr.addListener("UpdateUIEvent", view.getChessBoardPane());
 				eventMgr.addListener("UpdateUIEvent", view.getStatusPane());
+				eventMgr.addListener("UpdateUIEvent", view);
 			}
 
 		});

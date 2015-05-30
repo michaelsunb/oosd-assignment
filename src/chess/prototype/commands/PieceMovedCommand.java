@@ -32,6 +32,5 @@ public class PieceMovedCommand extends MovedDecisionTemplate {
 		
 		selectedPiece.getOwner().increaseMove();
 		this.getGame().swapPlayer();
-		ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
 	}
 }

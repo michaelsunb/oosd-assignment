@@ -17,6 +17,7 @@ import chess.mvc.models.GameNewEvent;
 import chess.mvc.models.PieceMovedEvent;
 import chess.mvc.models.PieceSelectedEvent;
 import chess.mvc.models.PieceSplitEvent;
+import chess.mvc.models.UndoEvent;
 import chess.mvc.models.UpdateUIEvent;
 import chess.mvc.views.MainFrame;
 import chess.prototype.commands.CommandBase;
@@ -27,6 +28,7 @@ import chess.prototype.commands.PieceMovedCommand;
 import chess.prototype.commands.PieceSelectedCommand;
 import chess.prototype.commands.PieceSplitCommand;
 import chess.prototype.composite.CombinePiece;
+import chess.prototype.momento.UndoCommand;
 import chess.prototype.observer.ChessEvent;
 import chess.prototype.observer.ChessEventDispatcher;
 import chess.prototype.observer.IObserver;
@@ -74,6 +76,10 @@ public class GameController extends AbstractAction {
 		return new PieceJoinCommand();
 	}
 
+	public IObserver undoGame() {
+		return new UndoCommand();
+	}
+
 	public MainFrame getView() {
 		return this.view;
 	}
@@ -97,6 +103,13 @@ public class GameController extends AbstractAction {
 		public LoadGameAction() {
 			super(eventMgr);
 			// event = new LoadGameEvent(board?);
+		}
+	}
+
+	public class UndoGameAction extends ActionController {
+		public UndoGameAction(int numOfReverts) {
+			super(eventMgr);
+			event = new UndoEvent(numOfReverts);
 		}
 	}
 
