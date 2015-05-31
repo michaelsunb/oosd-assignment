@@ -15,17 +15,8 @@ Structural
 > Composite
 > Decorator
 
-Behavioral (still need to fine tune)
+Behavioral
 > Observer
 > Command
-
-
-----------WK 9 & 10
-> Split problem
-> check combine piece combine with combine piece (PieceTest.java, PieceJoinTest.java)
-
-> UI Problem
-> review observer & command
-
-
---- WK 11 (refactoring)
+> Momento
+> Template Method

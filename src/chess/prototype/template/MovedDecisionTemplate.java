@@ -60,6 +60,11 @@ public abstract class MovedDecisionTemplate extends CommandBase {
 		return true;
 	}
 
+	/**
+	 * @pre.condition: Must be called by the child class to execute
+	 * template method pattern.
+	 * @post.condition: Fires next events according to methods above
+	 */
 	public void moveDecider() {
 		if(!this.pieceTurn()) return;
 		
@@ -80,7 +85,8 @@ public abstract class MovedDecisionTemplate extends CommandBase {
 	}
 	
 	/**
-	 * @pre.condition: Old position is a piece and new position is empty
+	 * @pre.condition: Old position is a piece and new position is empty and
+	 * must have a child class to execute this method
 	 * @post.condition: Piece has moved to the new position and old position is now empty
 	 */
 	public abstract void fireMoveCommand();

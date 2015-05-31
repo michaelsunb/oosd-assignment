@@ -63,13 +63,16 @@ public class MouseHandler extends MouseAdapter {
 		PieceViewPanel pvp = controller.getView().getPieceViewPane();
 
 		if (pvp.needSplit()) {
+			Piece selectCompositePiece = pvp.getSelectedPieces();
+			
+			if (!selectCompositePiece.canMoveTo(current, this.position)) return null;
+			
 			event = new PieceSplitEvent((CombinePiece)piece, 
-					pvp.getSelectedPieces(), this.position);
+					selectCompositePiece, this.position);
 		} else {
 			event = new PieceMovedEvent(current, position);
 		}
 		
 		return event;
 	}
-
 }

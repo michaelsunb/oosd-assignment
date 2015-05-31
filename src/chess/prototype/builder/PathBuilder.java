@@ -51,7 +51,8 @@ public class PathBuilder {
 			currPos = currentPosition;
 
 			if (currPos < 0 || currPos > boardSize) {
-				throw new Exception("Current position is out of the board");
+				throw new Exception("Current position is out of the board at position "
+						+ currentPosition);
 			}
 
 			currX = (currPos % board.getWidth());
