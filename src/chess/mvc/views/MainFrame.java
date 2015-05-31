@@ -1,18 +1,24 @@
 package chess.mvc.views;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import chess.core.Game;
 import chess.mvc.controllers.GameController;
+import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.momento.GameCaretaker;
 import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.IObserver;
-import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.observer.ChessEventDispatcher;
+import chess.prototype.observer.IObserver;
 
 public class MainFrame extends JFrame implements IObserver {
 	private static final long serialVersionUID = 1L;

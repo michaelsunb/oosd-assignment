@@ -22,6 +22,10 @@ public class GameOptionViewPanel extends JDialog {
 	private JTextField txtMaxMove;
 	private JTextArea txtMap;
 
+	/**
+	 * @pre.condition: Instantiate the object with JFrame input
+	 * @post.condition: Creates a popup screen to start the game
+	 */
 	public GameOptionViewPanel(JFrame frame) {
 		
 		super(frame, "Game Options", JDialog.ModalityType.DOCUMENT_MODAL);

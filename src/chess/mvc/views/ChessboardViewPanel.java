@@ -20,18 +20,27 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	private Square[] squares;
 	private GameController actionHandler;
 
+	/**
+	 * @pre.condition: Input of UpdateUIEvent
+	 * @post.condition: Redraws the chessboard
+	 */
 	@Override
 	public void update(ChessEvent event) {
 		if (event instanceof UpdateUIEvent) {
 			this.redraw(false);
 		}
 	}
-	
+
+	/**
+	 * @pre.condition: Instantiate the class with GameController
+	 * @post.condition: Class is instantiated
+	 */
 	public ChessboardViewPanel(GameController handler) {
 		this.actionHandler = handler;
 	}
 
 	/**
+	 * @pre.condition: Game and Board object must have their properties set
 	 * @post.condition: game board set up
 	 */
 	private void initialComponent() {
@@ -51,10 +60,6 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			this.squares[i].addMouseListener(new MouseHandler(i, this.actionHandler));
 			new PieceDropTarget(this.squares[i]);
 		}
-	}
-	
-	public void redraw() {
-		this.redraw(false);
 	}
 
 	/**
@@ -101,9 +106,13 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	public void clearPath() {
 		if (this.squares == null) return;
 		
-		this.redraw();
+		this.redraw(false);
 	}
-	
+
+	/**
+	 * @pre.condition: Input integer position
+	 * @post.condition: Sets the tile background to red
+	 */
 	public void markPath(int pos) {
 		squares[pos].setBackground(Color.RED);
 	}
@@ -115,18 +124,5 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	public Square getSquare(int i) {
 		if (i < 0 || i > this.squares.length) return null;
 		return this.squares[i];
-	}
-	
-	public Square getSquareAt(int x, int y) {
-		Component comp = this.getComponentAt(Math.abs(x), Math.abs(y));
-		if (!(comp instanceof Square)) return null;
-		
-		for (int i = 0; i < this.squares.length; i++) {
-			if (comp.equals(this.squares[i])) {
-				System.out.println("position: "+ i);
-				return this.squares[i];
-			}
-		}
-		return null;
 	}
 }

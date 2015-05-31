@@ -19,19 +19,18 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 	private JLabel[] lbScores;
 	// each player available pieces
 	private JLabel[] lbPieces;
-	
-	private JLabel gameState;
-	// private JLabel timeCounter;
+	// game status
+	private JLabel gameStatus;
 	
 	private static final int PLAYER_ONE = 0;
 	private static final int PLAYER_TWO = 1;
 	
 	public GameStatusViewPanel() {
 		// game state
-		this.gameState = new JLabel("");
-		Font font = this.gameState.getFont();
-		this.gameState.setFont(new Font(font.getFontName(), Font.BOLD,  14));
-		this.add(this.gameState);
+		this.gameStatus = new JLabel("");
+		Font font = this.gameStatus.getFont();
+		this.gameStatus.setFont(new Font(font.getFontName(), Font.BOLD,  14));
+		this.add(this.gameStatus);
 		
 		JPanel statusPane = playerStats();
 		this.add(statusPane);
@@ -39,7 +38,10 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		this.setPreferredSize(new Dimension(200, 110));
 	}
 
-
+	/**
+	 * @pre.condition: New game must have begun
+	 * @post.condition: Returns JPanel of initial scores/moves/turns
+	 */
 	private JPanel playerStats() {		
 		JPanel statusPane = new JPanel();
 		statusPane.setLayout(new GridLayout (4, 3));
@@ -95,7 +97,10 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		return statusPane;
 	}
 
-
+	/**
+	 * @pre.condition: A chess event must be fired
+	 * @post.condition: Updates the JPanel of scores/moves/turns
+	 */
 	@Override
 	public void update(ChessEvent event) {
 		// NOTE in fact we can get info from Game.getInstance();
@@ -114,11 +119,11 @@ public class GameStatusViewPanel extends JPanel implements IObserver {
 		this.lbPieces[PLAYER_TWO].setText("" + g.getPlayerPieces(PLAYER_TWO + 1).size());
 
 		if (g.isGameOver()) {
-			this.gameState.setForeground(Color.RED);
-			this.gameState.setText("GAME OVER!!!");
+			this.gameStatus.setForeground(Color.RED);
+			this.gameStatus.setText("GAME OVER!!!");
 		} else {
-			this.gameState.setForeground(Color.BLUE);
-			this.gameState.setText("GAME PLAY");
+			this.gameStatus.setForeground(Color.BLUE);
+			this.gameStatus.setText("GAME PLAY");
 		}
 	}
 }
