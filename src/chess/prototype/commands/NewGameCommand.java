@@ -1,11 +1,16 @@
 package chess.prototype.commands;
 
 import chess.mvc.models.GameNewEvent;
+import chess.mvc.models.UpdateUIEvent;
 import chess.mvc.views.GameOptionViewPanel;
 import chess.prototype.observer.ChessEvent;
 
 public class NewGameCommand extends CommandBase {
 
+	/**
+	 * @pre.condition: GameNewEvent must be fired
+	 * @post.condition: Pop up a dialog box to set a new game
+	 */
 	@Override
 	public void update(ChessEvent event) {
 		if (!(event instanceof GameNewEvent)) return;
@@ -13,8 +18,6 @@ public class NewGameCommand extends CommandBase {
 
 		new GameOptionViewPanel(theEvent.getMainFame()).setVisible(true);
 
-		theEvent.getMainFame().getChessBoardPane().redraw(true);
-		theEvent.getMainFame().revalidate();
+		this.eventMgr().fireEvent(new UpdateUIEvent(true));
 	}
-
 }

@@ -204,16 +204,22 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * 
+	 * @pre.condition: Input integer value
 	 * @post.condition: store the location of the piece
 	 */
 	public void setSelPosition(int pos) {
 		this.selectedPiece = pos;
 	}
-	
+
+	/**
+	 * @pre.condition: Game and Board are set and players are playing
+	 * @post.condition: Returns true/false if game is over
+	 */
 	public boolean isGameOver() {
 		return
 				this.players[0].getNumberOfMove() == this.maxMoves
-				&& this.players[1].getNumberOfMove() == this.maxMoves;
+				&& this.players[1].getNumberOfMove() == this.maxMoves 
+				|| this.getPlayerPieces(1).size() == 0
+				|| this.getPlayerPieces(2).size() == 0;
 	}
 }

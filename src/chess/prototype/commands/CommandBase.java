@@ -10,6 +10,11 @@ public abstract class CommandBase implements IObserver {
 	protected int oldPosition;
 	protected int newPosition;
 
+	/**
+	 * @pre.condition: Game object must be instantiated
+	 * @post.condition: Instantiate child class with selected
+	 * position set to old position 
+	 */
 	public CommandBase() {
 		this.oldPosition = getGame().getSelPosition();
 	}

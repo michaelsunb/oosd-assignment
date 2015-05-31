@@ -2,8 +2,6 @@ package chess.mvc.controllers;
 
 import chess.core.Game;
 import chess.core.IBoard;
-import chess.mvc.models.GameNewEvent;
-import chess.mvc.models.UndoEvent;
 import chess.mvc.views.MainFrame;
 import chess.prototype.commands.NewGameCommand;
 import chess.prototype.commands.PieceCapturedCommand;
@@ -57,18 +55,5 @@ public class GameController {
 
 	public MainFrame getView() {
 		return this.view;
-	}
-	
-	// Actions
-	public class NewGameAction extends ActionController {
-		public NewGameAction() {
-			event = new GameNewEvent(view);
-		}
-	}
-
-	public class UndoGameAction extends ActionController {
-		public UndoGameAction(int numOfReverts) {
-			event = new UndoEvent(numOfReverts);
-		}
 	}
 }

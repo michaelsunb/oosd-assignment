@@ -1,11 +1,16 @@
 package chess.mvc.views;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import chess.core.Game;
-import chess.prototype.observer.*;
+import chess.prototype.observer.ChessEvent;
+import chess.prototype.observer.IObserver;
 
 /*
  * A panel which render game status
