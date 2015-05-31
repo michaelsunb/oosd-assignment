@@ -5,12 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -25,7 +22,11 @@ import chess.prototype.composite.CombinePiece;
 public class PieceViewPanel extends JPanel {
 	private JList<Piece> list;
 	private Piece currentPiece;
-	
+
+	/**
+	 * @pre.condition: Instantiate the class with GameController
+	 * @post.condition: Class is instantiated with an empty list
+	 */
 	public PieceViewPanel(GameController handler) {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -46,15 +47,24 @@ public class PieceViewPanel extends JPanel {
 		
 		this.add(scrollPane, c);
 		
-		c.gridy ++;
+		c.gridy++;
 	}
 
+	/**
+	 * @pre.condition: Input piece value
+	 * @post.condition: sets the list from input piece
+	 */
 	public void setSelectPiece(Piece piece) {
 		// update
 		this.list.clearSelection();
 		this.list.setModel(new PieceListModel(piece));
 	}
-	
+
+	/**
+	 * @pre.condition:  List needs to be set
+	 * @post.condition: Return true/false if selected piece
+	 * needs to be split
+	 */
 	public boolean needSplit() {
 		this.currentPiece = Game.getInstance()
 				.getBoardInstance()
@@ -68,12 +78,15 @@ public class PieceViewPanel extends JPanel {
 
 		return (numPiece != selPiece) && (selPiece != 0);
 	}
-	
+
+	/**
+	 * @pre.condition: Needs a list of pieces
+	 * @post.condition: Returns a piece or pieces
+	 */
 	public Piece getSelectedPieces() {
 		CombinePiece composite = new CombinePiece();
 		
-		for(Object obj : this.list.getSelectedValuesList()) {
-			Piece p = (Piece)obj;
+		for(Piece p : this.list.getSelectedValuesList()) {
 			if(this.list.getSelectedValuesList().size() == 1) {
 				return p;
 			}
@@ -81,7 +94,7 @@ public class PieceViewPanel extends JPanel {
 		}
 		return composite;
 	}
-	
+
 	private class PieceListModel extends AbstractListModel<Piece>  {
 		private CombinePiece composite;
 		
@@ -118,6 +131,5 @@ public class PieceViewPanel extends JPanel {
 					isSelected, cellHasFocus);
 
 		}
-
 	}
 }

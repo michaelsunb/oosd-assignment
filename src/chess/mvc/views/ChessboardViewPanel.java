@@ -1,7 +1,6 @@
 package chess.mvc.views;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 	@Override
 	public void update(ChessEvent event) {
 		if (event instanceof UpdateUIEvent) {
-			this.redraw(false);
+			this.redraw(((UpdateUIEvent)event).isRenew());
 		}
 	}
 
@@ -125,4 +124,16 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 		if (i < 0 || i > this.squares.length) return null;
 		return this.squares[i];
 	}
+
+	/**
+	 * @pre.condition: Squares must be set
+	 * @post.condition: returns the number of squares
+	 */
+	public int getSquareSize() {
+		if(squares == null) return 0;
+		
+		return squares.length;
+	}
+	
+	
 }

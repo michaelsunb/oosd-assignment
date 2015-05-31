@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -36,12 +37,12 @@ public class MainFrame extends JFrame implements IObserver {
 		
 		JPanel contentPane = (JPanel)getContentPane();
 		
-		// build menu
-		buildMenuBar();
-		
 		// adding Chessboard
 		this.chessboardPane = new ChessboardViewPanel(handler);
 		contentPane.add(this.chessboardPane, BorderLayout.CENTER);
+		
+		// build menu
+		buildMenuBar();
 		
 		// add game status
 		this.statusPane = new GameStatusViewPanel();
@@ -83,16 +84,19 @@ public class MainFrame extends JFrame implements IObserver {
 				Game.getInstance().save();
 			}
 		});
+
+		saveGame.setEnabled((this.chessboardPane.getSquareSize() > 0));
 		menu.add(saveGame);
 		
 		// restore
 		JMenuItem restoreGame = new JMenuItem("Restore");
+		restoreGame.setEnabled(new File("game.state").exists());
 		restoreGame.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Game.getInstance().restore();
-				ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent());
+				ChessEventDispatcher.getInstance().fireEvent(new UpdateUIEvent(true));
 			}
 		});
 		menu.add(restoreGame);
