@@ -93,9 +93,15 @@ public class GameTest {
 		// arrange
 		Game game = Game.getInstance();
 		game.reset(10);
-		
-		game.getPlayer(1).increaseMove();
-		game.getBoardInstance().setPiece(7, new Rook());
+
+		Player player2 = game.getPlayer(2);
+		player2.increaseMove();
+
+		Rook rook = new Rook();
+		rook.setOwner(player2);
+
+		game.getBoardInstance().setPiece(30, null);
+		game.getBoardInstance().setPiece(7, rook);
 		
 		game.save();
 		game.reset(11);
@@ -108,6 +114,9 @@ public class GameTest {
 		
 		// assert
 		assertEquals("Max move restored", 10, Game.getInstance().getMaxMoves());
-		
+
+		assertEquals("Player 2 rook is not at position 30", null, Game.getInstance().getBoardInstance().getPiece(30));
+		assertEquals("Player 2 rook is at position 7", rook.getClass(),
+				Game.getInstance().getBoardInstance().getPiece(7).getClass());
 	}
 }

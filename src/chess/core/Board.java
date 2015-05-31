@@ -53,7 +53,7 @@ public class Board implements IBoard, Serializable {
 	 */
 	@Override
 	public Piece getPiece(int pos) {
-		if (pos < 0 || pos > this.squares.length) return null;
+		if (pos < 0 || pos >= this.squares.length) return null;
 		return squares[pos];
 	}
 
