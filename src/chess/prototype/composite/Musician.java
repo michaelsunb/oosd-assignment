@@ -26,7 +26,6 @@ public class Musician extends Piece {
 				.southTwoWestOne()
 				.build();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return buildPositions.getMovablePositions();

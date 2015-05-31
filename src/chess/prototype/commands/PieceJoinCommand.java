@@ -6,10 +6,8 @@ package chess.prototype.commands;
 
 import chess.core.Piece;
 import chess.mvc.models.PieceJoinEvent;
-import chess.mvc.models.UpdateUIEvent;
 import chess.prototype.composite.CombinePiece;
 import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.ChessEventDispatcher;
 
 public class PieceJoinCommand extends CommandBase {
 

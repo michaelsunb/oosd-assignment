@@ -26,7 +26,6 @@ public class Jester extends Piece {
 				.westTwoSouthOne()
 				.build();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return buildPositions.getMovablePositions();

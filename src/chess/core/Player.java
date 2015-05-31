@@ -4,7 +4,6 @@
  */
 package chess.core;
 
-import java.util.*;
 import java.awt.Color;
 import java.io.Serializable;
 

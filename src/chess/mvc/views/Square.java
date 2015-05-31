@@ -2,8 +2,6 @@ package chess.mvc.views;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.datatransfer.*;
-import java.awt.dnd.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,16 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.TransferHandler;
 
-import chess.core.Game;
 import chess.core.Piece;
-import chess.mvc.models.PieceMovedEvent;
-import chess.mvc.models.PieceSplitEvent;
-import chess.prototype.composite.CombinePiece;
-import chess.prototype.composite.Rook;
-import chess.prototype.observer.ChessEvent;
-import chess.prototype.observer.ChessEventDispatcher;
 
 // http://www.dreamincode.net/forums/topic/209966-java-drag-and-drop-tutorial-part-1-basics-of-dragging/
 @SuppressWarnings("serial")
@@ -31,11 +21,6 @@ public class Square extends JPanel {
 	private JLabel lblIcon = new JLabel();
 	private Piece piece;
 	private int position;
-	
-	// drag & drop implementation
-	private DragSource source;
-	
-	private TransferHandler t;
 	
 	public Square() {
 		this.setLayout(new GridLayout(1, 1));
@@ -50,8 +35,6 @@ public class Square extends JPanel {
 	public void empty() {
 		this.piece = null;
 		this.lblIcon.setIcon(null);
-		
-		t = null;
 	}
 
 	public void draw(Piece piece) {

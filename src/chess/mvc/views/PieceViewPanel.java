@@ -23,8 +23,7 @@ import chess.mvc.controllers.GameController;
 import chess.prototype.composite.CombinePiece;
 
 public class PieceViewPanel extends JPanel {
-	private JList list;
-	private JButton btnSplit;
+	private JList<Piece> list;
 	private Piece currentPiece;
 	
 	public PieceViewPanel(GameController handler) {
@@ -40,7 +39,7 @@ public class PieceViewPanel extends JPanel {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(180, 80));
-		list = new JList();
+		list = new JList<Piece>();
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setCellRenderer(new PieceListCellRenderer());
 		scrollPane.setViewportView(list);

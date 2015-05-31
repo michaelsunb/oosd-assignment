@@ -85,9 +85,6 @@ public class Game implements Serializable {
 	public void swapPlayer() {
 		this.players[0].setTurn(!this.players[0].isTurn());
 		this.players[1].setTurn(!this.players[1].isTurn());
-//		for (Player p : this.players) {
-//			p.setTurn(!p.isTurn());
-//		}
 	}
 
 	/*
@@ -198,11 +195,18 @@ public class Game implements Serializable {
 		return false;
 	}
 
-	// store the location of the piece
+	/**
+	 * @pre.condition: Location of the piece must have an integer value
+	 * @post.condition: return location of the piece
+	 */
 	public int getSelPosition() {
 		return selectedPiece;
 	}
-	
+
+	/**
+	 * 
+	 * @post.condition: store the location of the piece
+	 */
 	public void setSelPosition(int pos) {
 		this.selectedPiece = pos;
 	}

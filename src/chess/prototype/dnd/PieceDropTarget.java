@@ -43,7 +43,6 @@ public class PieceDropTarget extends DropTargetAdapter implements
 			}
 			
 			if (!piece.canMoveTo(prevPosition, tagetPosition)) {
-				System.out.println("Nah! you can't move there.");
 				event.rejectDrop();
 				return;
 			}

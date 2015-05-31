@@ -3,13 +3,13 @@ package chess.prototype.commands;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 
-import chess.core.*;
-import chess.mvc.models.*;
+import chess.core.Game;
+import chess.core.Piece;
+import chess.mvc.models.PieceSelectedEvent;
 import chess.mvc.views.ChessboardViewPanel;
 import chess.prototype.composite.Barrier;
 import chess.prototype.dnd.PieceDragGesture;
-import chess.prototype.dnd.PieceDropTarget;
-import chess.prototype.observer.*;
+import chess.prototype.observer.ChessEvent;
 
 public class PieceSelectedCommand extends CommandBase {
 
