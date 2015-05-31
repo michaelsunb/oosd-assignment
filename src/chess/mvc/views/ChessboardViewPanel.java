@@ -96,7 +96,8 @@ public class ChessboardViewPanel extends JPanel implements IObserver {
 			this.add(square);
 			pos++;
 		}
-		this.validate();
+		this.revalidate();
+		this.repaint();
 	}
 	
 	/*
